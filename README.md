@@ -1,2 +1,0 @@
-# mobile.ad
-mobile ad

@@ -1,0 +1,31 @@
+page-gallery {
+    .flex-box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .flex-box2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .flex-box>* {
+        margin: 8px;
+    }
+    .flex-item>img {
+        width: 84px;
+    }
+    .flex-spacer {
+        flex: 1;
+    }
+    .flex-box-text {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .flex-box-text>a {
+        margin-left: auto;
+        margin-bottom: 5px;
+    }
+}

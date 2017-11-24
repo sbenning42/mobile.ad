@@ -1,0 +1,40 @@
+page-gallery-detail {
+    ion-slides {
+        height: 70%;
+        margin-bottom: 16px;
+    }
+    .card-md {
+        margin: 0;
+        width: 100%;
+    }
+    .flex-box {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .flex-box>* {
+        margin: 8px;
+        margin-left: 0;
+        margin-right: 16px;
+    }
+    .right {
+        float: right;
+    }
+    .left {
+        float: left;
+    }
+    .fix-right-marge {
+        margin-right: 4px;
+    }
+    .flex-box-text {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .flex-box-text>a {
+        margin-left: auto;
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "mobile.authenticdesign",
+  "app_id": "97159b06",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
