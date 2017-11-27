@@ -16,7 +16,7 @@ export class GalleryModeProvider {
   private mode$: BehaviorSubject<string>;
 
   constructor(public http: HttpClient) {
-    this.mode = 'apps';
+    this.mode = 'list';
     this.mode$ = new BehaviorSubject(this.mode);
     console.log('Hello GalleryModeProvider Provider');
   }

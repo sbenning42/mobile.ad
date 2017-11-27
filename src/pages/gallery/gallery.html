@@ -16,7 +16,7 @@
 <ion-content padding>
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
-        <ion-card *ngFor="let article of articles">
+        <!--ion-card *ngFor="let article of articles">
 
             <ion-item>
                 <ion-avatar item-start>
@@ -41,7 +41,35 @@
                 </div>
             </ion-card-content>
 
+        </ion-card-->
+
+        <ion-card *ngFor="let article of articles">
+
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
+                </ion-avatar>
+                <div class="flex-box-text">
+                    <h2>{{ article.user ? article.user.name : 'Authentic Design' }}</h2>
+                    <a (click)="contact(article)">Contact</a>
+                </div>
+            </ion-item>
+
+            <img src="{{ basePicturesApi + article?.pictures[0]?.url_img }}">
+
+            <ion-card-content style="white-space: pre-line;">
+                <p style="white-space: pre-line;">{{ article.name }}</p>
+                <div class="flex-box2">
+                    <p>Ref: {{ article.id }}</p>
+                    <span class="flex-spacer"></span>
+                    <p>{{ article.price }} Euros</p>
+                    <span class="flex-spacer"></span>
+                    <a (click)="details(article)">View</a>
+                </div>
+            </ion-card-content>
+
         </ion-card>
+
     </ion-list>
 
     <!-- Thumbnail Mode -->

@@ -21,5 +21,6 @@ export class Article {
         public size_width: string = '',
         public size_depth: string = '',
         public weight: string = '',
+        public pictures?: any[]
     ) { }
 }

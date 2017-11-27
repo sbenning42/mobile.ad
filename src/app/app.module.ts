@@ -37,6 +37,7 @@ import { GalleryModeProvider } from '../providers/gallery-mode/gallery-mode';
 import { AnnexesProvider } from '../providers/annexes/annexes';
 import { StockCountsProvider } from '../providers/stock-counts/stock-counts';
 import { ChannelsProvider } from '../providers/channels/channels';
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { ChannelsProvider } from '../providers/channels/channels';
     GalleryModeProvider,
     AnnexesProvider,
     StockCountsProvider,
-    ChannelsProvider
+    ChannelsProvider,
+    ApiProvider
   ]
 })
 export class AppModule {}

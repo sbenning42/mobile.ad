@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { basePicturesApi } from '../../api/api';
 import { GalleryProvider } from '../../providers/gallery/gallery';
 import { GalleryModeProvider } from '../../providers/gallery-mode/gallery-mode';
+import { ApiProvider } from './../../providers/api/api';
 import { Article } from '../../models/article';
 import { PageOptions } from '../../models/page-options';
 import { ContactPage } from '../contact/contact';
@@ -32,15 +33,23 @@ export class GalleryPage {
 
   mode$: Observable<string>;
 
+  gallery$: Observable<Article[]>;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     private gallery: GalleryProvider,
-    private galleryMode: GalleryModeProvider
+    private galleryMode: GalleryModeProvider,
+    private api: ApiProvider
   ) {
     this.mode$ = this.galleryMode.get();
     this.fetchData();
+    /*this.gallery$ = this.api.getGallery(new PageOptions(0)).do(
+      gallery => {
+        console.log(JSON.stringify(gallery));
+        gallery.products.forEach(article => article.pictures.sort((p1, p2) => p1.principal ? -1 : (p2.principal ? 1 : 0)));
+      });*/
   }
 
   ionViewDidLoad() {

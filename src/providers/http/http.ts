@@ -15,32 +15,47 @@ export class HttpProvider {
     console.log('Hello HttpProvider Provider');
   }
 
-  private makeHeaders(): { headers: HttpHeaders } {
+  private makeHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     const headers = token ?
       new HttpHeaders().set('Authorization', `Bearer ${token}`) :
       new HttpHeaders();
-    return { headers: headers };
+    return headers;
+  }
+
+  private makeParams(userParams?: {key: string, value: any}[]): HttpParams {
+    let params = new HttpParams();
+    if (userParams) {
+      userParams.forEach(userParam => params = params.set(userParam.key, userParam.value));
+    }
+    return params;
+  }
+
+  private makeOptions(userParams?: {key: string, value: any}[]) {
+    return {
+      headers: this.makeHeaders(),
+      params: this.makeParams(userParams)
+    };
   }
 
   get(endpoint: string, id = 0): Observable<any> {
     const url = id ? `${endpoint}/${id}` : endpoint;
-    return this.http.get(url, this.makeHeaders());
+    return this.http.get(url, this.makeOptions());
   }
 
   post(endpoint: string, params?: any): Observable<any> {
     const url = endpoint;
-    return this.http.post(url, params, this.makeHeaders());
+    return this.http.post(url, params, this.makeOptions());
   }
 
   put(endpoint: string, id = 0, params?: any): Observable<any> {
     const url = id ? `${endpoint}/${id}` : endpoint;
-    return this.http.put(url, params, this.makeHeaders());
+    return this.http.put(url, params, this.makeOptions());
   }
 
   delete(endpoint: string, id = 0): Observable<any> {
     const url = id ? `${endpoint}/${id}` : endpoint;
-    return this.http.delete(url, this.makeHeaders());
+    return this.http.delete(url, this.makeOptions());
   }
 
 }
