@@ -8,12 +8,17 @@
 
     <ion-navbar>
         <ion-title>Gallery</ion-title>
+        <ion-buttons right>
+            <button ion-button (click)="changeGalleryMode()">
+                <ion-icon name="{{ mode$|async }}"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
         <!--ion-card *ngFor="let article of articles">
@@ -43,32 +48,36 @@
 
         </ion-card-->
 
-        <ion-card *ngFor="let article of articles">
+        <ng-container *ngFor="let article of articles">
+            <div class="padding-border">
+                <ion-item no-lines>
+                    <ion-avatar item-start>
+                        <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
+                    </ion-avatar>
+                    <div class="flex-box-text">
+                        <h2>{{ article.user ? article.user.name : 'Authentic Design' }}</h2>
+                        <a (click)="contact(article)">Contact</a>
+                    </div>
+                </ion-item>
 
-            <ion-item>
-                <ion-avatar item-start>
-                    <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
-                </ion-avatar>
-                <div class="flex-box-text">
-                    <h2>{{ article.user ? article.user.name : 'Authentic Design' }}</h2>
-                    <a (click)="contact(article)">Contact</a>
-                </div>
-            </ion-item>
+                <img src="{{  article.principale }}" (click)="details(article)">
 
-            <img src="{{ basePicturesApi + article?.pictures[0]?.url_img }}">
+                <ion-item no-lines>
+                    <p style="white-space: pre-line;">{{ article.name }}</p>
+                </ion-item>
+                <ion-item no-lines>
+                    <div class="flex-box2">
+                        <p>Ref: {{ article.id }}</p>
+                        <span class="flex-spacer"></span>
+                        <p>{{ article.price }} Euros</p>
+                        <span class="flex-spacer"></span>
+                        <a (click)="details(article)">View</a>
+                    </div>
+                </ion-item>
 
-            <ion-card-content style="white-space: pre-line;">
-                <p style="white-space: pre-line;">{{ article.name }}</p>
-                <div class="flex-box2">
-                    <p>Ref: {{ article.id }}</p>
-                    <span class="flex-spacer"></span>
-                    <p>{{ article.price }} Euros</p>
-                    <span class="flex-spacer"></span>
-                    <a (click)="details(article)">View</a>
-                </div>
-            </ion-card-content>
-
-        </ion-card>
+                <hr>
+            </div>
+        </ng-container>
 
     </ion-list>
 

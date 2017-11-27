@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-    <ion-tabs *ngIf="!(logged$|async)">
+    <ion-tabs *ngIf="!(logged$|async)" tabsPlacement="top">
         <ion-tab [root]="stockFilterAll" tabTitle="All" tabIcon="apps" tabBadge="{{ allCount }}"></ion-tab>
         <ion-tab [root]="stockFilterCreation" tabTitle="Creation" tabIcon="construct" tabBadge="{{ creationCount }}"></ion-tab>
         <ion-tab [root]="stockFilterSold" tabTitle="Sold" tabIcon="logo-euro" tabBadge="{{ soldCount }}"></ion-tab>

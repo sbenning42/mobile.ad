@@ -124,4 +124,8 @@ export class GalleryPage {
     loading.dismiss();
   }
 
+  changeGalleryMode() {
+    this.galleryMode.change();
+  }
+
 }

@@ -6,14 +6,19 @@ page-gallery {
     }
     .flex-box2 {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: row;
         justify-content: center;
+        align-items: center;
+    }
+    .flex-box3 {
+        display: flex;
+        flex-direction: column;
     }
     .flex-box>* {
-        margin: 8px;
+        width: 31%;
     }
     .flex-item>img {
-        width: 84px;
+        width: 100%;
     }
     .flex-spacer {
         flex: 1;
@@ -27,5 +32,15 @@ page-gallery {
     .flex-box-text>a {
         margin-left: auto;
         margin-bottom: 5px;
+    }
+    .padding-border {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    hr {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        color: rgba(125, 125, 125, 0.5);
+        height: 4px;
     }
 }
