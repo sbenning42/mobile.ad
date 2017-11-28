@@ -19,9 +19,12 @@
 
 
 <ion-content>
-    <ion-infinite-scroll class="top" position="top" threshold="0px" (ionInfinite)="reload($event)">
+    <!--ion-infinite-scroll class="top" position="top" threshold="0px" (ionInfinite)="reload($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    </ion-infinite-scroll-->
+    <ion-refresher (ionRefresh)="reload($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
         <!--ion-card *ngFor="let article of articles">
