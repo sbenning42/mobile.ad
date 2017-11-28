@@ -114,7 +114,7 @@ export class GalleryPage {
   }
 
   details(article: Article) {
-    this.navCtrl.push(GalleryDetailPage, {article: article});
+    this.navCtrl.push(GalleryDetailPage, {article: article, articles: this.articles.filter(art => +art.user_id === +article.user_id)});
   }
 
   presentLoading() {

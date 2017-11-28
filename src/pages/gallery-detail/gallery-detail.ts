@@ -71,7 +71,7 @@ export class GalleryDetailPage {
   }
 
   contact() {
-    this.navCtrl.push(ContactPage, {user: this.article['user']});
+    this.navCtrl.push(ContactPage, {user: this.article['user'], articles: this.navParams.data.articles});
   }
 
 }

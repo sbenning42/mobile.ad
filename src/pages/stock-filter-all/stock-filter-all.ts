@@ -40,9 +40,13 @@ export class StockFilterAllPage {
     public stockCounts: StockCountsProvider
   ) {
     this.mode$ = this.stockModeProvider.get();
+    console.log(this.stockCounts.getAll());
     this.pageOptions = new PageOptions(this.stockCounts.getAll(), 20, 0, 'all');
     this.stock.get(this.pageOptions).subscribe(
-      response => this.getPrincipale(this.articles = response.products),
+      response => {
+        this.getPrincipale(this.articles = response.products);
+        this.pageOptions = new PageOptions(this.stockCounts.getAll(), 20, 0, 'all');
+      },
       errors => {},
       () => this.pageOptions.nextPage()
     );
@@ -63,6 +67,11 @@ export class StockFilterAllPage {
         article['pictures'].find(picture => +picture['principal'] === 1) :
         undefined;
       article.principale = principale ?
+        basePicturesApi + principale.url_thumb :
+        (article['pictures'] && article['pictures'][0] ?
+          basePicturesApi + article['pictures'][0].url_thumb :
+          'assets/imgs/addef.jpg');
+      article.principaleB = principale ?
         basePicturesApi + principale.url_img :
         (article['pictures'] && article['pictures'][0] ?
           basePicturesApi + article['pictures'][0].url_img :

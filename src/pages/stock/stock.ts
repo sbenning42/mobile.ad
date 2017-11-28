@@ -42,20 +42,20 @@ export class StockPage {
   ) { }
 
   initCounts(counts) {
-    this.allCount = counts['all'];
+    /*this.allCount = counts['all'];
     this.creationCount = counts['undefined'];
     this.soldCount = counts['sold'];
     this.stockCounts.setAll(counts['all']);
     this.stockCounts.setCreation(counts['creation']);
-    this.stockCounts.setSold(counts['sold']);
+    this.stockCounts.setSold(counts['sold']);*/
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StockPage');
     this.pageOptions = new PageOptions(0);
-    this.stockProvider.get(this.pageOptions).subscribe(
+    /*this.stockProvider.get(this.pageOptions).subscribe(
       response => this.initCounts(response.counts)
-    );
+    );*/
   }
 
   ionViewWillLoad() {

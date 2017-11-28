@@ -22,13 +22,13 @@
 
 <ion-content>
 
-    <ion-item no-lines>
+    <ion-item no-lines (click)="contact()">
         <ion-avatar item-start>
             <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
         </ion-avatar>
         <div class="flex-box-text">
             <h2>{{ article.user ? article.user.name : '' }}</h2>
-            <a (click)="contact()">Contact</a>
+            <a>Contact</a>
         </div>
     </ion-item>
 
@@ -38,10 +38,10 @@
         </ion-slide>
     </ion-slides>
     <div class="padding">
-        <h4 style="white-space: pre-line;">{{ article.name }}</h4>
-        <sub>{{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg</sub>
-        <p style="white-space: pre-line;">{{ article.description }}</p>
-        <p class="fix-right-marge" style="text-align:right">{{ article.price }} Euros</p>
+        <h5 style="white-space: pre-line;">{{ article.name }} - {{ article.price }} Euros</h5>
+        <!--sub>{{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg</sub-->
+        <p style="white-space: pre-line;">{{ article.description }} <br><sub>({{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg)</sub></p>
+        <!--p class="fix-right-marge" style="text-align:right">{{ article.price }} Euros</p-->
         <div class="flex-box">
             <ion-badge>{{ category }}</ion-badge>
             <ion-badge>{{ style }}</ion-badge>
