@@ -19,40 +19,13 @@
 
 
 <ion-content>
-    <!--ion-infinite-scroll class="top" position="top" threshold="0px" (ionInfinite)="reload($event)">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll-->
+
     <ion-refresher (ionRefresh)="reload($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+
     <!-- List Mode -->
-    <ion-list *ngIf="(mode$|async) === 'apps'">
-        <!--ion-card *ngFor="let article of articles">
-
-            <ion-item>
-                <ion-avatar item-start>
-                    <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
-                </ion-avatar>
-                <div class="flex-box-text">
-                    <h2>{{ article.user ? article.user.name : 'Authentic Design' }}</h2>
-                    <a (click)="contact(article)">Contact</a>
-                </div>
-            </ion-item>
-
-            <img src="{{ article.principale }}">
-
-            <ion-card-content style="white-space: pre-line;">
-                <p style="white-space: pre-line;">{{ article.name }}</p>
-                <div class="flex-box2">
-                    <p>Ref: {{ article.id }}</p>
-                    <span class="flex-spacer"></span>
-                    <p>{{ article.price }} Euros</p>
-                    <span class="flex-spacer"></span>
-                    <a (click)="details(article)">View</a>
-                </div>
-            </ion-card-content>
-
-        </ion-card-->
+    <!--ion-list *ngIf="(mode$|async) === 'apps'">
 
         <ng-container *ngFor="let article of articles">
             <div class="padding-border">
@@ -85,6 +58,21 @@
             </div>
         </ng-container>
 
+    </ion-list-->
+
+    <ion-list *ngIf="(mode$|async) === 'apps'">
+        <ion-item *ngFor="let article of articles" (click)="details(article)">
+            <ion-thumbnail item-start>
+                <img src="{{ article.principale }}">
+            </ion-thumbnail>
+            <h2 style="white-space: pre-line;">{{ article.name }}</h2>
+            <p>Price: {{ article.price }} Euros</p>
+            <ion-avatar item-end>
+                <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
+            </ion-avatar>
+            <!--ion-icon name="time" item-end (click)="details(article)"></ion-icon-->
+            <!--button ion-button clear item-end (click)="details(article, i)">View</button-->
+        </ion-item>
     </ion-list>
 
     <!-- Thumbnail Mode -->
