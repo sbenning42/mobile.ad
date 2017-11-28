@@ -1,6 +1,7 @@
 export class Article {
     
     principale: string;
+    principaleB: string;
 
     constructor(
         public id: string = '',

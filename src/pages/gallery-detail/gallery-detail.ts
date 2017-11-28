@@ -43,7 +43,7 @@ export class GalleryDetailPage {
     this.article = this.navParams.get('article');
 
     this.picturesForLoop = [];
-    this.picturesForLoop.push(this.article.principale);
+    this.picturesForLoop.push(this.article.principaleB);
     if (this.article['pictures']) {
       this.article['pictures'].filter(pic => !pic.principal).forEach(pic => this.picturesForLoop.push(basePicturesApi + pic.url_img));
     }

@@ -96,10 +96,15 @@ export class GalleryPage {
         article['pictures'].find(picture => +picture['principal'] === 1) :
         undefined;
       article.principale = principale ?
+        basePicturesApi + principale.url_thumb :
+        (article['pictures'] && article['pictures'][0] ?
+          basePicturesApi + article['pictures'][0].url_thumb :
+          'assets/imgs/addef.jpg');
+      article.principaleB = principale ?
         basePicturesApi + principale.url_img :
         (article['pictures'] && article['pictures'][0] ?
-          basePicturesApi + article['pictures'][0].url_img :
-          'assets/imgs/addef.jpg');
+            basePicturesApi + article['pictures'][0].url_img :
+            'assets/imgs/addef.jpg');
     });
     return articles;
   }
