@@ -19,6 +19,9 @@
 
 
 <ion-content>
+    <ion-infinite-scroll (ionInfinite)="reload($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
         <!--ion-card *ngFor="let article of articles">
