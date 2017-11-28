@@ -19,7 +19,7 @@
 
 
 <ion-content>
-    <ion-infinite-scroll (ionInfinite)="reload($event)">
+    <ion-infinite-scroll class="top" position="top" threshold="0px" (ionInfinite)="reload($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     <!-- List Mode -->

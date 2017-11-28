@@ -133,12 +133,13 @@ export class GalleryPage {
     this.galleryMode.change();
   }
 
-  reload($event) {
+  reload(infiniteScroll) {
     this.pageOptions = new PageOptions(0);
     this.gallery.get(this.pageOptions)
       .do(
         response => this.pageOptions.reNew(response.count)
-      ).subscribe(
+      ).do(response => infiniteScroll.complete())
+        .subscribe(
         response => this.getPrincipale(this.articles = response.products),
         error => {},
         () => this.pageOptions.nextPage()
