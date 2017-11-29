@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { basePicturesApi } from './../../api/api';
 
@@ -18,14 +18,26 @@ import { basePicturesApi } from './../../api/api';
 export class SliderPage {
 
   pictures: string[];
+  index: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  mySlideOptions= {
+    initialSlide:0,
+    pager:true,
+    spaceBetween:0
+  };
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.pictures = this.navParams.get('pictures').map(pic => basePicturesApi + pic.url_img);
-    const index = this.navParams.get('index');
+    this.index = this.navParams.get('index');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SliderPage');
+  }
+
+  dismiss() {
+    console.log('hello there');
+    this.viewCtrl.dismiss();
   }
 
 }

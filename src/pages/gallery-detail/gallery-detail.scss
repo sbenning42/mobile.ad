@@ -23,9 +23,7 @@ page-gallery-detail {
     .left {
         float: left;
     }
-    .fix-right-marge {
-        margin-right: 4px;
-    }
+    .fix-right-marge {}
     .flex-box-text {
         display: flex;
         flex-wrap: wrap;
@@ -36,21 +34,19 @@ page-gallery-detail {
         margin-left: auto;
         margin-bottom: 5px;
     }
-    .padding {
-        padding: 16px;
-        padding-top: 0;
-    }
+    .padding {}
     .gallery-box {
-        width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
+        padding-left: auto;
+        padding-right: auto;
     }
     .gallery-item {
-        width: 31vw;
-        height: 31vw;
-        margin: 1vw;
+        width: 30vw;
+        height: 30vw;
+        border: solid 1px white;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -59,9 +55,17 @@ page-gallery-detail {
         object-fit: cover;
     }
     .gallery-item-more {
-        background-image: url(assets/imgs/more.jpg);
+        background-image: url(/assets/imgs/more.jpg);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 50% 50%;
+    }
+    .dense {
+        margin-top: 0 !important;
+    }
+    .bigger {
+        font-size: 1.6rem;
+        margin-bottom: 8px !important;
+        margin-top: 0 !important;
     }
 }

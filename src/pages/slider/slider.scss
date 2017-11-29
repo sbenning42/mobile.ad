@@ -1,9 +1,19 @@
 page-slider {
-    ion-slides: {
+    background-color: black;
+    z-index: 0;
+    .back {
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+        left: 8px;
+        top: 8px;
+        z-index: 1;
+    }
+    ion-header {
+        display: none;
+    }
+    .toolbar-background {
+        background: #000000 !important;
+    }
+    .swiper-pagination-progress .swiper-pagination-progressbar {
+        background: #f4f4f4;
     }
 }

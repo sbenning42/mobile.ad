@@ -20,7 +20,7 @@
   Ionic pages and navigation.
 -->
 
-<ion-content>
+<ion-content padding>
 
     <ion-item no-lines (click)="contact()">
         <ion-avatar item-start>
@@ -31,24 +31,22 @@
         </div>
     </ion-item>
 
-    <!--ion-slides pager paginationType="progress">
-        <ion-slide *ngFor="let picture of picturesForLoop">
-            <img src="{{ picture }}">
-        </ion-slide>
-    </ion-slides-->
+    <div class="padding">
+        <p class="bigger" style="white-space: pre-line;"><strong>{{ article.name }}</strong></p>
+        <p class="dense" style="white-space: pre-line;">{{ article.description }} <br><sub>({{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg)</sub></p>
+        <p class="fix-right-marge" style="text-align:right"><strong>{{ article.price }} Euros</strong></p>
+    </div>
 
-    <div class="gallery-box">
-        <div class="gallery-item" *ngFor="let picture of picturesForLoop; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }" (click)="detail(index)">
-        </div>
-        <div class="gallery-item gallery-item-more" (click)="detail(0)">
+    <div class="gallery-wrapper">
+        <div class="gallery-box">
+            <div class="gallery-item" *ngFor="let picture of picturesForLoop; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }" (click)="detail(index)">
+            </div>
+            <div *ngIf="morePicture" class="gallery-item gallery-item-more" (click)="detail(0)">
+            </div>
         </div>
     </div>
 
     <div class="padding">
-        <h5 style="white-space: pre-line;">{{ article.name }} - {{ article.price }} Euros</h5>
-        <!--sub>{{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg</sub-->
-        <p style="white-space: pre-line;">{{ article.description }} <br><sub>({{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg)</sub></p>
-        <!--p class="fix-right-marge" style="text-align:right">{{ article.price }} Euros</p-->
         <div class="flex-box">
             <ion-badge>{{ category }}</ion-badge>
             <ion-badge>{{ style }}</ion-badge>

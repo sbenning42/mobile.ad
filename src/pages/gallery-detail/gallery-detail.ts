@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 
 import { basePicturesApi } from '../../api/api';
 import { SliderPage } from './../../pages/slider/slider';
@@ -34,11 +35,13 @@ export class GalleryDetailPage {
   color: string;
 
   picturesForLoop: string[];
+  morePicture: boolean;
 
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public annexes: AnnexesProvider
   ) {
     this.article = this.navParams.get('article');
@@ -46,7 +49,7 @@ export class GalleryDetailPage {
     this.picturesForLoop = [];
     this.picturesForLoop.push(this.article.principale);
     if (this.article['pictures']) {
-      this.article['pictures'].filter(pic => !pic.principal).forEach((pic, index) => index < 7 ? this.picturesForLoop.push(basePicturesApi + pic.url_thumb) : undefined);
+      this.article['pictures'].filter(pic => !pic.principal).forEach((pic, index) => index < 7 ? this.picturesForLoop.push(basePicturesApi + pic.url_thumb) : this.morePicture = true);
     }
 
     const category = this.annexes.categories.find(cat => +cat.id === +this.article.category_id);
@@ -76,7 +79,9 @@ export class GalleryDetailPage {
   }
 
   detail(index: number) {
-    this.navCtrl.push(SliderPage, { pictures: this.article['pictures'], index });
+    const modal = this.modalCtrl.create(SliderPage, { pictures: this.article['pictures'], index });
+    modal.present();
+    // this.navCtrl.push(SliderPage, { pictures: this.article['pictures'], index });
   }
 
 }
