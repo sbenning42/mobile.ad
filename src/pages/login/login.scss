@@ -11,7 +11,12 @@ page-login {
         background-image: url(/assets/imgs/niy.jpg);
         background-size: cover;
     }
-    ion-item+ion-item {
-        margin-top: 16px !important;
+    ion-card {
+        padding: 16px;
+        min-width: 200px;
+        background-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .spacer {
+        flex: 1;
     }
 }

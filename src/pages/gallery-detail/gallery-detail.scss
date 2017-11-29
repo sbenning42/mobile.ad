@@ -40,4 +40,28 @@ page-gallery-detail {
         padding: 16px;
         padding-top: 0;
     }
+    .gallery-box {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .gallery-item {
+        width: 31vw;
+        height: 31vw;
+        margin: 1vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .gallery-item>img {
+        object-fit: cover;
+    }
+    .gallery-item-more {
+        background-image: url(assets/imgs/more.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
 }

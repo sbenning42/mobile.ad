@@ -28,15 +28,22 @@
         </ion-avatar>
         <div class="flex-box-text">
             <h2>{{ article.user ? article.user.name : '' }}</h2>
-            <a>Contact</a>
         </div>
     </ion-item>
 
-    <ion-slides pager paginationType="progress">
+    <!--ion-slides pager paginationType="progress">
         <ion-slide *ngFor="let picture of picturesForLoop">
             <img src="{{ picture }}">
         </ion-slide>
-    </ion-slides>
+    </ion-slides-->
+
+    <div class="gallery-box">
+        <div class="gallery-item" *ngFor="let picture of picturesForLoop; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }" (click)="detail(index)">
+        </div>
+        <div class="gallery-item gallery-item-more" (click)="detail(0)">
+        </div>
+    </div>
+
     <div class="padding">
         <h5 style="white-space: pre-line;">{{ article.name }} - {{ article.price }} Euros</h5>
         <!--sub>{{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg</sub-->
