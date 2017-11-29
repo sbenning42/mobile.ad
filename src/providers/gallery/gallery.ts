@@ -18,11 +18,12 @@ export class GalleryProvider {
     console.log('Hello GalleryProvider Provider');
   }
 
-  get(pageOptions): Observable<any> {
+  get(pageOptions, filters?): Observable<any> {
     const options = {
       pageIndex: pageOptions.index,
       pageSize: pageOptions.size,
       sort: pageOptions.sort,
+      filters: filters
     };
     return this.http.post(galleryApi, options);
   }

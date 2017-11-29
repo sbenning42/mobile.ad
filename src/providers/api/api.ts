@@ -117,9 +117,9 @@ export class HotAsyncStream {
     }
   
     private initStreams(
-      dataState?: any[]
+      dataState?: any
     ) {
-      this.dataState = dataState ? dataState : [];
+      this.dataState = dataState ? dataState : undefined;
       this.subjectStream$ = new BehaviorSubject(this.dataState);
       this.observableStream$ = this.subjectStream$.asObservable();
     }
@@ -128,16 +128,16 @@ export class HotAsyncStream {
       this.subjectStream$.next(this.dataState);
     }
   
-    private publish(dataState: any[]) {
+    private publish(dataState: any) {
       this.dataState = dataState;
       this.next();
     }
   
-    public fetch(source$: Observable<any[]>) {
+    public fetch(source$: Observable<any>) {
       source$.do(dataState => this.publish(dataState)).subscribe();
     }
   
-    public get stream$(): Observable<any[]> {
+    public get stream$(): Observable<any> {
       return this.observableStream$;
     }
 }
