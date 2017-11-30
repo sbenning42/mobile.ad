@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+import { AnnexesProvider } from '../annexes/annexes';
 import { baseApi } from '../../api/api';
 import { HttpProvider } from '../http/http';
 import { User } from '../../models/user'
@@ -39,7 +40,7 @@ export class AuthProvider {
   private isLogged$: BehaviorSubject<boolean>;
   private isAdmin$: BehaviorSubject<boolean>;
 
-  constructor(public http: HttpProvider) {
+  constructor(public http: HttpProvider, private annexe: AnnexesProvider) {
     this.user$ = new BehaviorSubject(this._user);
     this.isLogged$ = new BehaviorSubject(this.isLogged());
     this.isAdmin$ = new BehaviorSubject(this.isAdmin());
@@ -53,6 +54,10 @@ export class AuthProvider {
 
   isAdmin(): boolean {
     return this._admin ? true : false;
+  }
+
+  userId() {
+    return this._user.id;
   }
 
   isLoggedStream(): Observable<boolean> {
@@ -70,6 +75,7 @@ export class AuthProvider {
     if (token !== undefined && admin !== undefined) {
       this.token = token;
       this.admin = admin;
+      this.annexe.fetch();
     } else {
       this.logout();
     }
@@ -81,6 +87,7 @@ export class AuthProvider {
     this.user = user;
     this.token = token;
     this.admin = +user.role_id === 1;
+    this.annexe.fetch();
   }
 
   logout() {

@@ -33,8 +33,6 @@ export class GalleryPage {
 
   mode$: Observable<string>;
 
-  gallery$: Observable<Article[]>;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,12 +42,7 @@ export class GalleryPage {
     private api: ApiProvider
   ) {
     this.mode$ = this.galleryMode.get();
-    this.fetchData();
-    /*this.gallery$ = this.api.getGallery(new PageOptions(0)).do(
-      gallery => {
-        console.log(JSON.stringify(gallery));
-        gallery.products.forEach(article => article.pictures.sort((p1, p2) => p1.principal ? -1 : (p2.principal ? 1 : 0)));
-      });*/
+    // this.fetchData();
   }
 
   ionViewDidLoad() {

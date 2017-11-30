@@ -22,7 +22,7 @@
 
 <ion-content padding>
 
-    <ion-item no-lines (click)="contact()">
+    <ion-item class="no-padding" no-lines (click)="contact()">
         <ion-avatar item-start>
             <img src="{{ article.user && article.user.picture ? (basePicturesApi + article.user.picture.public_path) : ('assets/imgs/addef.jpg') }}">
         </ion-avatar>
@@ -32,9 +32,9 @@
     </ion-item>
 
     <div class="padding">
-        <p class="bigger" style="white-space: pre-line;"><strong>{{ article.name }}</strong></p>
+        <p class="bigger" style="white-space: pre-line;"><strong>{{ article.name }} - Ref: {{ article.id }}</strong></p>
         <p class="dense" style="white-space: pre-line;">{{ article.description }} <br><sub>({{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg)</sub></p>
-        <p class="fix-right-marge" style="text-align:right"><strong>{{ article.price }} Euros</strong></p>
+        <p class="bigger fix-right-marge" style="text-align:right"><strong>{{ article.price }} Euros</strong></p>
     </div>
 
     <div class="gallery-wrapper">

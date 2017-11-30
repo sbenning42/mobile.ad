@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
+import { LoginModalPage } from './../../pages/login-modal/login-modal';
 import { TabsPage } from '../tabs/tabs';
-import { AuthProvider } from '../../providers/auth/auth';
-import { User } from '../../models/user';
 
 /**
  * Generated class for the LoginPage page.
@@ -19,25 +18,16 @@ import { User } from '../../models/user';
 })
 export class LoginPage {
 
-  user: User;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private auth: AuthProvider
-  ) {
-    this.user = new User();
-  }
+    public modelCtrl: ModalController
+  ) { }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
+    const modal = this.modelCtrl.create(LoginModalPage);
+    modal.present();
     console.log('ionViewDidLoad LoginPage');
-  }
-
-  login() {
-    this.auth.login(this.user).subscribe(
-      response => this.navCtrl.setRoot(TabsPage),
-      error => {}
-    );
   }
 
 }

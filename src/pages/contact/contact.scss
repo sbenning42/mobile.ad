@@ -13,6 +13,7 @@ page-contact {
     ion-avatar img {
         width: 100% !important;
         height: 100% !important;
+        min-width: 80px !important; //any size
         max-width: 80px !important; //any size
         max-height: 80px !important; //any size
     }
@@ -20,6 +21,7 @@ page-contact {
         color: inherit !important;
     }
     .flex-header {
+        background-color: white;
         height: 48px;
         display: flex;
         justify-content: center;
@@ -49,6 +51,8 @@ page-contact {
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
+        margin-bottom: 8px;
+        margin-top: 8px;
     }
     .flex-item {
         width: 30vw;
@@ -61,5 +65,19 @@ page-contact {
     .flex-item>img {}
     .row-no-padding {
         padding-left: 0 !important;
+        padding-right: 16px;
+        min-height: 64px;
+    }
+    .fixed {
+        min-width: 100%;
+        z-index: 10;
+        position: fixed;
+        top: 56px;
+        background-color: white;
+    }
+    .fixed-float {
+        min-width: 100%;
+        z-index: 1;
+        position: absolute;
     }
 }

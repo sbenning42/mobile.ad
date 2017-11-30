@@ -7,20 +7,48 @@
 <ion-header>
 
     <ion-navbar>
+        <ion-buttons left>
+            <strong>{{ pageOptions?.count }}</strong>
+            <span>posts</span>
+        </ion-buttons>
         <ion-title>Stock</ion-title>
+        <ion-buttons right>
+            <button ion-button (click)="changeGalleryMode()">
+                <ion-icon name="{{ mode$|async }}"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-    <!--ion-tabs *ngIf="!(logged$|async)" tabsPlacement="top">
-        <ion-tab [root]="stockFilterAll" tabTitle="All" tabIcon="apps" tabBadge="{{ allCount }}"></ion-tab>
-        <ion-tab [root]="stockFilterCreation" tabTitle="Creation" tabIcon="construct" tabBadge="{{ creationCount }}"></ion-tab>
-        <ion-tab [root]="stockFilterSold" tabTitle="Sold" tabIcon="logo-euro" tabBadge="{{ soldCount }}"></ion-tab>
-    </ion-tabs-->
-    <div class="flex-box">
-        <h1>Comming Soon...</h1>
+
+    <ion-refresher (ionRefresh)="reload($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <!-- List Mode -->
+    <ion-list *ngIf="(mode$|async) === 'apps'">
+        <ion-item *ngFor="let article of articles" (click)="details(article)">
+            <ion-thumbnail item-start>
+                <img src="{{ article.principale }}">
+            </ion-thumbnail>
+            <h2 style="white-space: pre-line;">{{ article.name }}<span class="grey"> - Ref: {{ article.id }}</span></h2>
+            <p>Price: {{ article.price }} Euros</p>
+            <ion-icon name="arrow-forward" item-end></ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <!-- Thumbnail Mode -->
+    <div *ngIf="(mode$|async) === 'list'" class="flex-box">
+        <div class="flex-item" *ngFor="let article of articles">
+            <img src="{{ article.principale }}" (click)="details(article)">
+        </div>
     </div>
+
+    <ion-infinite-scroll *ngIf="pageOptions?.miss > 0 && articles" (ionInfinite)="nextPage($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Article } from '../../models/article';
 import { PageOptions } from '../../models/page-options';
 import { StockProvider } from '../../providers/stock/stock';
+import { StockModeProvider } from '../../providers/stock-mode/stock-mode';
 import { StockCountsProvider } from '../../providers/stock-counts/stock-counts';
-import { StockFilterAllPage } from '../stock-filter-all/stock-filter-all';
-import { StockFilterCreationPage } from '../stock-filter-creation/stock-filter-creation';
-import { StockFilterSoldPage } from '../stock-filter-sold/stock-filter-sold';
+
+import { basePicturesApi } from '../../api/api';
+import { GalleryProvider } from '../../providers/gallery/gallery';
+import { GalleryModeProvider } from '../../providers/gallery-mode/gallery-mode';
+import { ApiProvider } from './../../providers/api/api';
+import { ContactPage } from '../contact/contact';
+import { StockDetailPage } from '../stock-detail/stock-detail';
 
 /**
  * Generated class for the StockPage page.
@@ -24,38 +30,97 @@ import { StockFilterSoldPage } from '../stock-filter-sold/stock-filter-sold';
 })
 export class StockPage {
 
-  stockFilterAll = StockFilterAllPage;
-  stockFilterCreation = StockFilterCreationPage;
-  stockFilterSold = StockFilterSoldPage;
-
-  allCount: number;
-  creationCount: number;
-  soldCount: number;
-
   pageOptions: PageOptions;
+  articles: Article[];
+  mode$: Observable<string>;
+
+  channels: any[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public stockProvider: StockProvider,
-    public stockCounts: StockCountsProvider
-  ) { }
-
-  initCounts(counts) {
-    /*this.allCount = counts['all'];
-    this.creationCount = counts['undefined'];
-    this.soldCount = counts['sold'];
-    this.stockCounts.setAll(counts['all']);
-    this.stockCounts.setCreation(counts['creation']);
-    this.stockCounts.setSold(counts['sold']);*/
+    public stockMode: StockModeProvider,
+    public stockCounts: StockCountsProvider,
+    private api: ApiProvider
+  ) {
+    this.mode$ = this.stockMode.get();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StockPage');
     this.pageOptions = new PageOptions(0);
-    /*this.stockProvider.get(this.pageOptions).subscribe(
-      response => this.initCounts(response.counts)
-    );*/
+    this.api.getContractedChannels()
+      .do(response => {
+        this.channels = response;
+      })
+      .switchMap(() => this.stockProvider.get(this.pageOptions))
+      .do(
+        response => this.pageOptions.reNew(response.count)
+      )
+      .subscribe(
+        response => {
+          this.articles = this.getPrincipalePicture(response.products);
+          console.log('Got a next in index ' + this.pageOptions.index);
+          this.pageOptions.nextPage();
+          console.log('completed with index: ' + this.pageOptions.index);
+        },
+        error => {
+          console.log('Got an error in index ' + this.pageOptions.index);
+        },
+        () => {
+        });
+  }
+
+  getPrincipalePicture(products: Article[]): Article[] {
+    products.forEach((product: Article) => {
+      if (product.principale) { return ; }
+      const principale = product['pictures'] ?
+      product['pictures'].find(picture => +picture['principal'] === 1) :
+        undefined;
+        product.principale = principale ?
+        basePicturesApi + principale.url_thumb :
+        (product['pictures'] && product['pictures'][0] ?
+          basePicturesApi + product['pictures'][0].url_thumb :
+          'assets/imgs/addef.jpg');
+        product.principaleB = principale ?
+          basePicturesApi + principale.url_img :
+          (product['pictures'] && product['pictures'][0] ?
+            basePicturesApi + product['pictures'][0].url_img :
+            'assets/imgs/addef.jpg');
+    });
+    return products;
+  }
+
+  nextPage(infiniteScroll) {
+    this.stockProvider.get(this.pageOptions)
+      .do(response => infiniteScroll.complete())
+      .subscribe(
+        response => this.articles = this.articles.concat(this.getPrincipalePicture(response.products)),
+        error => {},
+        () => this.pageOptions.nextPage()
+      );
+  }
+
+  changeGalleryMode() {
+    this.stockMode.change();
+  }
+
+  reload(infiniteScroll) {
+    this.pageOptions = new PageOptions(0);
+    this.stockProvider.get(this.pageOptions)
+      .do(
+        response => this.pageOptions.reNew(response.count)
+      ).do(response => infiniteScroll.complete())
+        .subscribe(
+        response => this.getPrincipalePicture(this.articles = response.products),
+        error => {},
+        () => this.pageOptions.nextPage()
+      );
+  }
+
+  details(article: Article) {
+    this.navCtrl.push(StockDetailPage, {article: article, channels: this.channels});
   }
 
   ionViewWillLoad() {
@@ -64,11 +129,6 @@ export class StockPage {
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter StockPage');
-    this.fetchData();
-  }
-
-  fetchData() {
-    console.log('Fetching data for StockPage');
   }
 
 }

@@ -27,6 +27,7 @@ import { StockFilterSoldPage } from '../pages/stock-filter-sold/stock-filter-sol
 import { StockDetailPage } from '../pages/stock-detail/stock-detail';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
+import { LoginModalPage } from '../pages/login-modal/login-modal';
 import { SliderPage } from '../pages/slider/slider';
 
 import { StockProvider } from '../providers/stock/stock';
@@ -57,6 +58,7 @@ import { ApiProvider } from '../providers/api/api';
     StockDetailPage,
     AccountPage,
     LoginPage,
+    LoginModalPage,
     SliderPage,
   ],
   imports: [
@@ -82,6 +84,7 @@ import { ApiProvider } from '../providers/api/api';
     StockDetailPage,
     AccountPage,
     LoginPage,
+    LoginModalPage,
     SliderPage,
   ],
   providers: [

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { ApiProvider } from './../../providers/api/api';
 import { basePicturesApi } from './../../api/api';
 import { User } from './../../models/user';
 import { Article } from './../../models/article';
@@ -12,32 +13,48 @@ import { GalleryProvider } from './../../providers/gallery/gallery';
   templateUrl: 'contact.html'
 })
 export class ContactPage {
-  
+
+  @ViewChild('fixed') el:ElementRef;
+
   articles: Article[];
   contact: User;
   count = 40;
   pageOption: PageOptions;
   basePicturesApi = basePicturesApi;
   mode : boolean;
+  infos: string;
+
+  height: number;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private api: ApiProvider,
     private gallery: GalleryProvider
   ) {
     this.mode = true;
     this.pageOption = new PageOptions(0);
     this.contact = this.navParams.data.user;
-    this.gallery.get(this.pageOption, [{type: 'user', name: this.contact.name}]).subscribe(
-      gallery => {
-        if (!gallery) { return ; }
-        this.count = gallery.count;
-        this.pageOption = new PageOptions(this.count);
-        this.pageOption.count = gallery.count;
-        this.articles = this.getPrincipale(gallery.products);
-        console.log('fetched ' + this.count + ' ' + JSON.stringify(gallery.products));
-      }, () => {}, () => this.pageOption.nextPage()
-    );
+  }
+
+  ionViewDidLoad() {
+    this.api.getUserInfos(+this.contact.id).do(infos => this.infos = infos.description)
+      .switchMap(infos => this.gallery.get(this.pageOption, [{type: 'user', name: this.contact.name}]))
+      .subscribe(
+        gallery => {
+          if (!gallery) { return ; }
+          this.count = gallery.count;
+          this.pageOption = new PageOptions(this.count);
+          this.pageOption.count = gallery.count;
+          this.articles = this.getPrincipale(gallery.products);
+          this.height = (<HTMLDivElement>this.el.nativeElement).clientHeight;
+          console.log(this.height);
+        }, () => {}, () => this.pageOption.nextPage()
+      );
+    /*setTimeout(() => {
+      this.height = (<HTMLDivElement>this.el.nativeElement).clientHeight;
+      console.log(this.height);
+    }, 2000);*/
   }
 
   getPrincipale(articles: Article[]): Article[] {
@@ -83,7 +100,8 @@ export class ContactPage {
   }
 
   modeFalse() {
-    this.mode = false;
+    return ;
+    // this.mode = false;
   }
 
 }

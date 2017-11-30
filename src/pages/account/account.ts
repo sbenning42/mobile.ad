@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the AccountPage page.
@@ -15,11 +18,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AccountPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  logged$: Observable<boolean>;
+
+  constructor(
+    public navCtrl: NavController,
+    private auth: AuthProvider
+  ) {
+    this.logged$ = this.auth.isLoggedStream();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountPage');
+  logout() {
+    this.auth.logout();
   }
 
 }

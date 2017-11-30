@@ -15,10 +15,5 @@
 
 <ion-content>
     <div class="flex-box">
-        <ion-card>
-            <ion-input type="email" placeholder="Email" [(ngModel)]="user.email"></ion-input>
-            <ion-input type="password" placeholder="Password" [(ngModel)]="user.password"></ion-input>
-            <ion-row><span class="spacer"></span><button ion-button clear (click)="login()" [disabled]="!user.email || !user.password">Login</button></ion-row>
-        </ion-card>
     </div>
 </ion-content>

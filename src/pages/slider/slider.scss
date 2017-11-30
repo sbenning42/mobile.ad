@@ -3,8 +3,8 @@ page-slider {
     z-index: 0;
     .back {
         position: absolute;
-        left: 8px;
-        top: 8px;
+        right: 8px;
+        bottom: 8px;
         z-index: 1;
     }
     ion-header {

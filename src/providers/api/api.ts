@@ -56,6 +56,10 @@ export class ApiProvider {
     return this.channels.stream$;
   }
 
+  getUserInfos(id: number): Observable<any> {
+    return this.http.get(Api.userInfo(id));
+  }
+
 }
 
 export class ColdAsyncStream {

@@ -1,14 +1,16 @@
 page-stock {
-    ion-content {
-        overflow: hidden;
-    }
     .flex-box {
-        width: 100%;
-        height: 100%;
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
-        background-image: url(/assets/imgs/niy3.jpg);
-        background-size: cover;
+    }
+    .flex-box>* {
+        width: 31%;
+    }
+    .flex-item>img {
+        width: 100%;
+    }
+    .grey {
+        color: grey;
     }
 }

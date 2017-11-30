@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-
-import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
   selector: 'page-home',
@@ -10,16 +7,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class HomePage {
 
-  logged$: Observable<boolean>;
-
   constructor(
-    public navCtrl: NavController,
-    private auth: AuthProvider
-  ) {
-    this.logged$ = this.auth.isLoggedStream();
-  }
+    public navCtrl: NavController
+  ) { }
 
-  logout() {
-    this.auth.logout();
-  }
 }

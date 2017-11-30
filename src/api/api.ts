@@ -5,6 +5,7 @@ export const galleryApi = `${baseApi}/shared-gallery`;
 export const annexesApi = `${baseApi}/annexes`;
 export const channelsApi = `${baseApi}/me/marketplaces/contracted`;
 export const channelsPublishApi = `${baseApi}/mypush`;
+export const userInfos = id => `${baseApi}/users/${id}/public-infos`;
 
 export class Api {
     public static base = baseApi;
@@ -14,4 +15,5 @@ export class Api {
     public static stock = stockApi;
     public static gallery = galleryApi;
     public static publishChannel = channelsPublishApi;
+    public static userInfo = id => userInfos(id);
 }
