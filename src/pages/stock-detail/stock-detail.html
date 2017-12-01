@@ -82,8 +82,8 @@
             <ion-col class="flexitude-center">
                 <p class="dense grey" style="white-space: pre-line;">{{ getStatus(channel.name)?.name }}</p>
             </ion-col>
-            <ion-col class="flexitude">
-                <ion-toggle disabled="{{ getStatus(channel.name)?.disabled || false }}" checked="{{ getStatus(channel.name)?.checked || false }}" (ionChange)="register(channel)"></ion-toggle>
+            <ion-col class="flexitude" (click)="register(channel)">
+                <ion-toggle disabled="{{ getStatus(channel.name)?.disabled || false }}" checked="{{ getStatus(channel.name)?.checked || false }}"></ion-toggle>
             </ion-col>
         </ion-row>
         <ion-item-divider class="second" color="light">Authentic Design</ion-item-divider>
@@ -94,8 +94,8 @@
             <ion-col class="flexitude-center">
                 <p class="dense grey" style="white-space: pre-line;">{{ getStatus(channel.name)?.name }}</p>
             </ion-col>
-            <ion-col class="flexitude">
-                <ion-toggle disabled="{{ getStatus(channel.name)?.disabled || false }}" checked="{{ getStatus(channel.name)?.checked || false }}" (ionChange)="register(channel)"></ion-toggle>
+            <ion-col class="flexitude" (click)="register(channel)">
+                <ion-toggle disabled="{{ getStatus(channel.name)?.disabled || false }}" checked="{{ getStatus(channel.name)?.checked || false }}"></ion-toggle>
             </ion-col>
         </ion-row>
 

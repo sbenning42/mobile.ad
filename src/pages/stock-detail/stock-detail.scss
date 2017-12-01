@@ -71,4 +71,7 @@ page-stock-detail {
     .pad {
         padding-left: 16px;
     }
+    ion-toggle {
+        z-index: -99;
+    }
 }

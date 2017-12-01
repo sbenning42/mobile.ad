@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { basePicturesApi } from './../../api/api';
 import { Article } from '../../models/article';
@@ -35,6 +36,7 @@ class Status {
 })
 export class StockDetailPage {
 
+  sub: Subscription;
   article: Article;
   alreadySold: boolean;
 
@@ -44,6 +46,8 @@ export class StockDetailPage {
   feChannels: any[];
 
   status: StatusMatch[] = [];
+
+  busy: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -80,8 +84,7 @@ export class StockDetailPage {
       if (!status) { return ; }
       const name = ch.status ? ch.status.name : undefined;
       this.alreadySold = this.alreadySold || name === 'Sold';
-      console.log(name + ' for ' + ch.name);
-      const disabled = (name && name === 'Remove') || this.alreadySold ? true : false;
+      const disabled = this.alreadySold ? true : false;
       const checked = name && name !== 'Remove' ? true : false;
       status.status = new Status(name, checked, disabled);
     });
@@ -91,19 +94,21 @@ export class StockDetailPage {
     const status = this.status.find(s => {
       return s.key === name;
     });
-    console.log('found status: ' + JSON.stringify(status));
     return status ? status.status : undefined;
   }
 
   register(channel) {
-    console.log('register');
-    this.channelsProvider.publish(this.article, channel).subscribe(
+    console.log('Got called');
+    if (this.busy) { return ; }
+    console.log('Actually do work');
+    this.busy = true;
+    this.sub = this.channelsProvider.publish(this.article, channel).subscribe(
       response => {
         this.article = this.getPrincipale(response);
         this.computeStatus();
       },
       error => {},
-      () => {}
+      () => {this.busy = false;}
     );
   }
 
@@ -129,7 +134,11 @@ export class StockDetailPage {
 
 
 
-
+  ionWillLeave() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
 
 
 

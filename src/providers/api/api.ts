@@ -22,6 +22,7 @@ import { PageOptions } from '../../models/page-options';
 @Injectable()
 export class ApiProvider {
 
+  private allChannels: ColdAsyncStream;
   private annexe: ColdAsyncStream;
   private stock: HotAsyncStream;
   private gallery: HotAsyncStream;
@@ -30,6 +31,7 @@ export class ApiProvider {
   constructor(public http: HttpProvider) {
     console.log('Hello ApiProvider Provider');
 
+    this.allChannels = new ColdAsyncStream(this.http.get(Api.channels));
     this.annexe = new ColdAsyncStream(this.http.get(Api.annexes));
   
     this.stock = new HotAsyncStream();
@@ -39,6 +41,10 @@ export class ApiProvider {
 
   getAnnexe(): Observable<any[]> {
     return this.annexe.stream$;
+  }
+
+  getChannels(): Observable<Channel[]> {
+    return this.allChannels.stream$;
   }
 
   getStock(pageOptions: PageOptions): Observable<any> {
@@ -56,8 +62,16 @@ export class ApiProvider {
     return this.channels.stream$;
   }
 
+  getUser() {
+    return this.http.get(Api.user);
+  }
+
   getUserInfos(id: number): Observable<any> {
     return this.http.get(Api.userInfo(id));
+  }
+
+  getUserAccount(id: number): Observable<any> {
+    return this.http.get(Api.userAccount(id));
   }
 
 }

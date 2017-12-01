@@ -68,6 +68,10 @@ export class AuthProvider {
     return this.isAdmin$.asObservable();
   }
 
+  getUser() {
+    return this.user$.asObservable();
+  }
+
   initFromScratch() {
     const token = localStorage.getItem('token');
     const admin = +localStorage.getItem('admin');
@@ -88,6 +92,9 @@ export class AuthProvider {
     this.token = token;
     this.admin = +user.role_id === 1;
     this.annexe.fetch();
+    this.user$.next(this._user);
+    this.isLogged$.next(this.isLogged());
+    this.isAdmin$.next(this.isAdmin());
   }
 
   logout() {

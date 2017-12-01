@@ -23,7 +23,7 @@ export class ChannelsProvider {
   }
 
   publish(article, channel): Observable<any> {
-    return this.http.post(channelsPublishApi, { product: { id: article.id }, marketplace: channel.name });
+    return this.http.put(channelsPublishApi(article.id, channel.id));
   }
 
 }

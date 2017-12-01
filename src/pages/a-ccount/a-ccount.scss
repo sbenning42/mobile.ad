@@ -1,0 +1,20 @@
+page-a-ccount {
+    .header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 20vh;
+        background-color: #00aed8;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .footer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 20vh;
+        background-color: #00aed8;
+        justify-content: flex-start;
+        align-items: center;
+    }
+}

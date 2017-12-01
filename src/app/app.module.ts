@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/delay';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -29,6 +30,10 @@ import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
 import { SliderPage } from '../pages/slider/slider';
+import { ACcountPage } from '../pages/a-ccount/a-ccount';
+import { CameraTabDefaultPagePage } from '../pages/camera-tab-default-page/camera-tab-default-page';
+import { CartTabDefaultPagePage } from '../pages/cart-tab-default-page/cart-tab-default-page';
+import { CloudTabDefaultPagePage } from '../pages/cloud-tab-default-page/cloud-tab-default-page';
 
 import { StockProvider } from '../providers/stock/stock';
 import { GalleryProvider } from '../providers/gallery/gallery';
@@ -60,6 +65,10 @@ import { ApiProvider } from '../providers/api/api';
     LoginPage,
     LoginModalPage,
     SliderPage,
+    ACcountPage,
+    CameraTabDefaultPagePage,
+    CartTabDefaultPagePage,
+    CloudTabDefaultPagePage,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +95,10 @@ import { ApiProvider } from '../providers/api/api';
     LoginPage,
     LoginModalPage,
     SliderPage,
+    ACcountPage,
+    CameraTabDefaultPagePage,
+    CartTabDefaultPagePage,
+    CloudTabDefaultPagePage,
   ],
   providers: [
     StatusBar,
