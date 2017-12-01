@@ -7,8 +7,14 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  contactCallNumber: string;
+  contactMailAddr: string;
+
   constructor(
     public navCtrl: NavController
-  ) { }
+  ) {
+    this.contactCallNumber = '0662351652';
+    this.contactMailAddr = 'contact@authenticdesign.fr';
+  }
 
 }

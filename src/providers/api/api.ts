@@ -66,6 +66,10 @@ export class ApiProvider {
     return this.http.get(Api.user);
   }
 
+  getUserPicture() {
+    return this.http.get(Api.userPicture);
+  }
+
   getUserInfos(id: number): Observable<any> {
     return this.http.get(Api.userInfo(id));
   }
