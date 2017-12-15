@@ -11,6 +11,7 @@ import { Article } from '../../models/article';
 import { PageOptions } from '../../models/page-options';
 import { ContactPage } from '../contact/contact';
 import { GalleryDetailPage } from '../gallery-detail/gallery-detail';
+import { LoginPage } from '../../pages/login/login';
 
 /**
  * Generated class for the GalleryPage page.
@@ -64,7 +65,9 @@ export class GalleryPage {
         response => this.pageOptions.reNew(response.count)
       ).subscribe(
         response => this.getPrincipale(this.articles = response.products),
-        error => {},
+        error => {
+          this.navCtrl.setRoot(LoginPage);
+        },
         () => {
           this.pageOptions.nextPage();
           this.dismissLoading(loader);
