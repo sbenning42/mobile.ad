@@ -55,7 +55,7 @@ export class ContactPage {
       console.log(this.el.nativeElement);
       this.height = (<HTMLDivElement>this.el.nativeElement).clientHeight;
       this.style = {marginTop: this.height};
-    }, 2000);
+    }, 500);
   }
 
   getPrincipale(articles: Article[]): Article[] {
