@@ -2,8 +2,15 @@ page-login-modal {
     .spacer {
         flex: 1;
     }
+    .box {
+        min-height: 100%;
+        display: flex;
+    }
     .cloth {
+        flex: 1;
         width: 100%;
+        background-image: url("/assets/imgs/niy2.jpg");
+        background-size: cover;
     }
     .content {
         position: relative;
@@ -27,5 +34,8 @@ page-login-modal {
     }
     .validate {
         min-width: 100px;
+    }
+    .alert {
+        color: #f44336;
     }
 }

@@ -36,6 +36,8 @@ export class StockPage {
 
   channels: any[];
 
+  detail: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -119,8 +121,14 @@ export class StockPage {
       );
   }
 
-  details(article: Article) {
-    this.navCtrl.push(StockDetailPage, {article: article, channels: this.channels});
+  details(article: Article, index) {
+    this.detail = index;
+    this.navCtrl.push(StockDetailPage, {article: article, channels: this.channels, delegate: this});
+  }
+
+  maj(article: Article) {
+    console.log('Have to maj ' + article);
+    this.articles[this.detail] = article;
   }
 
   ionViewWillLoad() {

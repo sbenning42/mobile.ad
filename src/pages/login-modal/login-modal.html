@@ -8,33 +8,35 @@
 
     <ion-navbar>
         <ion-title>Login</ion-title>
+        <button ion-button (click)="dismiss()">Back</button>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-    <div class="content">
-        <div class="padding">
-            <ion-item>
-                <ion-label color="primary" placeholder="Email" floating>Email</ion-label>
-                <ion-input type="email" [(ngModel)]="user.email"></ion-input>
-            </ion-item>
+    <div class="padding">
+        <ion-item>
+            <ion-label color="primary" placeholder="Email" floating>Email</ion-label>
+            <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+        </ion-item>
 
-            <ion-item>
-                <ion-label color="primary" placeholder="Password" floating>Password</ion-label>
-                <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-            </ion-item>
+        <ion-item>
+            <ion-label color="primary" placeholder="Password" floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+        </ion-item>
 
-            <ion-row><span class="spacer"></span><button class="validate" ion-button raised (click)="login()" [disabled]="!user.email || !user.password">Login</button></ion-row>
-            <ion-item no-lines *ngIf="message" (click)="message = undefined">
-                <p>{{ message }}</p>
-            </ion-item>
-        </div>
-
+        <ion-row>
+            <p *ngIf="message" (click)="message = undefined" class="alert">{{ message }}
+                <ion-icon name="close"></ion-icon>
+            </p>
+            <span class="spacer"></span>
+            <button class="validate" ion-button raised (click)="login()" [disabled]="!user.email || !user.password">Login</button></ion-row>
+    </div>
+    <div class="box">
         <div class="cloth">
-            <img src="assets/imgs/niy2.jpg">
         </div>
     </div>
+
 </ion-content>
 <!--button (click)="dismiss()" class="back" ion-fab mini color="light"><ion-icon name="close"></ion-icon></button-->

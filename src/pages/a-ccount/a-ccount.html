@@ -1,14 +1,14 @@
-<!--ion-header>
+<ion-header>
     <ion-navbar>
         <ion-title>
             Account
         </ion-title>
     </ion-navbar>
-</ion-header-->
+</ion-header>
 
 <ion-content>
 
-    <div class="header primary-color">
+    <div class="myheader primary-color">
         <h4>{{ user?.name }}</h4>
         <ion-item no-lines class="primary-color">
             <ion-avatar class="wrap-avatar"><img class="avatar" src="{{ basePictureApi + user?.picture?.public_path }}"></ion-avatar>
@@ -53,7 +53,7 @@
         <ng-container *ngFor="let channel of channels">
             <div class="wrap-mk-pres">
                 <ion-item class="mk-pres" no-lines>
-                    <ion-icon item-start name="pricetags" class="grey"></ion-icon>
+                    <!--ion-icon item-start name="pricetags" class="grey"></ion-icon-->
                     <div item-start class="item-text">
                         <span item-start>{{ channel.name }}</span>
                         <p class="description">{{ channel.description }}</p>

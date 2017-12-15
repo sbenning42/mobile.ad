@@ -1,4 +1,8 @@
 page-contact {
+    ion-content {
+        max-height: 100%;
+        overflow: hidden;
+    }
     .flex-column {
         display: flex;
         flex-direction: column;
@@ -71,13 +75,10 @@ page-contact {
     .fixed {
         min-width: 100%;
         z-index: 10;
-        position: fixed;
-        top: 56px;
         background-color: white;
     }
     .fixed-float {
         min-width: 100%;
         z-index: 1;
-        position: absolute;
     }
 }

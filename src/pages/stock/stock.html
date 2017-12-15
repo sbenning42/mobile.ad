@@ -30,7 +30,7 @@
 
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
-        <ion-item *ngFor="let article of articles" (click)="details(article)">
+        <ion-item *ngFor="let article of articles; let index = index" (click)="details(article, index)">
             <ion-thumbnail item-start>
                 <img src="{{ article.principale }}">
             </ion-thumbnail>
@@ -42,8 +42,8 @@
 
     <!-- Thumbnail Mode -->
     <div *ngIf="(mode$|async) === 'list'" class="flex-box">
-        <div class="flex-item" *ngFor="let article of articles">
-            <img src="{{ article.principale }}" (click)="details(article)">
+        <div class="flex-item" *ngFor="let article of articles; let index = index">
+            <img src="{{ article.principale }}" (click)="details(article, index)">
         </div>
     </div>
 

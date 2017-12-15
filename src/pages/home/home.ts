@@ -14,7 +14,7 @@ export class HomePage {
     public navCtrl: NavController
   ) {
     this.contactCallNumber = '0662351652';
-    this.contactMailAddr = 'contact@authenticdesign.fr';
+    this.contactMailAddr = 'info@authenticdesign.fr';
   }
 
 }

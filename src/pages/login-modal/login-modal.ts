@@ -38,7 +38,8 @@ export class LoginModalPage {
     this.auth.login(this.user).subscribe(
       response => this.dismiss(),
       error => {
-        this.message = error;
+        this.message = error.error.errors;
+        console.log(JSON.stringify(error))
       }
     );
   }

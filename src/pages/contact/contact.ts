@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, style } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { ApiProvider } from './../../providers/api/api';
@@ -26,6 +26,8 @@ export class ContactPage {
 
   height: number;
 
+  style = {};
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,14 +49,13 @@ export class ContactPage {
           this.pageOption = new PageOptions(this.count);
           this.pageOption.count = gallery.count;
           this.articles = this.getPrincipale(gallery.products);
-          this.height = (<HTMLDivElement>this.el.nativeElement).clientHeight;
-          console.log(this.height);
         }, () => {}, () => this.pageOption.nextPage()
       );
-    /*setTimeout(() => {
+    setTimeout(() => {
+      console.log(this.el.nativeElement);
       this.height = (<HTMLDivElement>this.el.nativeElement).clientHeight;
-      console.log(this.height);
-    }, 2000);*/
+      this.style = {marginTop: this.height};
+    }, 2000);
   }
 
   getPrincipale(articles: Article[]): Article[] {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -48,6 +48,9 @@ export class StockDetailPage {
   status: StatusMatch[] = [];
 
   busy: boolean;
+  delegate: any;
+
+  updated = new EventEmitter();
 
   constructor(
     public navCtrl: NavController,
@@ -56,6 +59,7 @@ export class StockDetailPage {
   ) {
     this.article = this.navParams.get('article');
     this.channels = this.navParams.get('channels');
+    this.delegate = this.navParams.get('delegate');
     this.computeStatus();
     /*this.channelsProvider.get().subscribe(
       response => {
@@ -106,6 +110,7 @@ export class StockDetailPage {
       response => {
         this.article = this.getPrincipale(response);
         this.computeStatus();
+        this.delegate.maj(this.article);
       },
       error => {},
       () => {this.busy = false;}
@@ -153,16 +158,6 @@ export class StockDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StockDetailPage');
-  }
-
-  handlePublicationOn(channel) {
-    this.channelsProvider.publish(this.article, channel.ch).subscribe(
-      response => {
-        this.navParams.get('from').majArticle(response);
-        this.mkChannels.forEach(mk => mk.status = this.searchStatusName(mk));
-        this.feChannels.forEach(fe => fe.status = this.searchStatusName(fe));
-      }
-    );
   }
 
 }
