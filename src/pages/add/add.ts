@@ -36,6 +36,7 @@ export class AddPage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
+    this.message = 'Trying to lauch camera...';
     this.camera.getPicture(cameraOptions).then((imageData) => {
       this.message = 'SUCCESS: '  + JSON.stringify(imageData);
       console.log('SUCCESS: '  + JSON.stringify(imageData));
