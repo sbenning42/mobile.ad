@@ -25,5 +25,5 @@ export class Api {
     public static publishChannel = (articleId, channelId) => channelsPublishApi;
     public static userInfo = id => userInfos(id);
     public static userAccount = id => userAccount(id);
-    public static uploadArticlePicture = 
+    public static uploadArticlePicture = uploadArticlePicture;
 }
