@@ -3,11 +3,9 @@ page-home {
         overflow: hidden;
     }
     .flex-box {
-        min-height: 100%;
         width: 100%;
-        background-image: url('assets/imgs/logo-home.png');
-        background-size: cover;
         display: flex;
+        flex-direction: column;
     }
     .actions {
         margin-top: auto;
