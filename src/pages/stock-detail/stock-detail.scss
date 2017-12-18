@@ -34,6 +34,8 @@ page-stock-detail {
     }
     .no-padding {
         margin-bottom: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
     .flexitude {
         display: flex;
@@ -61,6 +63,7 @@ page-stock-detail {
         justify-content: center;
         align-items: center;
         margin-top: 16px;
+        margin-bottom: 16px;
     }
     .validate {
         width: 80%;

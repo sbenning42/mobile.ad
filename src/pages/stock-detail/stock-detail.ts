@@ -88,7 +88,7 @@ export class StockDetailPage {
       if (!status) { return ; }
       const name = ch.status ? ch.status.name : undefined;
       this.alreadySold = this.alreadySold || name === 'Sold';
-      const disabled = this.alreadySold ? true : false;
+      const disabled = this.alreadySold || +this.article.state_id < 2 ? true : false;
       const checked = name && name !== 'Remove' ? true : false;
       status.status = new Status(name, checked, disabled);
     });
@@ -103,7 +103,7 @@ export class StockDetailPage {
 
   register(channel) {
     console.log('Got called');
-    if (this.busy) { return ; }
+    if (this.busy || +this.article.state_id < 2) { return ; }
     console.log('Actually do work');
     this.busy = true;
     this.sub = this.channelsProvider.publish(this.article, channel).subscribe(

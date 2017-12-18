@@ -98,38 +98,10 @@
                 <ion-toggle disabled="{{ getStatus(channel.name)?.disabled || false }}" checked="{{ getStatus(channel.name)?.checked || false }}"></ion-toggle>
             </ion-col>
         </ion-row>
-
-
-
-        <!--p class="bigger" style="white-space: pre-line;"><strong>{{ article.name }}</strong></p>
-        <p style="white-space: pre-line;">{{ article.description }} <br><sub>({{ article.size_width }} cm * {{ article.size_height }} cm * {{ article.size_depth }} cm - {{ article.weight }} kg)</sub></p>
-        <p class="fix-right-marge" style="text-align:right"><strong>{{ article.price }} Euros</strong></p-->
     </div>
+
     <div class="validate-box">
         <button class="validate" ion-button raised (click)="sold()" disabled>Sold</button>
     </div>
-
-    <!--div class="gallery-wrapper">
-        <div class="gallery-box">
-            <div class="gallery-item" *ngFor="let picture of picturesForLoop; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }" (click)="detail(index)">
-            </div>
-            <div *ngIf="morePicture" class="gallery-item gallery-item-more" (click)="detail(0)">
-            </div>
-        </div>
-    </div-->
-
-    <!--div class="padding">
-        <div class="flex-box">
-            <ion-badge>{{ category }}</ion-badge>
-            <ion-badge>{{ style }}</ion-badge>
-            <ion-badge>{{ period }}</ion-badge>
-            <ion-badge>{{ designer }}</ion-badge>
-            <ion-badge>{{ brand }}</ion-badge>
-            <ion-badge>{{ material }}</ion-badge>
-            <ion-badge>{{ color }}</ion-badge>
-            <ion-badge>{{ condition }}</ion-badge>
-        </div>
-    </div-->
-
 
 </ion-content>

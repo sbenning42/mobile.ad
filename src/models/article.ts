@@ -6,6 +6,7 @@ export class Article {
     constructor(
         public id: string = '',
         public user_id: string = '',
+        public state_id: string = '',
         public address_id: string = '',
         public category_id: string = '',
         public style_id: string = '',
