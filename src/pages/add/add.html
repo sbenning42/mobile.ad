@@ -14,11 +14,12 @@
 
 
 <ion-content>
-    <button ion-button outline (click)="takePicture()">Take A Picture</button>
-    <!--div class="flex-box">
-        <h1>Comming Soon...</h1>
-    </div-->
-    <p>
-        Message: {{ message }}
-    </p>
+    <ion-list>
+        <ion-item *ngFor="let picture of pictures">
+            <img src="{{ picture }}">
+        </ion-item>
+    </ion-list>
+    <ion-item>
+        <button ion-button outline (click)="takePicture()">Take Another Picture</button>
+    </ion-item>
 </ion-content>
