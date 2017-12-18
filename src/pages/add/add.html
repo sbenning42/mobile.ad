@@ -14,12 +14,29 @@
 
 
 <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let picture of pictures">
-            <img src="{{ picture }}">
+
+
+    <ion-item-divider color="light">
+        {{ length }} PICTURES
+    </ion-item-divider>
+    <div class="preview-box">
+        <div class="body">
+            <div class="pic" *ngFor="let picture of pictures">
+                <img src="{{ picture }}">
+            </div>
+        </div>
+        <button ion-button block (click)="takePicture()">Take Another Picture</button>
+    </div>
+    <ion-item-divider color="light">
+        ARTICLE
+    </ion-item-divider>
+    <form novalidate>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="article.name" name="name"></ion-input>
         </ion-item>
-    </ion-list>
-    <ion-item>
-        <button ion-button outline (click)="takePicture()">Take Another Picture</button>
-    </ion-item>
+
+    </form>
+    <button class="submit" ion-button (click)="submit()" block disabled="!article.name || !(article.pictures && article.pictures[0])">Create Article</button>
+
 </ion-content>

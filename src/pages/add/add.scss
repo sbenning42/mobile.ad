@@ -4,11 +4,40 @@ page-add {
     }
     .flex-box {
         width: 100%;
-        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: url(/assets/imgs/niy2.jpg);
-        background-size: cover;
+    }
+    .preview-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .head {
+        width: 100%;
+        display: flex;
+    }
+    .spacer {
+        flex: 1;
+    }
+    .body {
+        min-height: 30vh;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 40px;
+        background-color: #00aed8;
+        margin-bottom: 16px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .submit {
+        position: absolute;
+        bottom: 0;
     }
 }

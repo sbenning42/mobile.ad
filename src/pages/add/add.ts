@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Article } from '../../models/article';
 
 /**
  * Generated class for the AddPage page.
@@ -16,15 +17,17 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class AddPage {
 
-  message;
+  article: Article;
 
   pictures: string[] = [];
+  length: number = 0;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public camera: Camera
   ) {
+    this.article = new Article();
   }
 
   ionViewDidLoad() {
@@ -43,6 +46,7 @@ export class AddPage {
     }
     this.camera.getPicture(cameraOptions).then((imageData) => {
       this.pictures.push(imageData);
+      this.length = this.pictures.length;
      }, (err) => {});
   }
 
