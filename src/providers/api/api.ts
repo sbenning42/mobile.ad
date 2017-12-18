@@ -80,7 +80,7 @@ export class ApiProvider {
   }
 
   addProduct(article: Article) {
-    return this.http.post('/myproducts', {name : article.name});
+    return this.http.post(Api.addArticle, {name : article.name});
   }
 
   putProduct(article: Article): Observable<Article> {

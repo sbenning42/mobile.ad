@@ -42,7 +42,7 @@ export class AddPage {
   takePicture() {
     const cameraOptions: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 1200,
