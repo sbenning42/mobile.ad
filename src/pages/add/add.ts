@@ -34,7 +34,9 @@ export class AddPage {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 600,
+      targetHeight: 600,
     }
     this.message = 'Trying to lauch camera...';
     this.camera.getPicture(cameraOptions).then((imageData) => {
