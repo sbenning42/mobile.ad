@@ -21,6 +21,10 @@ export class AddPage {
     public navParams: NavParams,
     public camera: Camera
   ) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad AddPage');
     const cameraOptions: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -32,10 +36,6 @@ export class AddPage {
      }, (err) => {
        console.log(JSON.stringify(err));
      });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPage');
   }
 
 }
