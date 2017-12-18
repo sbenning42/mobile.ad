@@ -25,6 +25,9 @@ export class AddPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
+  }
+
+  takePicture() {
     const cameraOptions: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -32,10 +35,10 @@ export class AddPage {
       mediaType: this.camera.MediaType.PICTURE
     }
     this.camera.getPicture(cameraOptions).then((imageData) => {
-      console.log(JSON.stringify(imageData));
+      console.log('SUCCESS: '  + JSON.stringify(imageData));
       let base64Image = 'data:image/jpeg;base64,' + imageData;
      }, (err) => {
-       console.log(JSON.stringify(err));
+       console.log('FAILURE: ' + JSON.stringify(err));
      });
   }
 
