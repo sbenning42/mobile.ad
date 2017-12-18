@@ -3,6 +3,9 @@ page-contact {
         max-height: 100%;
         overflow: hidden;
     }
+    ion-header {
+        z-index: 1000;
+    }
     .flex-column {
         display: flex;
         flex-direction: column;
@@ -68,17 +71,20 @@ page-contact {
     }
     .flex-item>img {}
     .row-no-padding {
-        padding-left: 0 !important;
-        padding-right: 16px;
         min-height: 64px;
     }
     .fixed {
         min-width: 100%;
-        z-index: 10;
         background-color: white;
     }
     .fixed-float {
         min-width: 100%;
-        z-index: 1;
+    }
+    .head {
+        width: calc(100% - 32px);
+        background-color: white;
+        border-bottom: solid 1px #8e9093;
+        margin: 16px;
+        margin-top: 0;
     }
 }
