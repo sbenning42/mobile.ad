@@ -89,7 +89,12 @@
         <variable name="UPDATE_API" value="https://api.ionicjs.com" />
         <variable name="MAX_STORE" value="2" />
     </plugin>
-    <plugin name="cordova-plugin-ios-camera-permissions" spec="^1.2.0" />
-    <plugin name="cordova-plugin-camera" spec="https://github.com/apache/cordova-plugin-camera.git" />
     <engine name="ios" spec="~4.5.4" />
+    <plugin name="cordova-plugin-camera" spec="^3.0.0" />
+    <plugin name="cordova-plugin-ios-camera-permissions" spec="^1.2.0">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="This app needs camera access" />
+        <variable name="MICROPHONE_USAGE_DESCRIPTION" value="This app needs microphone access" />
+        <variable name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" value="This app needs write-access to photo library" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="This app needs read/write-access photo library access" />
+    </plugin>
 </widget>
