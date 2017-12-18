@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Article } from '../../models/article';
+import { ApiProvider } from '../../providers/api/api';
 
 /**
  * Generated class for the AddPage page.
@@ -25,9 +26,11 @@ export class AddPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public camera: Camera
+    public camera: Camera,
+    public api: ApiProvider
   ) {
     this.article = new Article();
+    this.article.pictures = [];
   }
 
   ionViewDidLoad() {
@@ -45,9 +48,18 @@ export class AddPage {
       targetHeight: 1200,
     }
     this.camera.getPicture(cameraOptions).then((imageData) => {
-      this.pictures.push(imageData);
+      this.article.pictures.push(imageData);
+      console.log(imageData);
       this.length = this.pictures.length;
      }, (err) => {});
+  }
+
+  submit() {
+    this.pictures = this.article.pictures;
+    const sub = this.api.addProduct(this.article).switchMap(article => {
+      this.article = article;
+      return this.api.uploadArticlePicture(this.article, this.pictures);
+    }).subscribe()
   }
 
 }

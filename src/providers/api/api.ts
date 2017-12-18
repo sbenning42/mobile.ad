@@ -12,6 +12,7 @@ import { HttpProvider } from './../http/http';
 import { Api } from './../../api/api';
 import { ReferenceAst } from '@angular/compiler';
 import { PageOptions } from '../../models/page-options';
+import { isNumber } from 'ionic-angular/util/util';
 
 /*
   Generated class for the ApiProvider provider.
@@ -76,6 +77,40 @@ export class ApiProvider {
 
   getUserAccount(id: number): Observable<any> {
     return this.http.get(Api.userAccount(id));
+  }
+
+  addProduct(article: Article) {
+    return this.http.post('/myproducts', {name : article.name});
+  }
+
+  putProduct(article: Article): Observable<Article> {
+    return this.http.put(`/myproducts`, +article.id, article);
+  }
+
+  uploadArticlePictures(article: Article, pictures: any[]): Observable<any> {
+    let stream$ = Observable.of(1);
+    pictures.forEach(picture => {
+      stream$ = stream$.switchMap((resp: number|any) => {
+        if (!isNumber(resp)) {
+          article.pictures.push(resp);
+        }
+        return this.uploadArticlePicture(article, picture);
+      });
+    });
+    return stream$;
+  }
+
+  uploadArticlePicture(article: Article, picture: any): Observable<any> {
+    let data = new FormData();
+    data.append('file_name', 'file');
+    data.append('file', picture);
+    data.append('fileName', picture.name);
+    data.append('fileSize', picture.size.toString());
+    data.append('fileType', picture.type);
+    data.append('fileLastMod', picture.lastModifiedDate);
+    data.append('article_id', article.id);
+      
+    return this.http.post(Api.uploadArticlePicture, data);
   }
 
 }
