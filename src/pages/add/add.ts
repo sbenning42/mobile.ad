@@ -30,7 +30,8 @@ export class AddPage {
     public api: ApiProvider
   ) {
     this.article = new Article();
-    this.article.pictures = [];
+    this.article.pictures = ['test'];
+    this.length = 1;
   }
 
   ionViewDidLoad() {
@@ -41,7 +42,7 @@ export class AddPage {
   takePicture() {
     const cameraOptions: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 1200,
@@ -49,7 +50,6 @@ export class AddPage {
     }
     this.camera.getPicture(cameraOptions).then((imageData) => {
       this.article.pictures.push(imageData);
-      console.log(imageData);
       this.length = this.pictures.length;
      }, (err) => {});
   }

@@ -37,6 +37,6 @@
         </ion-item>
 
     </form>
-    <button class="submit" ion-button (click)="submit()" block disabled="!article.name || !(article.pictures && article.pictures[0])">Create Article</button>
+    <button class="submit" ion-button (click)="submit()" block [disabled]="!article.name || !(article.pictures && article.pictures[0])">Create Article</button>
 
 </ion-content>
