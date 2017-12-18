@@ -16,6 +16,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class AddPage {
 
+  message;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,9 +37,11 @@ export class AddPage {
       mediaType: this.camera.MediaType.PICTURE
     }
     this.camera.getPicture(cameraOptions).then((imageData) => {
+      this.message = 'SUCCESS: '  + JSON.stringify(imageData);
       console.log('SUCCESS: '  + JSON.stringify(imageData));
       let base64Image = 'data:image/jpeg;base64,' + imageData;
      }, (err) => {
+       this.message = 'FAILURE: ' + JSON.stringify(err);
        console.log('FAILURE: ' + JSON.stringify(err));
      });
   }
