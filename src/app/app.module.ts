@@ -46,6 +46,8 @@ import { AnnexesProvider } from '../providers/annexes/annexes';
 import { StockCountsProvider } from '../providers/stock-counts/stock-counts';
 import { ChannelsProvider } from '../providers/channels/channels';
 import { ApiProvider } from '../providers/api/api';
+import { UploadProvider } from '../providers/upload/upload';
+import { CameraProvider } from '../providers/camera/camera';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,9 @@ import { ApiProvider } from '../providers/api/api';
     AnnexesProvider,
     StockCountsProvider,
     ChannelsProvider,
-    ApiProvider
+    ApiProvider,
+    UploadProvider,
+    CameraProvider
   ]
 })
 export class AppModule {}
