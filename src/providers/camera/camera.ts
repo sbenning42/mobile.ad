@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Camera } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /*
   Generated class for the CameraProvider provider.
@@ -12,24 +12,22 @@ import { Camera } from '@ionic-native/camera';
 export class CameraProvider {
 
   pictures: any[] = [];
+  options: CameraOptions;
   
   constructor(public camera: Camera) {
     console.log('Hello CameraProvider Provider');
-  }
-/*
-  take(): any {
-    this.camera.getPicture(cameraOptions).then((imageData) => {
-      this.article.pictures.push(imageData);
-      this.length = this.pictures.length;
-     }, (err) => {});
-  }*/
-
-}
-    /*const cameraOptions: CameraOptions = {
+    this.options = <CameraOptions>{
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 1200,
-      targetHeight: 1200,
-    }*/
+      targetWidth: 600,
+      targetHeight: 600,
+    };
+  }
+
+  take(then: (imageData: any) => void, err: (errors: any) => void): any {
+    this.camera.getPicture(this.options).then(then, err);
+  }
+
+}

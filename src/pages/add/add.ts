@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Article } from '../../models/article';
 import { ApiProvider } from '../../providers/api/api';
+import { CameraProvider } from '../../providers/camera/camera';
 
 /**
  * Generated class for the AddPage page.
@@ -20,18 +21,18 @@ export class AddPage {
 
   article: Article;
 
-  pictures: string[] = [];
   length: number = 0;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public camera: Camera,
+    // public camera: Camera,
+    public camera: CameraProvider,
     public api: ApiProvider
   ) {
     this.article = new Article();
-    this.article.pictures = ['test'];
-    this.length = 1;
+    this.article.pictures = [];
+    this.length = 0;
   }
 
   ionViewDidLoad() {
@@ -40,25 +41,19 @@ export class AddPage {
   }
 
   takePicture() {
-    const cameraOptions: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 1200,
-      targetHeight: 1200,
-    }
-    this.camera.getPicture(cameraOptions).then((imageData) => {
+    this.camera.take((imageData) => {
       this.article.pictures.push(imageData);
-      this.length = this.pictures.length;
-     }, (err) => {});
+      this.length = this.article.pictures.length;
+     }, (err) => {
+       console.log(JSON.stringify(err));
+     });
   }
 
   submit() {
-    this.pictures = this.article.pictures;
+    const pictures = this.article.pictures;
     const sub = this.api.addProduct(this.article).switchMap(article => {
       this.article = article;
-      return this.api.uploadArticlePicture(this.article, this.pictures);
+      return this.api.uploadArticlePicture(this.article, pictures);
     }).subscribe()
   }
 
