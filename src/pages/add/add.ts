@@ -4,6 +4,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Article } from '../../models/article';
 import { ApiProvider } from '../../providers/api/api';
 import { CameraProvider } from '../../providers/camera/camera';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the AddPage page.
@@ -20,41 +22,45 @@ import { CameraProvider } from '../../providers/camera/camera';
 export class AddPage {
 
   article: Article;
+  error: string;
 
-  length: number = 0;
+  sub: Subscription;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    // public camera: Camera,
     public camera: CameraProvider,
     public api: ApiProvider
   ) {
     this.article = new Article();
     this.article.pictures = [];
-    this.length = 0;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
+    this.sub = this.camera.cameraError$
+      .switchMap((errors: string[]) => {
+        this.error = errors && errors.length ? errors[errors.length - 1] : '';
+        return this.camera.pictures$;
+      }).subscribe((pictures: string[]) => this.article.pictures = pictures);
     this.takePicture();
   }
 
+  ionViewWillLeave() {
+    this.sub.unsubscribe();
+  }
+
   takePicture() {
-    this.camera.take((imageData) => {
-      this.article.pictures.push(imageData);
-      this.length = this.article.pictures.length;
-     }, (err) => {
-       console.log(JSON.stringify(err));
-     });
+    this.camera.takeShot();
   }
 
   submit() {
     const pictures = this.article.pictures;
-    const sub = this.api.addProduct(this.article).switchMap(article => {
-      this.article = article;
-      return this.api.uploadArticlePicture(this.article, pictures);
-    }).subscribe()
+    const sub = this.api.addProduct(this.article)
+      .switchMap(article => {
+        this.article = article;
+        return Observable.of(1);// this.api.uploadArticlePicture(this.article, pictures);
+      }).subscribe()
   }
 
 }

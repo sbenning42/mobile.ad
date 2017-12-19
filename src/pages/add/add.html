@@ -25,6 +25,9 @@
                 <img src="{{ picture }}">
             </div>
         </div>
+        <p *ngIf="error" (click)="error = ''">
+            {{ error }}
+        </p>
         <button ion-button block (click)="takePicture()">Take Another Picture</button>
     </div>
     <ion-item-divider color="light">
