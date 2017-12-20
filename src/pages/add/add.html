@@ -102,7 +102,7 @@
 
         <ion-item>
             <ion-label>Category <span [ngStyle]="{'color': selected.category ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('category')" (change)="getItems(focus, $event)" [(ngModel)]="selected.category"></ion-input>
+            <ion-input (ionFocus)="setFocus('category')" (input)="getItems(focus, $event)" [(ngModel)]="selected.category"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'category'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -113,7 +113,7 @@
 
         <ion-item>
             <ion-label>Style <span [ngStyle]="{'color': selected.style ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('style')" [(ngModel)]="selected.style"></ion-input>
+            <ion-input (ionFocus)="setFocus('style')" (input)="getItems(focus, $event)" [(ngModel)]="selected.style"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'style'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -124,7 +124,7 @@
 
         <ion-item>
             <ion-label>Period <span [ngStyle]="{'color': selected.periods ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('periods')" [(ngModel)]="selected.periods"></ion-input>
+            <ion-input (ionFocus)="setFocus('periods')" (input)="getItems(focus, $event)" [(ngModel)]="selected.periods"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'periods'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -135,7 +135,7 @@
 
         <ion-item>
             <ion-label>Condition <span [ngStyle]="{'color': selected.condition ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('condition')" [(ngModel)]="selected.condition"></ion-input>
+            <ion-input (ionFocus)="setFocus('condition')" (input)="getItems(focus, $event)" [(ngModel)]="selected.condition"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'condition'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -146,7 +146,7 @@
 
         <ion-item>
             <ion-label>Material <span [ngStyle]="{'color': selected.material ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('material')" [(ngModel)]="selected.material"></ion-input>
+            <ion-input (ionFocus)="setFocus('material')" (input)="getItems(focus, $event)" [(ngModel)]="selected.material"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'material'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -157,7 +157,7 @@
 
         <ion-item>
             <ion-label>Color <span [ngStyle]="{'color': selected.color ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('color')" [(ngModel)]="selected.color"></ion-input>
+            <ion-input (ionFocus)="setFocus('color')" (input)="getItems(focus, $event)" [(ngModel)]="selected.color"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'color'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -168,7 +168,7 @@
 
         <ion-item>
             <ion-label>Designer</ion-label>
-            <ion-input (ionFocus)="setFocus('designer')" [(ngModel)]="selected.designer"></ion-input>
+            <ion-input (ionFocus)="setFocus('designer')" (input)="getItems(focus, $event)" [(ngModel)]="selected.designer"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'designer'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
@@ -179,7 +179,7 @@
 
         <ion-item>
             <ion-label>Brand</ion-label>
-            <ion-input (ionFocus)="setFocus('brand')" [(ngModel)]="selected.brand"></ion-input>
+            <ion-input (ionFocus)="setFocus('brand')" (input)="getItems(focus, $event)" [(ngModel)]="selected.brand"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'brand'">
             <ion-item-divider>{{ focus }}</ion-item-divider>

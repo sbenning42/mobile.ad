@@ -128,7 +128,7 @@ export class AddPage {
 
   getItems(key: string, search: string) {
     this.items = this.items.filter(item => {
-      return item.name.search(search) ? true : false;
+      return item.name.search(search) < 0 ? false : true;
     });
     this._items$.next(this.items);
   }
