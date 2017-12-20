@@ -83,6 +83,21 @@
     </ion-list>
 
     <ion-list #step2 *ngIf="step === 2">
+        <ion-list-header>Transport</ion-list-header>
+        <ion-item>
+            <ion-label>Location <span [ngStyle]="{'color': article.address_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input type="number" [(ngModel)]="article.number_of_packs"></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="saveDraft()">Save Draft</button>
+        </ion-item>
+    </ion-list>
+
+    <ion-list #step3 *ngIf="step === 3">
         <ion-list-header>Article Qualification</ion-list-header>
 
         <ion-item>
@@ -176,21 +191,7 @@
         <ion-item>
             <button ion-button (click)="saveDraft()">Save Draft</button>
         </ion-item>
-    </ion-list>
 
-    <ion-list #step3 *ngIf="step === 3">
-        <ion-list-header>Transport</ion-list-header>
-        <ion-item>
-            <ion-label>Location <span [ngStyle]="{'color': article.address_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input type="number" [(ngModel)]="article.number_of_packs"></ion-input>
-        </ion-item>
-        <ion-item>
-            <button ion-button (click)="saveDraft()">Save Draft</button>
-        </ion-item>
     </ion-list>
 
     <ion-list #step3 *ngIf="step === 4">
