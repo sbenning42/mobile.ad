@@ -71,10 +71,16 @@
             <ion-label>Price <span [ngStyle]="{'color': article.price ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.price"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-label>Price by <span [ngStyle]="{'color': article.price_by ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input></ion-input>
-        </ion-item>
+        <ion-item-divider>Price by <span [ngStyle]="{'color': article.price_by ? '#00aed8' : '#f44336'}">*</span></ion-item-divider>
+        <ion-list radio-group [(ngModel)]="article.price_by">
+            <ion-item>
+                <ion-radio value="unit" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-radio value="set"></ion-radio>
+            </ion-item>
+        </ion-list>
+        <ion-item-divider></ion-item-divider>
         <ion-item>
             <button ion-button (click)="saveDraft()">Save Draft</button>
         </ion-item>
@@ -83,9 +89,14 @@
     <ion-list #step2 *ngIf="step === 2">
         <ion-list-header>Transport</ion-list-header>
         <ion-item>
-            <ion-label>Location <span [ngStyle]="{'color': article.address_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input></ion-input>
+            <ion-label>Location <span [ngStyle]="{'color': selected.address ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input disabled [(ngModel)]="selected.address"></ion-input>
         </ion-item>
+        <ion-item-divider>Addresses</ion-item-divider>
+        <ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address.type" [class.selected]="address.type === selected.address">
+            {{ address.type }}: {{ address.address }}, {{ address.city }}
+        </ion-item>
+        <ion-item-divider></ion-item-divider>
         <ion-item>
             <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.number_of_packs"></ion-input>

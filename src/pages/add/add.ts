@@ -25,8 +25,6 @@ import { AnnexesProvider } from '../../providers/annexes/annexes';
 })
 export class AddPage {
 
-  @ViewChild('step3', {read: ElementRef}) private step3El: ElementRef;
-
   @ViewChild('categoryInput', {read: ElementRef}) private categoryEl: ElementRef;
   @ViewChild('styleInput', {read: ElementRef}) private styleEl: ElementRef;
   @ViewChild('periodsInput', {read: ElementRef}) private periodsEl: ElementRef;
@@ -37,6 +35,8 @@ export class AddPage {
   @ViewChild('brandInput', {read: ElementRef}) private brandEl: ElementRef; 
 
   article: Article = new Article();
+
+  addresses$: Observable<any[]>
 
   pictures$: Observable<string[]>;
   errors$: Observable<string[]>;
@@ -49,7 +49,7 @@ export class AddPage {
   selected = {
     category: '', style: '', periods: '',
     condition: '', material: '', color: '',
-    designer: '', brand: ''
+    designer: '', brand: '', address: ''
   };
 
   steps = [
@@ -71,17 +71,19 @@ export class AddPage {
     public navCtrl: NavController,
     public camera: CameraProvider,
     public modalCtrl: ModalController,
+    public api: ApiProvider,
     public annexes: AnnexesProvider
   ) { }
 
   ionViewDidLoad() {
+    this.addresses$ = this.api.getUserAddresses();
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
-        case 'category': { this.categoryEl ? window.scrollTo(0, +this.categoryEl.nativeElement.offsetTop) : undefined; this.items = this.annexes.categories; break ; }
+        case 'category': { this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.categories; break ; }
         case 'style': { this.styleEl ? this.styleEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.styles; break ; }
         case 'periods': { this.periodsEl ? this.periodsEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.periods; break ; }
         case 'condition': { this.conditionEl ? this.conditionEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.conditions; break ; }
-        case 'material': { this.materialEl ? window.scrollTo(0, +this.materialEl.nativeElement.offsetTop) : undefined; this.items = this.annexes.materials; break ; }
+        case 'material': { this.materialEl ? this.materialEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.materials; break ; }
         case 'color': { this.colorEl ? this.colorEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.colors; break ; }
         case 'designer': { this.designerEl ? this.designerEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.designers; break ; }
         case 'brand': { this.brandEl ? this.brandEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.brands; break ; }
@@ -142,16 +144,11 @@ export class AddPage {
 
   setFocus(key: string) {
     this.focus = key;
-    console.log('publishing focus: ' + key);
     this._focus$.next(key);
   }
 
   getItems(search: string) {
-    console.log('Will search items: ' + search + ', for focus: ' + this.focus);
-    const items = this.items.filter(item => {
-      console.log('search for items: ' + search + ', in: ' + item.name);
-      return item.name.search(search) < 0 ? false : true;
-    });
+    const items = this.items.filter(item => item.name.search(search) < 0 ? false : true);
     this._items$.next(items);
   }
 

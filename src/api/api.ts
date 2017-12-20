@@ -7,6 +7,7 @@ export const channelsApi = `${baseApi}/me/marketplaces/contracted`;
 export const allChannelsApi = `${baseApi}/marketplaces`;
 export const user = `${baseApi}/myusers`;
 export const userPicture = `${baseApi}/user/mypictures`;
+export const userAddresses = `${baseApi}/user/myaddresses`;
 export const channelsPublishApi = (articleId, channelId) => `${baseApi}/v2/products/${articleId}/marketplaces/${channelId}`;
 export const userInfos = id => `${baseApi}/users/${id}/public-infos`;
 export const userAccount = id => `${baseApi}/users/${id}/account`;
@@ -23,6 +24,7 @@ export class Api {
     public static gallery = galleryApi;
     public static user = user;
     public static userPicture = userPicture;
+    public static userAddresses = userAddresses;
     public static publishChannel = (articleId, channelId) => channelsPublishApi;
     public static userInfo = id => userInfos(id);
     public static userAccount = id => userAccount(id);
