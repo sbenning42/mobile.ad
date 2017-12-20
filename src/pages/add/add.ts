@@ -35,22 +35,23 @@ export class AddPage {
   @ViewChild('brandInput', {read: ElementRef}) private brandEl: ElementRef; 
 
   article: Article = new Article();
-
-  addresses$: Observable<any[]>
-
+  selected = {
+    category: {id: '0', name: ''}, style: {id: '0', name: ''}, periods: {id: '0', name: ''},
+    condition: {id: '0', name: ''}, material: {id: '0', name: ''}, color: {id: '0', name: ''},
+    designer: {id: '0', name: ''}, brand: {id: '0', name: ''}, address: {id: '0', name: ''}
+  };
   pictures$: Observable<string[]>;
+
+  addresses$: Observable<any[]>;
   errors$: Observable<string[]>;
-  checked = 0;
 
   focus = '';
-  private _focus$: BehaviorSubject<string> = new BehaviorSubject(this.focus);
-  focus$: Observable<string> = this._focus$.asObservable();
+  items: {id: string, name: string}[] = [];
 
-  selected = {
-    category: '', style: '', periods: '',
-    condition: '', material: '', color: '',
-    designer: '', brand: '', address: ''
-  };
+  private _focus$: BehaviorSubject<string> = new BehaviorSubject(this.focus);
+  private _items$: BehaviorSubject<{id: string, name: string}[]> = new BehaviorSubject(this.items);
+  focus$: Observable<string> = this._focus$.asObservable();
+  items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
   steps = [
     {icon: 'camera', color: '#f44336'},
@@ -61,11 +62,8 @@ export class AddPage {
   ];
   step = 0;
 
-  items: {id: string, name: string}[] = [];
-  private _items$: BehaviorSubject<{id: string, name: string}[]> = new BehaviorSubject(this.items);
-  items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
-
   sub: Subscription;
+  saveSub: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -77,6 +75,9 @@ export class AddPage {
 
   ionViewDidLoad() {
     this.addresses$ = this.api.getUserAddresses();
+    this.pictures$ = this.camera.pictures$;
+    this.errors$ = this.camera.errors$;
+  
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
         case 'category': { this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.categories; break ; }
@@ -94,8 +95,7 @@ export class AddPage {
       this._items$.next(this.items);
       return this.items$;
     }).subscribe();
-    this.pictures$ = this.camera.pictures$;
-    this.errors$ = this.camera.errors$;
+  
     this.takeLoop();
   }
 
@@ -108,10 +108,6 @@ export class AddPage {
     const loop = this.modalCtrl.create(PicturesLoopComponent);
     loop.onDidDismiss(finish => finish ? undefined : this.takeLoop())
     loop.present();
-  }
-
-  setPrincipale(index) {
-    this.checked = index;
   }
 
   remove(index: number) {
@@ -135,7 +131,64 @@ export class AddPage {
     this.step = $event;
   }
 
+  aggregateArticleAndSelection() {
+    this.article.address_id = this.selected.address.id;
+    this.article.brand_id = this.selected.brand.id;
+    this.article.category_id = this.selected.category.id;
+    this.article.color_id = this.selected.color.id;
+    this.article.condition_id = this.selected.condition.id;
+    this.article.designer_id = this.selected.designer.id;
+    this.article.periods_id = this.selected.periods.id;
+    this.article.material_id = this.selected.material.id;
+    this.article.style_id = this.selected.style.id;
+
+  }
+
   saveDraft() {
+    if (this.saveSub) { this.saveSub.unsubscribe(); }
+    
+    let picturesFiles;
+  
+    let stream$ = this.pictures$.switchMap(pictures => {
+        picturesFiles = pictures.map(picture => picture);
+        return this.api.addProduct(this.article);
+      }).switchMap(apiArticle => {
+        this.article.id = apiArticle.id;
+        return this.api.putProduct(this.article);
+      });
+    
+    this.aggregateArticleAndSelection();
+    
+    if (picturesFiles) {
+      picturesFiles.foreach((file, index) => {
+        stream$ = stream$.switchMap(apiData => {
+          console.log((index ? 'Picture: ' : 'Product: ') + JSON.stringify(apiData));
+          return this.api.uploadArticlePicture(this.article, file);
+        });
+      });
+    }
+
+    this.saveSub = stream$.subscribe(
+      () => console.log('Yiha'),
+      (err) => console.log('Erf...: ' + JSON.stringify(err)),
+      () => console.log('What Next ?!!')
+    );
+
+    /**
+     * Steps for saving:
+     * 
+     * User should get a feedback on the advance of the following proccess:
+     * 
+     * 1) save the name to get a valid edition id.
+     * 2) aggregate the relationals ids in the this.article: Article object.
+     *    All those ids lands on this.selected: { ... } literal object.
+     * 3) Once the edition id and the aggregate are done, edit the article.
+     * 4) Loop througth this.camera.pictures$: Observable<string[]> object to map
+     *    it to get valid part-data form for the backend to accept the files.
+     * 5) Save thoses files one by one
+     */
+
+    
   }
 
   save() {
