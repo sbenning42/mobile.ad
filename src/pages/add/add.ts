@@ -25,6 +25,8 @@ import { AnnexesProvider } from '../../providers/annexes/annexes';
 })
 export class AddPage {
 
+  @ViewChild('step3', {read: ElementRef}) private step3El: ElementRef;
+
   @ViewChild('categoryInput', {read: ElementRef}) private categoryEl: ElementRef;
   @ViewChild('styleInput', {read: ElementRef}) private styleEl: ElementRef;
   @ViewChild('periodsInput', {read: ElementRef}) private periodsEl: ElementRef;
@@ -75,11 +77,11 @@ export class AddPage {
   ionViewDidLoad() {
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
-        case 'category': { this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.categories; break ; }
+        case 'category': { this.categoryEl ? window.scrollTo(0, +this.categoryEl.nativeElement.offsetTop) : undefined; this.items = this.annexes.categories; break ; }
         case 'style': { this.styleEl ? this.styleEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.styles; break ; }
         case 'periods': { this.periodsEl ? this.periodsEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.periods; break ; }
         case 'condition': { this.conditionEl ? this.conditionEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.conditions; break ; }
-        case 'material': { this.materialEl ? this.materialEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.materials; break ; }
+        case 'material': { this.materialEl ? window.scrollTo(0, +this.materialEl.nativeElement.offsetTop) : undefined; this.items = this.annexes.materials; break ; }
         case 'color': { this.colorEl ? this.colorEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.colors; break ; }
         case 'designer': { this.designerEl ? this.designerEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.designers; break ; }
         case 'brand': { this.brandEl ? this.brandEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.brands; break ; }
