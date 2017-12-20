@@ -102,7 +102,7 @@
 
         <ion-item>
             <ion-label>Category <span [ngStyle]="{'color': selected.category ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input (ionFocus)="setFocus('category')" (ionInput)="getItems(focus, $event)" [(ngModel)]="selected.category"></ion-input>
+            <ion-input (ionFocus)="setFocus('category')" (change)="getItems(focus, $event)" [(ngModel)]="selected.category"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'category'">
             <ion-item-divider>{{ focus }}</ion-item-divider>
