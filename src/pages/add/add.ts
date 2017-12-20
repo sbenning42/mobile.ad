@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { PicturesLoopComponent } from '../../components/pictures-loop/pictures-loop';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 /**
  * Generated class for the AddPage page.
@@ -30,9 +31,17 @@ export class AddPage {
   settings: string;
 
   steps = [
-    {icon: 'camera', color: '#f44336'}, {icon: 'book', color: '#f44336'}, {icon: 'ribbon', color: '#4caf50'}, {icon: 'pin', color: '#f44336'}, {icon: 'document', color: '#4caf50'}
+    {icon: 'camera', color: '#f44336'},
+    {icon: 'book', color: '#f44336'},
+    {icon: 'ribbon', color: '#4caf50'},
+    {icon: 'pin', color: '#f44336'},
+    {icon: 'document', color: '#4caf50'}
   ];
   step = 0;
+
+  private items: {id: string, name: string}[] = [];
+  private _items$: BehaviorSubject<{id: string, name: string}[]> = new BehaviorSubject(this.items);
+  items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
   constructor(public navCtrl: NavController, public camera: CameraProvider, public modalCtrl: ModalController) {
   }
@@ -91,6 +100,14 @@ export class AddPage {
 
   save() {
     this.saveDraft();
+  }
+
+  setFocus(key: string) {
+
+  }
+
+  getItems(key: string, search: string) {
+
   }
 
 }

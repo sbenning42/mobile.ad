@@ -58,7 +58,7 @@ export class CameraProvider {
   }
 
   removePicture(index: number) {
-    this.pictures = this.pictures.filter((picture, i) => i === index);
+    this.pictures = this.pictures.filter((picture, i) => i !== index);
     this.publishPictures();
   }
 

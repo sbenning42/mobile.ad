@@ -13,7 +13,12 @@
 <ion-content>
 
     <ion-list #step0 *ngIf="step === 0">
-        <ion-list-header>{{ (pictures$|async)?.length }} Pictures</ion-list-header>
+        <ion-list-header>Article Cover</ion-list-header>
+        <ion-item>
+            <ion-label>Name <span color="#f44336">*</span></ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
         <ion-item class="error" *ngFor="let error of errors$; let index = index" (click)="removeError(index)">
             {{ error }}
         </ion-item>
@@ -37,41 +42,37 @@
         <ion-list-header>Article Infos</ion-list-header>
         <ion-item-divider>Identification</ion-item-divider>
         <ion-item>
-            <ion-label>Name</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Description</ion-label>
+            <ion-label>Description <span color="#f44336">*</span></ion-label>
             <ion-textarea></ion-textarea>
         </ion-item>
         <ion-item-divider>Dimention</ion-item-divider>
         <ion-item>
-            <ion-label>Height - cm</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Height - cm <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Width - cm</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Width - cm <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Depth - cm</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Depth - cm <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Weight - kg</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Weight - kg <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item-divider>Pricing - €</ion-item-divider>
         <ion-item>
-            <ion-label>Quantity</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Quantity <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Price</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Price <span color="#f44336">*</span></ion-label>
+            <ion-input type="number"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Price by</ion-label>
+            <ion-label>Price by <span color="#f44336">*</span></ion-label>
             <ion-input></ion-input>
         </ion-item>
         <ion-item>
@@ -83,7 +84,7 @@
         <ion-list-header>Article Qualification</ion-list-header>
 
         <ion-item>
-            <ion-label>Category</ion-label>
+            <ion-label>Category <span color="#f44336">*</span></ion-label>
             <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'categories'">
@@ -94,39 +95,82 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Style</ion-label>
-            <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
+            <ion-label>Style <span color="#f44336">*</span></ion-label>
+            <ion-searchbar (ionFocus)="setFocus('styles')" (ionInput)="getItems('styles', $event)"></ion-searchbar>
         </ion-item>
-        <ng-container *ngIf="focus === 'categories'">
-            <ion-item-divider>Categories</ion-item-divider>
-            <ion-item *ngFor="let category of items$|async">
-                {{ category?.name }}
+        <ng-container *ngIf="focus === 'styles'">
+            <ion-item-divider>Styles</ion-item-divider>
+            <ion-item *ngFor="let style of items$|async">
+                {{ style?.name }}
             </ion-item>
         </ng-container>
+
         <ion-item>
-            <ion-label>Period</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Period <span color="#f44336">*</span></ion-label>
+            <ion-searchbar (ionFocus)="setFocus('periods')" (ionInput)="getItems('periods', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'periods'">
+            <ion-item-divider>Periods</ion-item-divider>
+            <ion-item *ngFor="let periods of items$|async">
+                {{ periods?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
-            <ion-label>Condition</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Condition <span color="#f44336">*</span></ion-label>
+            <ion-searchbar (ionFocus)="setFocus('conditions')" (ionInput)="getItems('conditions', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'conditions'">
+            <ion-item-divider>Conditions</ion-item-divider>
+            <ion-item *ngFor="let condition of items$|async">
+                {{ condition?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
-            <ion-label>Material</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Material <span color="#f44336">*</span></ion-label>
+            <ion-searchbar (ionFocus)="setFocus('materials')" (ionInput)="getItems('materials', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'materials'">
+            <ion-item-divider>Materials</ion-item-divider>
+            <ion-item *ngFor="let material of items$|async">
+                {{ material?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
-            <ion-label>Color</ion-label>
-            <ion-input></ion-input>
+            <ion-label>Color <span color="#f44336">*</span></ion-label>
+            <ion-searchbar (ionFocus)="setFocus('colors')" (ionInput)="getItems('colors', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'colors'">
+            <ion-item-divider>Colors</ion-item-divider>
+            <ion-item *ngFor="let color of items$|async">
+                {{ color?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
             <ion-label>Designer</ion-label>
-            <ion-input></ion-input>
+            <ion-searchbar (ionFocus)="setFocus('designers')" (ionInput)="getItems('designers', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'designers'">
+            <ion-item-divider>Designers</ion-item-divider>
+            <ion-item *ngFor="let designer of items$|async">
+                {{ designer?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
             <ion-label>Brand</ion-label>
-            <ion-input></ion-input>
+            <ion-searchbar (ionFocus)="setFocus('brands')" (ionInput)="getItems('brands', $event)"></ion-searchbar>
         </ion-item>
+        <ng-container *ngIf="focus === 'brands'">
+            <ion-item-divider>Brands</ion-item-divider>
+            <ion-item *ngFor="let brand of items$|async">
+                {{ brand?.name }}
+            </ion-item>
+        </ng-container>
+
         <ion-item>
             <button ion-button (click)="saveDraft()">Save Draft</button>
         </ion-item>
@@ -135,11 +179,11 @@
     <ion-list #step3 *ngIf="step === 3">
         <ion-list-header>Transport</ion-list-header>
         <ion-item>
-            <ion-label>Location</ion-label>
+            <ion-label>Location <span color="#f44336">*</span></ion-label>
             <ion-input></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Number of packs</ion-label>
+            <ion-label>Number of packs <span color="#f44336">*</span></ion-label>
             <ion-input></ion-input>
         </ion-item>
         <ion-item>
