@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Article } from '../../models/article';
@@ -24,6 +24,15 @@ import { AnnexesProvider } from '../../providers/annexes/annexes';
   templateUrl: 'add.html',
 })
 export class AddPage {
+
+  @ViewChild('categoryInput', {read: ElementRef}) private categoryEl: ElementRef;
+  @ViewChild('styleInput', {read: ElementRef}) private styleEl: ElementRef;
+  @ViewChild('periodsInput', {read: ElementRef}) private periodsEl: ElementRef;
+  @ViewChild('conditionInput', {read: ElementRef}) private conditionEl: ElementRef;
+  @ViewChild('materialInput', {read: ElementRef}) private materialEl: ElementRef;
+  @ViewChild('colorInput', {read: ElementRef}) private colorEl: ElementRef;
+  @ViewChild('designerInput', {read: ElementRef}) private designerEl: ElementRef;
+  @ViewChild('brandInput', {read: ElementRef}) private brandEl: ElementRef; 
 
   article: Article = new Article();
 
@@ -66,38 +75,14 @@ export class AddPage {
   ionViewDidLoad() {
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
-        case 'category': {
-          this.items = this.annexes.categories;
-          break ;
-        }
-        case 'style': {
-          this.items = this.annexes.styles;
-          break ;
-        }
-        case 'periods': {
-          this.items = this.annexes.periods;
-          break ;
-        }
-        case 'condition': {
-          this.items = this.annexes.conditions;
-          break ;
-        }
-        case 'material': {
-          this.items = this.annexes.materials;
-          break ;
-        }
-        case 'color': {
-          this.items = this.annexes.colors;
-          break ;
-        }
-        case 'designer': {
-          this.items = this.annexes.designers;
-          break ;
-        }
-        case 'brand': {
-          this.items = this.annexes.brands;
-          break ;
-        }
+        case 'category': { this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.categories; break ; }
+        case 'style': { this.styleEl ? this.styleEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.styles; break ; }
+        case 'periods': { this.periodsEl ? this.periodsEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.periods; break ; }
+        case 'condition': { this.conditionEl ? this.conditionEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.conditions; break ; }
+        case 'material': { this.materialEl ? this.materialEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.materials; break ; }
+        case 'color': { this.colorEl ? this.colorEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.colors; break ; }
+        case 'designer': { this.designerEl ? this.designerEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.designers; break ; }
+        case 'brand': { this.brandEl ? this.brandEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.brands; break ; }
         default: {
           this.items = [];
         }

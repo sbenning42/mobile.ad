@@ -7,10 +7,13 @@ page-add {
         display: flex;
     }
     .error {
-        border: solid 2px#f44336;
+        border: solid 2px #f44336;
     }
     .not-to-much {
-        max-height: 70vh;
+        max-height: 30vh;
         overflow: auto;
+    }
+    .spacer {
+        flex: 1;
     }
 }
