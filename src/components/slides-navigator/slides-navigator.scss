@@ -1,3 +1,14 @@
 slides-navigator {
-
+    .navigator {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navigator>* {
+        margin: 8px;
+    }
+    .active {
+        background-color: lightcoral;
+    }
 }
