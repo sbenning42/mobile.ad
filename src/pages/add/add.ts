@@ -69,6 +69,10 @@ export class AddPage {
     this.camera.removePicture(index);
   }
 
+  removeError(index: number) {
+    this.camera.removeError(index);
+  }
+
   stepUp() {
     this.step = (this.step + 1) % 4;
   }

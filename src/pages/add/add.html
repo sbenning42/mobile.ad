@@ -14,6 +14,9 @@
 
     <ion-list #step0 *ngIf="step === 0">
         <ion-list-header>{{ (pictures$|async)?.length }} Pictures</ion-list-header>
+        <ion-item class="error" *ngFor="let error of errors$; let index = index" (click)="removeError(index)">
+            {{ error }}
+        </ion-item>
         <ion-item (click)="takeLoop()">
             <ion-icon name="camera"></ion-icon>
             Add a Picture
