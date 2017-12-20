@@ -74,9 +74,11 @@
         <ion-item-divider>Price by <span [ngStyle]="{'color': article.price_by ? '#00aed8' : '#f44336'}">*</span></ion-item-divider>
         <ion-list radio-group [(ngModel)]="article.price_by">
             <ion-item>
+                <ion-label>Unit</ion-label>
                 <ion-radio value="unit" checked></ion-radio>
             </ion-item>
             <ion-item>
+                <ion-label>Set</ion-label>
                 <ion-radio value="set"></ion-radio>
             </ion-item>
         </ion-list>
