@@ -123,11 +123,14 @@ export class AddPage {
 
   setFocus(key: string) {
     this.focus = key;
+    console.log('publishing focus: ' + key);
     this._focus$.next(key);
   }
 
-  getItems(key: string, search: string) {
+  getItems(search: string) {
+    console.log('Will search items: ' + search + ', for focus: ' + this.focus);
     this.items = this.items.filter(item => {
+      console.log('search for items: ' + search + ', in: ' + item);
       return item.name.search(search) < 0 ? false : true;
     });
     this._items$.next(this.items);
