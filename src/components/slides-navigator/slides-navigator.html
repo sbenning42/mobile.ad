@@ -1,7 +1,7 @@
 <!-- Generated template for the SlidesNavigatorComponent component -->
 <div class="navigator">
-    <ion-card *ngFor="let step of steps; let index = index" class="navigator" [class.active]="stepNo === index" (click)="goto(index)">
-        <ion-icon name="{{ step }}"></ion-icon>
+    <ion-card *ngFor="let step of steps; let index = index" class="navigator" [class.active]="stepNo === index" [ngStyle.backgroudColor]="step.color" (click)="goto(index)">
+        <ion-icon name="{{ step?.icon }}"></ion-icon>
         <ion-icon name="arrow-forward"></ion-icon>
     </ion-card>
 </div>

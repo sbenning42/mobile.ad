@@ -12,7 +12,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SlidesNavigatorComponent {
 
-  @Input() steps: string[];
+  @Input() steps: {icon: string, color: string}[];
 
   stepNoMirror: number;
   @Input()

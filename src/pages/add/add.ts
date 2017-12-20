@@ -30,7 +30,7 @@ export class AddPage {
   settings: string;
 
   steps = [
-    'camera', 'book', 'ribbon', 'pin', 'document'
+    {icon: 'camera', color: '#f44336'}, {icon: 'book', color: '#f44336'}, {icon: 'ribbon', color: '#4caf50'}, {icon: 'pin', color: '#f44336'}, {icon: 'document', color: '#4caf50'}
   ];
   step = 0;
 
