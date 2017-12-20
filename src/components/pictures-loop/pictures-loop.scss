@@ -1,0 +1,10 @@
+pictures-loop {
+    .big-box {
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+    ion-list {
+        margin-top: auto;
+    }
+}

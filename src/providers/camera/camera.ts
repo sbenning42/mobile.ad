@@ -13,41 +13,67 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class CameraProvider {
 
-  options: CameraOptions = <CameraOptions>{
+  private options: CameraOptions = {
     quality: 100,
-    targetWidth: 900,
-    targetHeight: 600,
+    targetWidth: 1200,
+    targetHeight: 1200,
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
     saveToPhotoAlbum: false,
     allowEdit: true,
     sourceType: 1
-  };
+  }
 
   private pictures: string[] = [];
-  private errors: string[] = [];
-
   private _pictures$: BehaviorSubject<string[]> = new BehaviorSubject(this.pictures);
   pictures$: Observable<string[]> = this._pictures$.asObservable();
 
-  private _cameraError$: BehaviorSubject<string[]> = new BehaviorSubject(this.errors);
-  cameraError$: Observable<string[]> = this._cameraError$.asObservable();
-  
-  constructor(public camera: Camera) {
+  private errors: string[] = [];
+  private _errors$: BehaviorSubject<string[]> = new BehaviorSubject(this.errors);
+  errors$: Observable<string[]> = this._errors$.asObservable();
+
+  constructor(private camera: Camera) {
     console.log('Hello CameraProvider Provider');
   }
 
-  takeShot(): any {
-    this.camera.getPicture(this.options).then((imageData) => {
-      const base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.pictures.push(base64Image);
-      this._pictures$.next(this.pictures);
-    }, err => {
-      const stringError = JSON.stringify(err);
-      this.errors.push(stringError);
-      this._cameraError$.next(this.errors);
-    });
+  private publishPictures(picture?: string) {
+    if (picture) {
+      this.pictures.push(picture);
+    }
+    this._pictures$.next(this.pictures);
+  }
+
+  private publishErrors(error?: string) {
+    if (error) {
+      this.errors.push(error);
+    }
+    this._errors$.next(this.errors);
+  }
+
+  takeOne() {
+    this.camera.getPicture(this.options).then(
+      imageData => this.publishPictures('data:image/jpeg;base64,' + imageData),
+      error => this.publishErrors('CameraProvider@takeOne,err: ' + JSON.stringify(error)));
+  }
+
+  removePicture(index: number) {
+    this.pictures = this.pictures.filter((picture, i) => i === index);
+    this.publishPictures();
+  }
+
+  removeError(index: number) {
+    this.errors = this.errors.filter((error, i) => i !== index);
+    this.publishErrors();
+  }
+
+  deploy(): string[] {
+    const pictures = this.pictures;
+    this.pictures = [];
+    this.errors = [];
+    this.publishPictures();
+    this.publishErrors();
+    return pictures;
   }
 
 }

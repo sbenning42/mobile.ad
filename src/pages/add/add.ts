@@ -6,6 +6,8 @@ import { ApiProvider } from '../../providers/api/api';
 import { CameraProvider } from '../../providers/camera/camera';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { PicturesLoopComponent } from '../../components/pictures-loop/pictures-loop';
 
 /**
  * Generated class for the AddPage page.
@@ -21,46 +23,70 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AddPage {
 
-  article: Article;
-  error: string;
+  pictures$: Observable<string[]>;
+  errors$: Observable<string[]>;
+  checked = 0;
 
-  sub: Subscription;
+  settings: string;
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public camera: CameraProvider,
-    public api: ApiProvider
-  ) {
-    this.article = new Article();
-    this.article.pictures = [];
+  steps = [
+    'camera', 'book', 'ribbon', 'pin', 'document'
+  ];
+  step = 0;
+
+  constructor(public navCtrl: NavController, public camera: CameraProvider, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPage');
-    this.sub = this.camera.cameraError$
-      .switchMap((errors: string[]) => {
-        this.error = errors && errors.length ? errors[errors.length - 1] : '';
-        return this.camera.pictures$;
-      }).subscribe((pictures: string[]) => this.article.pictures = pictures);
-    this.takePicture();
+    this.pictures$ = this.camera.pictures$;
+    this.errors$ = this.camera.errors$;
+    this.takeLoop();
   }
 
-  ionViewWillLeave() {
-    this.sub.unsubscribe();
+  takeLoop() {
+    this.camera.takeOne();
+    const loop = this.modalCtrl.create(PicturesLoopComponent);
+    loop.onDidDismiss(finish => finish ? undefined : this.takeLoop())
+    loop.present();
   }
 
-  takePicture() {
-    this.camera.takeShot();
+  setPrincipale(index) {
+    this.checked = index;
   }
 
-  submit() {
-    const pictures = this.article.pictures;
-    const sub = this.api.addProduct(this.article)
-      .switchMap(article => {
-        this.article = article;
-        return Observable.of(1);// this.api.uploadArticlePicture(this.article, pictures);
-      }).subscribe()
+  orderUp(index: number) {
+    if (!index) {
+      return ;
+    }
+    // TODO
+  }
+
+  orderDown(index: number) {
+    // TODO
+  }
+
+  remove(index: number) {
+    this.camera.removePicture(index);
+  }
+
+  stepUp() {
+    this.step = (this.step + 1) % 4;
+  }
+
+  stepDown() {
+    const step = (this.step - 1) % 4;
+    this.step = step < 0 ? 0 : step;
+  }
+
+  gotoStep($event) {
+    this.step = $event;
+  }
+
+  saveDraft() {
+  }
+
+  save() {
+    this.saveDraft();
   }
 
 }

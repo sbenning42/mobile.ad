@@ -36,6 +36,8 @@ import { CameraTabDefaultPagePage } from '../pages/camera-tab-default-page/camer
 import { CartTabDefaultPagePage } from '../pages/cart-tab-default-page/cart-tab-default-page';
 import { CloudTabDefaultPagePage } from '../pages/cloud-tab-default-page/cloud-tab-default-page';
 
+import { SlidesNavigatorComponent, PicturesLoopComponent } from '../components/components.module';
+
 import { StockProvider } from '../providers/stock/stock';
 import { GalleryProvider } from '../providers/gallery/gallery';
 import { AuthProvider } from '../providers/auth/auth';
@@ -72,6 +74,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CameraTabDefaultPagePage,
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
+    SlidesNavigatorComponent, PicturesLoopComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CameraTabDefaultPagePage,
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
+    SlidesNavigatorComponent, PicturesLoopComponent
   ],
   providers: [
     StatusBar,

@@ -5,41 +5,151 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
-        <ion-title>Add</ion-title>
+        <slides-navigator [steps]="steps" [stepNo]="step" (upEvent)="stepUp()" (downEvent)="stepDown()" (gotoEvent)="gotoStep($event)"></slides-navigator>
     </ion-navbar>
-
 </ion-header>
-
 
 <ion-content>
 
-
-    <ion-item-divider color="light">
-        {{ length }} PICTURES
-    </ion-item-divider>
-    <div class="preview-box">
-        <div class="body">
-            <div class="pic" *ngFor="let picture of article.pictures">
+    <ion-list #step0 *ngIf="step === 0">
+        <ion-list-header>{{ (pictures$|async)?.length }} Pictures</ion-list-header>
+        <ion-item (click)="takeLoop()">
+            <ion-icon name="camera"></ion-icon>
+            Add a Picture
+        </ion-item>
+        <ion-item *ngFor="let picture of pictures$|async; let index = index">
+            <ion-thumbnail item-start>
                 <img src="{{ picture }}">
-            </div>
-        </div>
-        <p *ngIf="error" (click)="error = ''">
-            {{ error }}
-        </p>
-        <button ion-button block (click)="takePicture()">Take Another Picture</button>
-    </div>
-    <ion-item-divider color="light">
-        ARTICLE
-    </ion-item-divider>
-    <form novalidate>
+            </ion-thumbnail>
+            <ion-icon item-start *ngIf="checked === index" name="star"></ion-icon>
+            <ion-icon item-end name="remove" (click)="remove(index)"></ion-icon>
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="saveDraft()">Save Draft</button>
+        </ion-item>
+    </ion-list>
+
+    <ion-list #step1 *ngIf="step === 1">
+        <ion-list-header>Article Infos</ion-list-header>
+        <ion-item-divider>Identification</ion-item-divider>
         <ion-item>
             <ion-label>Name</ion-label>
-            <ion-input type="text" [(ngModel)]="article.name" name="name"></ion-input>
+            <ion-input></ion-input>
         </ion-item>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-textarea></ion-textarea>
+        </ion-item>
+        <ion-item-divider>Dimention</ion-item-divider>
+        <ion-item>
+            <ion-label>Height - cm</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Width - cm</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Depth - cm</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Weight - kg</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item-divider>Pricing - €</ion-item-divider>
+        <ion-item>
+            <ion-label>Quantity</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Price</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Price by</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="saveDraft()">Save Draft</button>
+        </ion-item>
+    </ion-list>
 
-    </form>
-    <button class="submit" ion-button (click)="submit()" block [disabled]="!article.name || !(article.pictures && article.pictures[0])">Create Article</button>
+    <ion-list #step2 *ngIf="step === 2">
+        <ion-list-header>Article Qualification</ion-list-header>
+
+        <ion-item>
+            <ion-label>Category</ion-label>
+            <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
+        </ion-item>
+        <ng-container *ngIf="focus === 'categories'">
+            <ion-item-divider>Categories</ion-item-divider>
+            <ion-item *ngFor="let category of items$|async">
+                {{ category?.name }}
+            </ion-item>
+        </ng-container>
+
+        <ion-item>
+            <ion-label>Style</ion-label>
+            <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
+        </ion-item>
+        <ng-container *ngIf="focus === 'categories'">
+            <ion-item-divider>Categories</ion-item-divider>
+            <ion-item *ngFor="let category of items$|async">
+                {{ category?.name }}
+            </ion-item>
+        </ng-container>
+        <ion-item>
+            <ion-label>Period</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Condition</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Material</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Color</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Designer</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Brand</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="saveDraft()">Save Draft</button>
+        </ion-item>
+    </ion-list>
+
+    <ion-list #step3 *ngIf="step === 3">
+        <ion-list-header>Transport</ion-list-header>
+        <ion-item>
+            <ion-label>Location</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Number of packs</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button (click)="saveDraft()">Save Draft</button>
+        </ion-item>
+    </ion-list>
+
+    <ion-list #step3 *ngIf="step === 4">
+        <ion-list-header>Resume</ion-list-header>
+        <ion-item>
+            <button ion-button (click)="save()">Save</button>
+        </ion-item>
+    </ion-list>
+
 
 </ion-content>
