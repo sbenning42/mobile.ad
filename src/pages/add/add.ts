@@ -35,6 +35,12 @@ export class AddPage {
   private _focus$: BehaviorSubject<string> = new BehaviorSubject(this.focus);
   focus$: Observable<string> = this._focus$.asObservable();
 
+  selected = {
+    category: '', style: '', periods: '',
+    condition: '', material: '', color: '',
+    designer: '', brand: ''
+  };
+
   steps = [
     {icon: 'camera', color: '#f44336'},
     {icon: 'book', color: '#f44336'},
@@ -59,12 +65,12 @@ export class AddPage {
 
   ionViewDidLoad() {
     this.sub = this.focus$.subscribe(focus => {
-      this.items = [
+      this.items = focus ? [
         { id: '0', name: 'test1' },
         { id: '0', name: 'test2' },
         { id: '0', name: 'test3' },
         { id: '0', name: 'test4' }
-      ];
+      ] : [];
       this._items$.next(this.items);
     });
     this.pictures$ = this.camera.pictures$;

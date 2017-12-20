@@ -101,89 +101,97 @@
         <ion-list-header>Article Qualification</ion-list-header>
 
         <ion-item>
-            <ion-label>Category <span [ngStyle]="{'color': article.category_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('categories')" (input)="getItems('categories', $event)"></ion-searchbar>
+            <ion-label>Category <span [ngStyle]="{'color': selected.category ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.category"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'categories'">
             <ion-item-divider>Categories</ion-item-divider>
-            <ion-item *ngFor="let category of items$|async">
+            <ion-item *ngFor="let category of items$|async" (click)="selected.category = category.name; setFocus('')">
                 {{ category?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
-            <ion-label>Style <span [ngStyle]="{'color': article.style_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('styles')" (input)="getItems('styles', $event)"></ion-searchbar>
+            <ion-label>Style <span [ngStyle]="{'color': selected.style ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.style"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('styles')" (ionInput)="getItems('styles', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'styles'">
             <ion-item-divider>Styles</ion-item-divider>
-            <ion-item *ngFor="let style of items$|async">
+            <ion-item *ngFor="let style of items$|async" (click)="selected.style = style.name; setFocus('')">
                 {{ style?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
-            <ion-label>Period <span [ngStyle]="{'color': article.periods_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('periods')" (input)="getItems('periods', $event)"></ion-searchbar>
+            <ion-label>Period <span [ngStyle]="{'color': selected.periods ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.periods"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('periods')" (ionInput)="getItems('periods', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'periods'">
             <ion-item-divider>Periods</ion-item-divider>
-            <ion-item *ngFor="let periods of items$|async">
+            <ion-item *ngFor="let periods of items$|async" (click)="selected.periods = periods.name; setFocus('')">
                 {{ periods?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
-            <ion-label>Condition <span [ngStyle]="{'color': article.condition_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('conditions')" (input)="getItems('conditions', $event)"></ion-searchbar>
+            <ion-label>Condition <span [ngStyle]="{'color': selected.condition ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.condition"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('conditions')" (ionInput)="getItems('conditions', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'conditions'">
             <ion-item-divider>Conditions</ion-item-divider>
-            <ion-item *ngFor="let condition of items$|async">
+            <ion-item *ngFor="let condition of items$|async" (click)="selected.condition = condition.name; setFocus('')">
                 {{ condition?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
-            <ion-label>Material <span [ngStyle]="{'color': article.material_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('materials')" (input)="getItems('materials', $event)"></ion-searchbar>
+            <ion-label>Material <span [ngStyle]="{'color': selected.material ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.material"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('materials')" (ionInput)="getItems('materials', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'materials'">
             <ion-item-divider>Materials</ion-item-divider>
-            <ion-item *ngFor="let material of items$|async">
+            <ion-item *ngFor="let material of items$|async" (click)="selected.material = material.name; setFocus('')">
                 {{ material?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
-            <ion-label>Color <span [ngStyle]="{'color': article.color_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (focus)="setFocus('colors')" (input)="getItems('colors', $event)"></ion-searchbar>
+            <ion-label>Color <span [ngStyle]="{'color': selected.color ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-input [(ngModel)]="selected.color"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('colors')" (ionInput)="getItems('colors', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'colors'">
             <ion-item-divider>Colors</ion-item-divider>
-            <ion-item *ngFor="let color of items$|async">
+            <ion-item *ngFor="let color of items$|async" (click)="selected.color = color.name; setFocus('')">
                 {{ color?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
             <ion-label>Designer</ion-label>
-            <ion-searchbar (focus)="setFocus('designers')" (input)="getItems('designers', $event)"></ion-searchbar>
+            <ion-input [(ngModel)]="selected.designer"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('designers')" (ionInput)="getItems('designers', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'designers'">
             <ion-item-divider>Designers</ion-item-divider>
-            <ion-item *ngFor="let designer of items$|async">
+            <ion-item *ngFor="let designer of items$|async" (click)="selected.designer = designer.name; setFocus('')">
                 {{ designer?.name }}
             </ion-item>
         </ng-container>
 
         <ion-item>
             <ion-label>Brand</ion-label>
-            <ion-searchbar (focus)="setFocus('brands')" (input)="getItems('brands', $event)"></ion-searchbar>
+            <ion-input [(ngModel)]="selected.brand"></ion-input>
         </ion-item>
+        <ion-searchbar (ionFocus)="setFocus('brands')" (ionInput)="getItems('brands', $event)"></ion-searchbar>
         <ng-container *ngIf="focus === 'brands'">
             <ion-item-divider>Brands</ion-item-divider>
-            <ion-item *ngFor="let brand of items$|async">
+            <ion-item *ngFor="let brand of items$|async" (click)="selected.brand = brand.name; setFocus('')">
                 {{ brand?.name }}
             </ion-item>
         </ng-container>
