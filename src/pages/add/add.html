@@ -102,7 +102,7 @@
 
         <ion-item>
             <ion-label>Category <span [ngStyle]="{'color': article.category_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('categories')" (ionInput)="getItems('categories', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('categories')" (input)="getItems('categories', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'categories'">
             <ion-item-divider>Categories</ion-item-divider>
@@ -113,7 +113,7 @@
 
         <ion-item>
             <ion-label>Style <span [ngStyle]="{'color': article.style_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('styles')" (ionInput)="getItems('styles', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('styles')" (input)="getItems('styles', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'styles'">
             <ion-item-divider>Styles</ion-item-divider>
@@ -124,7 +124,7 @@
 
         <ion-item>
             <ion-label>Period <span [ngStyle]="{'color': article.periods_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('periods')" (ionInput)="getItems('periods', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('periods')" (input)="getItems('periods', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'periods'">
             <ion-item-divider>Periods</ion-item-divider>
@@ -135,7 +135,7 @@
 
         <ion-item>
             <ion-label>Condition <span [ngStyle]="{'color': article.condition_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('conditions')" (ionInput)="getItems('conditions', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('conditions')" (input)="getItems('conditions', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'conditions'">
             <ion-item-divider>Conditions</ion-item-divider>
@@ -146,7 +146,7 @@
 
         <ion-item>
             <ion-label>Material <span [ngStyle]="{'color': article.material_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('materials')" (ionInput)="getItems('materials', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('materials')" (input)="getItems('materials', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'materials'">
             <ion-item-divider>Materials</ion-item-divider>
@@ -157,7 +157,7 @@
 
         <ion-item>
             <ion-label>Color <span [ngStyle]="{'color': article.color_id ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-searchbar (ionFocus)="setFocus('colors')" (ionInput)="getItems('colors', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('colors')" (input)="getItems('colors', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'colors'">
             <ion-item-divider>Colors</ion-item-divider>
@@ -168,7 +168,7 @@
 
         <ion-item>
             <ion-label>Designer</ion-label>
-            <ion-searchbar (ionFocus)="setFocus('designers')" (ionInput)="getItems('designers', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('designers')" (input)="getItems('designers', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'designers'">
             <ion-item-divider>Designers</ion-item-divider>
@@ -179,7 +179,7 @@
 
         <ion-item>
             <ion-label>Brand</ion-label>
-            <ion-searchbar (ionFocus)="setFocus('brands')" (ionInput)="getItems('brands', $event)"></ion-searchbar>
+            <ion-searchbar (focus)="setFocus('brands')" (input)="getItems('brands', $event)"></ion-searchbar>
         </ion-item>
         <ng-container *ngIf="focus === 'brands'">
             <ion-item-divider>Brands</ion-item-divider>
