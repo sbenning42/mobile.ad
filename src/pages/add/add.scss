@@ -12,11 +12,22 @@ page-add {
     .not-to-much {
         max-height: 30vh;
         overflow: auto;
+        direction: rtl;
+        filter: sepia(0.2);
+    }
+    .not-to-much-inner {
+        direction: ltr;
     }
     .spacer {
         flex: 1;
     }
     .selected {
         color: #00aed8;
+    }
+    .autocomp {
+        color: #00aed8;
+    }
+    .label {
+        display: flex;
     }
 }

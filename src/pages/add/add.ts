@@ -42,7 +42,7 @@ export class AddPage {
   errors$: Observable<string[]>;
   checked = 0;
 
-  private focus = '';
+  focus = '';
   private _focus$: BehaviorSubject<string> = new BehaviorSubject(this.focus);
   focus$: Observable<string> = this._focus$.asObservable();
 
@@ -61,7 +61,7 @@ export class AddPage {
   ];
   step = 0;
 
-  private items: {id: string, name: string}[] = [];
+  items: {id: string, name: string}[] = [];
   private _items$: BehaviorSubject<{id: string, name: string}[]> = new BehaviorSubject(this.items);
   items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
@@ -150,6 +150,14 @@ export class AddPage {
   getItems(search: string) {
     const items = this.items.filter(item => item.name.search(search) < 0 ? false : true);
     this._items$.next(items);
+  }
+
+  toggleAutocomp() {
+    if (this.focus && this.items && this.items[0]) {
+      this._focus$.next('');
+    } else {
+      this._focus$.next(this.focus);
+    }
   }
 
 }

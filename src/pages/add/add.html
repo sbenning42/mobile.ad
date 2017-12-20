@@ -20,7 +20,7 @@
         </ion-item>
         <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
         <ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
-            <p item-start style="white-space: pre-line; width: 75%">{{ error }}</p>
+            <p item-start style="white-space: pre-line; width: 50%">{{ error }}</p>
             <button item-end ion-button icon-left><ion-icon name="close"></ion-icon>Remove</button>
         </ion-item>
         <ion-item (click)="takeLoop()">
@@ -40,7 +40,6 @@
 
     <ion-list #step1 *ngIf="step === 1">
         <ion-list-header>Article Infos</ion-list-header>
-        <ion-item-divider>Identification</ion-item-divider>
         <ion-item>
             <ion-label>Description <span [ngStyle]="{'color': article.description ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-textarea [(ngModel)]="article.description"></ion-textarea>
@@ -91,12 +90,11 @@
     <ion-list #step2 *ngIf="step === 2">
         <ion-list-header>Transport</ion-list-header>
         <ion-item>
-            <ion-label>Location <span [ngStyle]="{'color': selected.address ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Location <span [ngStyle]="{'color': selected.address ? '#00aed8' : '#f44336'}">*</span> :</ion-label>
             <ion-input disabled [(ngModel)]="selected.address"></ion-input>
         </ion-item>
-        <ion-item-divider>Addresses</ion-item-divider>
         <ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address.type" [class.selected]="address.type === selected.address">
-            {{ address.type }}: {{ address.address }}, {{ address.city }}
+            {{ address.type }} -- {{ address.address }}, {{ address.city }}
         </ion-item>
         <ion-item-divider></ion-item-divider>
         <ion-item>
@@ -116,13 +114,16 @@
             <ion-input #categoryInput (ionFocus)="setFocus('category')" (ionChange)="getItems(selected.category)" [(ngModel)]="selected.category"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'category'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -130,13 +131,16 @@
             <ion-input #styleInput (ionFocus)="setFocus('style')" (ionChange)="getItems(selected.style)" [(ngModel)]="selected.style"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'style'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -144,13 +148,16 @@
             <ion-input #periodsInput (ionFocus)="setFocus('periods')" (ionChange)="getItems(selected.periods)" [(ngModel)]="selected.periods"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'periods'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -158,13 +165,16 @@
             <ion-input #conditionInput (ionFocus)="setFocus('condition')" (ionChange)="getItems(selected.condition)" [(ngModel)]="selected.condition"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'condition'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -172,15 +182,16 @@
             <ion-input #materialInput (ionFocus)="setFocus('material')" (ionChange)="getItems(selected.material)" [(ngModel)]="selected.material"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'material'">
-            <ion-item-divider>{{ focus }}<span class="spacer"></span>
-                <ion-icon name="close"></ion-icon>
-            </ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -188,13 +199,16 @@
             <ion-input #colorInput (ionFocus)="setFocus('color')" (ionChange)="getItems(selected.color)" [(ngModel)]="selected.color"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'color'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -202,13 +216,16 @@
             <ion-input #designerInput (ionFocus)="setFocus('designer')" (ionChange)="getItems(selected.designer)" [(ngModel)]="selected.designer"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'designer'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -216,13 +233,16 @@
             <ion-input #brandInput (ionFocus)="setFocus('brand')" (ionChange)="getItems(selected.brand)" [(ngModel)]="selected.brand"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'brand'">
-            <ion-item-divider>{{ focus }}</ion-item-divider>
             <div class="not-to-much">
-                <ion-item *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
+                <ion-item class="autocomp" *ngFor="let item of items$|async" (click)="selected[focus] = item.name; setFocus('')">
                     {{ item.name }}
                 </ion-item>
             </div>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider class="autocomp-box" (click)="toggleAutocomp()">
+                <span class="spacer"></span>
+                <ion-icon name="{{ focus && items && !items[0] ? 'arrow-down' : 'arrow-up' }}"></ion-icon>
+                <span class="spacer"></span>
+            </ion-item-divider>
         </ng-container>
 
         <ion-item>
@@ -231,8 +251,74 @@
 
     </ion-list>
 
-    <ion-list #step3 *ngIf="step === 4">
+    <ion-list #step4 *ngIf="step === 4">
         <ion-list-header>Resume</ion-list-header>
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon item-start name="{{ false ? 'warning' : 'done' }}"></ion-icon>
+            <ion-label item-start>Label</ion-label>
+            <p style="white-space: pre-line; width: 33%" item-end> Value </p>
+        </ion-item>
+
         <ion-item>
             <button ion-button (click)="save()">Save</button>
         </ion-item>
