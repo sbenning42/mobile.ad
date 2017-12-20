@@ -24,6 +24,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 })
 export class AddPage {
 
+  article: Article = new Article();
+
   pictures$: Observable<string[]>;
   errors$: Observable<string[]>;
   checked = 0;
@@ -67,17 +69,6 @@ export class AddPage {
 
   setPrincipale(index) {
     this.checked = index;
-  }
-
-  orderUp(index: number) {
-    if (!index) {
-      return ;
-    }
-    // TODO
-  }
-
-  orderDown(index: number) {
-    // TODO
   }
 
   remove(index: number) {

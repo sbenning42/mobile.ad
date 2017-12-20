@@ -20,11 +20,13 @@
         </ion-item>
         <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
         <ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
-            <p style="white-space: pre-line;">{{ error }}</p>
+            <p item-start style="white-space: pre-line;">{{ error }}</p>
+            <button item-end ion-icon-button><ion-icon name="close"></ion-icon></button>
         </ion-item>
         <ion-item (click)="takeLoop()">
-            <ion-icon name="camera"></ion-icon>
-            Add a Picture
+            <button ion-icon-button>
+                <ion-icon name="camera"></ion-icon>Add a Picture
+            </button>
         </ion-item>
         <ion-item *ngFor="let picture of pictures$|async; let index = index">
             <ion-thumbnail item-start>
