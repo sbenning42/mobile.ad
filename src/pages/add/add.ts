@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { PicturesLoopComponent } from '../../components/pictures-loop/pictures-loop';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AnnexesProvider } from '../../providers/annexes/annexes';
 
 /**
  * Generated class for the AddPage page.
@@ -47,17 +48,32 @@ export class AddPage {
   private _items$: BehaviorSubject<{id: string, name: string}[]> = new BehaviorSubject(this.items);
   items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
-  constructor(public navCtrl: NavController, public camera: CameraProvider, public modalCtrl: ModalController) {
-    this.focus$.subscribe(focus => {
-      this.items = [{id: '0', name: 'test1'}, {id: '0', name: 'test2'}, {id: '0', name: 'test3'}, {id: '0', name: 'test4'}];
-      this._items$.next(this.items);
-    });
-  }
+  sub: Subscription;
+
+  constructor(
+    public navCtrl: NavController,
+    public camera: CameraProvider,
+    public modalCtrl: ModalController,
+    public annexes: AnnexesProvider
+  ) { }
 
   ionViewDidLoad() {
+    this.sub = this.focus$.subscribe(focus => {
+      this.items = [
+        { id: '0', name: 'test1' },
+        { id: '0', name: 'test2' },
+        { id: '0', name: 'test3' },
+        { id: '0', name: 'test4' }
+      ];
+      this._items$.next(this.items);
+    });
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
     this.takeLoop();
+  }
+
+  ionViewDidLeave() {
+    this.sub.unsubscribe();
   }
 
   takeLoop() {
