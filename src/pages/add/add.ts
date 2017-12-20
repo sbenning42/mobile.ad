@@ -64,15 +64,47 @@ export class AddPage {
   ) { }
 
   ionViewDidLoad() {
-    this.sub = this.focus$.subscribe(focus => {
-      this.items = focus ? [
-        { id: '0', name: 'test1' },
-        { id: '0', name: 'test2' },
-        { id: '0', name: 'test3' },
-        { id: '0', name: 'test4' }
-      ] : [];
+    this.sub = this.focus$.switchMap(focus => {
+      switch (focus) {
+        case 'category': {
+          this.items = this.annexes.categories;
+          break ;
+        }
+        case 'style': {
+          this.items = this.annexes.styles;
+          break ;
+        }
+        case 'periods': {
+          this.items = this.annexes.periods;
+          break ;
+        }
+        case 'condition': {
+          this.items = this.annexes.conditions;
+          break ;
+        }
+        case 'material': {
+          this.items = this.annexes.materials;
+          break ;
+        }
+        case 'color': {
+          this.items = this.annexes.colors;
+          break ;
+        }
+        case 'designer': {
+          this.items = this.annexes.designers;
+          break ;
+        }
+        case 'brand': {
+          this.items = this.annexes.brands;
+          break ;
+        }
+        default: {
+          this.items = [];
+        }
+      }
       this._items$.next(this.items);
-    });
+      return this.items$;
+    }).subscribe();
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
     this.takeLoop();
@@ -129,11 +161,11 @@ export class AddPage {
 
   getItems(search: string) {
     console.log('Will search items: ' + search + ', for focus: ' + this.focus);
-    this.items = this.items.filter(item => {
+    const items = this.items.filter(item => {
       console.log('search for items: ' + search + ', in: ' + item.name);
       return item.name.search(search) < 0 ? false : true;
     });
-    this._items$.next(this.items);
+    this._items$.next(items);
   }
 
 }

@@ -9,4 +9,8 @@ page-add {
     .error {
         border: solid 2px#f44336;
     }
+    .not-to-much {
+        max-height: 70vh;
+        overflow: auto;
+    }
 }
