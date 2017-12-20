@@ -28,7 +28,9 @@ export class AddPage {
   errors$: Observable<string[]>;
   checked = 0;
 
-  settings: string;
+  private focus = '';
+  private _focus$: BehaviorSubject<string> = new BehaviorSubject(this.focus);
+  focus$: Observable<string> = this._focus$.asObservable();
 
   steps = [
     {icon: 'camera', color: '#f44336'},
@@ -44,6 +46,10 @@ export class AddPage {
   items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
   constructor(public navCtrl: NavController, public camera: CameraProvider, public modalCtrl: ModalController) {
+    this.focus$.subscribe(focus => {
+      this.items = [{id: '0', name: 'test1'}, {id: '0', name: 'test2'}, {id: '0', name: 'test3'}, {id: '0', name: 'test4'}];
+      this._items$.next(this.items);
+    });
   }
 
   ionViewDidLoad() {
@@ -103,11 +109,15 @@ export class AddPage {
   }
 
   setFocus(key: string) {
-
+    this.focus = key;
+    this._focus$.next(key);
   }
 
   getItems(key: string, search: string) {
-
+    this.items = this.items.filter(item => {
+      return item.name.search(search) ? true : false;
+    });
+    this._items$.next(this.items);
   }
 
 }
