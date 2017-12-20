@@ -88,7 +88,7 @@ export class ApiProvider {
   }
 
   putProduct(article: Article): Observable<Article> {
-    return this.http.put(`/myproducts`, +article.id, article);
+    return this.http.put(Api.putArticle, +article.id, article);
   }
 
   uploadArticlePictures(article: Article, pictures: any[]): Observable<any> {

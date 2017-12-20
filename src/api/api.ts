@@ -12,6 +12,7 @@ export const channelsPublishApi = (articleId, channelId) => `${baseApi}/v2/produ
 export const userInfos = id => `${baseApi}/users/${id}/public-infos`;
 export const userAccount = id => `${baseApi}/users/${id}/account`;
 export const addArticle = `${baseApi}/myproducts`;
+export const putArticle = `${baseApi}/myproducts`;
 export const uploadArticlePicture = `${baseApi}/product/upload`;
 
 export class Api {
@@ -29,5 +30,6 @@ export class Api {
     public static userInfo = id => userInfos(id);
     public static userAccount = id => userAccount(id);
     public static addArticle = addArticle;
+    public static putArticle = putArticle;
     public static uploadArticlePicture = uploadArticlePicture;
 }
