@@ -130,7 +130,7 @@ export class AddPage {
   getItems(search: string) {
     console.log('Will search items: ' + search + ', for focus: ' + this.focus);
     this.items = this.items.filter(item => {
-      console.log('search for items: ' + search + ', in: ' + item);
+      console.log('search for items: ' + search + ', in: ' + item.name);
       return item.name.search(search) < 0 ? false : true;
     });
     this._items$.next(this.items);
