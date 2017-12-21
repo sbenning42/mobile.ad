@@ -22,6 +22,37 @@ import { TabsPage } from '../tabs/tabs';
  * Ionic pages and navigation.
  */
 
+export class ImageDataConverter {
+  constructor(public dataURI) {
+    this.dataURI = dataURI;
+  }
+  getByteString() {
+    let byteString;
+    if (this.dataURI.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(this.dataURI.split(',')[1]);
+    } else {
+      byteString = decodeURI(this.dataURI.split(',')[1]);
+    }
+    return byteString;
+  }
+  getMimeString() {
+    return this.dataURI.split(',')[0].split(':')[1].split(';')[0];
+  }
+  convertToTypedArray() {
+    let byteString = this.getByteString();
+    let ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return ia;
+  }
+  dataURItoBlob() {
+    let mimeString = this.getMimeString();
+    let intArray = this.convertToTypedArray();
+    return new Blob([intArray], {type: mimeString});
+  }
+}
+
 @IonicPage()
 @Component({
   selector: 'page-add',
@@ -173,7 +204,18 @@ export class AddPage {
     this.article.periods_id = this.selected.periods.id;
     this.article.material_id = this.selected.material.id;
     this.article.style_id = this.selected.style.id;
+  }
 
+  convertBase64Encoding(dataURL) {
+    const blob = new ImageDataConverter(dataURL).dataURItoBlob();
+    let data = new FormData();
+    data.append('file_name', 'file');
+    data.append('file', blob);
+    data.append('fileName', 'unknow');
+    data.append('fileSize', 'unknow');
+    data.append('fileType', 'unknow');
+    data.append('fileLastMod', 'unknow');
+    return data;
   }
 
   saveDraft(observer?) {
@@ -183,7 +225,7 @@ export class AddPage {
   
     let stream$ = this.article.id
       ? this.pictures$.switchMap(pictures => {
-          picturesFiles = pictures.map(picture => picture);
+          picturesFiles = pictures.map(picture => this.convertBase64Encoding(picture));
           return this.api.putProduct(this.article);
         })
       : this.pictures$.switchMap(pictures => {
@@ -198,7 +240,10 @@ export class AddPage {
     
     if (picturesFiles) {
       picturesFiles.foreach((file, index) => {
-        stream$ = stream$.switchMap(apiData => this.api.uploadArticlePicture(this.article, file));
+        stream$ = stream$.switchMap(apiData => {
+          file.append('article_id', this.article.id);
+          return this.api.uploadArticlePicture(this.article, file)
+        });
       });
     }
 
