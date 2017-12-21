@@ -35,7 +35,7 @@
 
         <ion-item (click)="article.name ? undefined : goto(0)">
             <ion-icon item-start name="{{ article.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.name ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Name</ion-label>
+            <ion-label item-start>Title</ion-label>
             <p style="white-space: pre-line" item-end> {{ article.name }} </p>
         </ion-item>
 

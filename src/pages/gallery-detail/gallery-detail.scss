@@ -34,18 +34,19 @@ page-gallery-detail {
         margin-left: auto;
         margin-bottom: 5px;
     }
-    .padding {}
+    .padding {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
     .gallery-box {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
-        padding-left: auto;
-        padding-right: auto;
     }
     .gallery-item {
-        width: 30vw;
-        height: 30vw;
+        width: calc(33vw - 4px);
+        height: calc(33vw - 4px);
         border: solid 1px white;
         display: flex;
         justify-content: center;
@@ -69,7 +70,7 @@ page-gallery-detail {
         margin-top: 0 !important;
     }
     .no-padding {
-        padding-left: 0;
+        padding-left: 8px;
     }
     ion-avatar img {
         width: 100% !important;
