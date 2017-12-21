@@ -59,8 +59,8 @@ export class ACcountPage {
       .switchMap(() => this.api.getUserAccount(+this.user.id))
       .do(account => {
         this.account = account;
-        this.dateStart = account.start_account;
-        this.dateEnd = account.end_account;
+        this.dateStart = account.start_account ? account.start_account.slice(0, 10) : '';
+        this.dateEnd = account.end_account ? account.end_account.slice(0, 10) : '';
       }).switchMap(() => this.api.getChannels())
         .do(channels => this.channels = channels.filter(ch => ch.name !== 'Gallery').map(ch => {
           const mk = this.user['marketplaces'].find(mk => mk.name === ch.name);

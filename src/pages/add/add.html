@@ -28,7 +28,7 @@
             <ion-input [(ngModel)]="article.name"></ion-input>
         </ion-item>
 
-        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
+        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span></ion-item-divider>
 
         <div class="gallery-wrapper">
             <div class="gallery-box">
@@ -155,7 +155,7 @@
         </ion-list-header>
 
         <ion-item>
-            <ion-label>Category <span [ngStyle]="{'color': selected.category ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Category <span [ngStyle]="{'color': selected.category?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #categoryInput (ionFocus)="setFocus('category')" (ionChange)="getItems(selected.category)" [(ngModel)]="selected.category.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'category'">
@@ -172,7 +172,7 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Style <span [ngStyle]="{'color': selected.style ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Style <span [ngStyle]="{'color': selected.style?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #styleInput (ionFocus)="setFocus('style')" (ionChange)="getItems(selected.style)" [(ngModel)]="selected.style.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'style'">
@@ -189,7 +189,7 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Period <span [ngStyle]="{'color': selected.periods ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Period <span [ngStyle]="{'color': selected.periods?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #periodsInput (ionFocus)="setFocus('periods')" (ionChange)="getItems(selected.periods)" [(ngModel)]="selected.periods.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'periods'">
@@ -206,7 +206,7 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Condition <span [ngStyle]="{'color': selected.condition ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Condition <span [ngStyle]="{'color': selected.condition?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #conditionInput (ionFocus)="setFocus('condition')" (ionChange)="getItems(selected.condition)" [(ngModel)]="selected.condition.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'condition'">
@@ -223,7 +223,7 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Material <span [ngStyle]="{'color': selected.material ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Material <span [ngStyle]="{'color': selected.material?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #materialInput (ionFocus)="setFocus('material')" (ionChange)="getItems(selected.material)" [(ngModel)]="selected.material.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'material'">
@@ -240,7 +240,7 @@
         </ng-container>
 
         <ion-item>
-            <ion-label>Color <span [ngStyle]="{'color': selected.color ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Color <span [ngStyle]="{'color': selected.color?.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input #colorInput (ionFocus)="setFocus('color')" (ionChange)="getItems(selected.color)" [(ngModel)]="selected.color.name"></ion-input>
         </ion-item>
         <ng-container *ngIf="focus === 'color'">

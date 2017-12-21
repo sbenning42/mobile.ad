@@ -14,6 +14,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { ArticlePreviewPage } from '../article-preview/article-preview';
 import { TabsPage } from '../tabs/tabs';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the AddPage page.
@@ -108,6 +109,7 @@ export class AddPage {
     public camera: CameraProvider,
     public modalCtrl: ModalController,
     public toastCtrl: ToastController,
+    public loading: LoadingController,
     public api: ApiProvider,
     public annexes: AnnexesProvider
   ) { }
@@ -148,7 +150,7 @@ export class AddPage {
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
 
-    this.errSub = this.camera.errors$.subscribe((err) => {
+    this.errSub = this.camera.errors$.throttleTime(500).subscribe((err) => {
       if (!(err && err[0])) { return ; }
       const toast = this.toastCtrl.create({
         message: 'No Picture to add',
@@ -281,14 +283,29 @@ export class AddPage {
         ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file))
         : this.api.uploadArticlePicture(this.article, file);
     });
-    let stream$ = (creationStream$
-      ? creationStream$.switchMap(() => picturesStreams$)
-      : picturesStreams$)
-      .switchMap(() => this.api.putProduct(this.article));
+
+    let stream$ = creationStream$ && picturesStreams$
+      ? creationStream$.switchMap(() => picturesStreams$).switchMap(() => this.api.putProduct(this.article))
+      : creationStream$
+        ? creationStream$.switchMap(() => this.api.putProduct(this.article))
+        : picturesStreams$
+          ? picturesStreams$.switchMap(() => this.api.putProduct(this.article))
+          : this.api.putProduct(this.article);
     
-      this.saveSub = stream$.subscribe(observer ? observer : {
-      next: () => this.toaster(successDraftMsg, 1500, 'success-toast'),
-      error: () => this.toaster(errorDraftMsg, 3000, 'failure-toast')
+    let loading;
+    if (!observer) {
+      loading = this.loading.create();
+      loading.present();
+    }
+    this.saveSub = stream$.subscribe(observer ? observer : {
+      next: () => {
+        this.toaster(successDraftMsg, 1500, 'success-toast');
+        loading.dismiss();
+      },
+      error: () => {
+        this.toaster(errorDraftMsg, 3000, 'failure-toast');
+        loading.dismiss();
+      }
     });
 
   }
@@ -296,17 +313,25 @@ export class AddPage {
   save() {
     let successMsg, errorMsg;
     if (this.article.id) {
-      successMsg = 'Product draft was edited successfully';
-      errorMsg = 'Product draft was not edited';
+      successMsg = 'Product was edited successfully';
+      errorMsg = 'Product was not edited';
     } else {
       successMsg = 'Product was created successfully';
       errorMsg = 'Product was not created. Title is missing';   
     }
+    const loading = this.loading.create();
     const callback = () => this.app.getRootNav().setRoot(TabsPage, { index: 1 });
     const observer = {
-      next: (data) => this.toaster(successMsg, 1500, 'toast-success', callback),
-      error: (err) => this.toaster(errorMsg, 3000, 'failure-toast')
+      next: (data) => {
+        this.toaster(successMsg, 1500, 'toast-success', callback);
+        loading.dismiss();
+      },
+      error: (err) => {
+        this.toaster(errorMsg, 3000, 'failure-toast');
+        loading.dismiss();
+      }
     };
+    loading.present();
     this.saveDraft(observer);
   }
 
@@ -316,7 +341,7 @@ export class AddPage {
   }
 
   getItems(search: any) {
-    const items = this.items.filter(item => item.name.search(search.name) < 0 ? false : true);
+    const items = this.items.filter(item => item.name.toLowerCase().search(search.name.toLowerCase()) < 0 ? false : true);
     this._items$.next(items);
   }
 
