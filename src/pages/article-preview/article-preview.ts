@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Article } from '../../models/article';
 import { Observable } from 'rxjs/Observable';
+import { CameraProvider } from '../../providers/camera/camera';
 
 /**
  * Generated class for the ArticlePreviewPage page.
@@ -17,20 +18,24 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ArticlePreviewPage {
 
-  article: Article;
-  selected: { [key: string]: { id: string, name: string } };
+  article: Article = new Article();
+  selected: { [key: string]: { id: string, name: string } } = {
+    category: {id: '0', name: ''}, style: {id: '0', name: ''}, periods: {id: '0', name: ''},
+    condition: {id: '0', name: ''}, material: {id: '0', name: ''}, color: {id: '0', name: ''},
+    designer: {id: '0', name: ''}, brand: {id: '0', name: ''}, address: {id: '0', name: ''}
+  };
   pictures$: Observable<string[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: CameraProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArticlePreviewPage');
+    this.pictures$ = this.camera.pictures$;
     this.article = this.navParams.get('article');
-    console.log('article: ' + this.article);
     this.selected = this.navParams.get('selected');
+    console.log('article: ' + this.article);
     console.log('selected: ' + this.selected);
-    this.pictures$ = this.navParams.get('pictures$');
     console.log('pictures$: ' + this.pictures$);
   }
 

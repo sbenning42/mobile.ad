@@ -17,21 +17,22 @@
     <ion-list>
         <ion-list-header>Article Resume</ion-list-header>
 
-        <ion-item (click)="goto(0)">
-            <ion-label>Cover</ion-label>
-            <ion-icon item-start name="{{ (pictures$|async).length ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': (pictures$|async).length ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-thumbnail item-end><img src="{{ (pictures$|async)[0] }}"></ion-thumbnail>
-        </ion-item>
-
-        <ion-item-divider>Pictures - {{ (pictures$|async)?.length }}</ion-item-divider>
-
+        <ion-item-divider (click)="goto(0)"> Pictures - {{ (pictures$|async)?.length }}</ion-item-divider>
         <ng-container *ngFor="let picture of pictures$|async; let index = index">
-            <ion-item *ngIf="index !== 0">
-                <ion-thumbnail><img src="{{ picture }}"></ion-thumbnail>
+            <ion-item *ngIf="index === 0" (click)="goto(0)">
+                <ion-label>Cover</ion-label>
+                <ion-icon item-start name="{{ picture ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': picture ? '#00aed8' : '#f44336' }"></ion-icon>
+                <ion-thumbnail item-end><img src="{{ picture }}"></ion-thumbnail>
             </ion-item>
         </ng-container>
-
+        <div class="gallery-wrapper">
+            <div class="gallery-box">
+                <div class="gallery-item" *ngFor="let picture of pictures$|async; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
+                </div>
+            </div>
+        </div>
         <ion-item-divider></ion-item-divider>
+
         <ion-item (click)="article.name ? undefined : goto(0)">
             <ion-icon item-start name="{{ article.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Name</ion-label>

@@ -153,7 +153,7 @@ export class AddPage {
     this.navCtrl.push(ArticlePreviewPage, {
       article: this.article,
       selected: this.selected,
-      pictures$: this.pictures$,
+      camera: this.camera,
       delegate: this
     });
   }
@@ -206,18 +206,18 @@ export class AddPage {
         console.log(`${this.article.id} draft has been saved!`);
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product draft was edited successfully' : 'Product draft was created successfully',
-          duration: 3000
+          duration: 3000,
+          cssClass: 'success-toast'
         });
-        toast.cssClass = 'success-toast';
         toast.present();
       },
       error: (err) => {
         console.log(`A error occured while saving article draft: ` + JSON.stringify(err));
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product draft was not edited' : 'Product draft was not created',
-          duration: 3000
+          duration: 3000,
+          cssClass: 'failure-toast'
         });
-        toast.cssClass = 'failure-toast';
         toast.present();
       },
       complete: () => console.log('Task Completed!')
@@ -249,18 +249,18 @@ export class AddPage {
         console.log(`${this.article.id} has been saved!`);
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product was edited successfully' : 'Product was created successfully',
-          duration: 3000
+          duration: 3000,
+          cssClass: 'success-toast'
         });
-        toast.cssClass = 'success-toast';
         toast.present();
       },
       error: (err) => {
         console.log(`A error occured while saving article: ` + JSON.stringify(err));
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product was not edited' : 'Product was not created',
-          duration: 3000
+          duration: 3000,
+          cssClass: 'failure-toast'
         });
-        toast.cssClass = 'failure-toast';
         toast.present();
       },
       complete: () => {
