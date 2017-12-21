@@ -13,15 +13,20 @@ slides-navigator {
         border: solid 5px #00aed8;
     }
     .test {
+        z-index: 50;
         position: absolute;
         top: 50%;
         border-top: solid 1px #00aed8;
-        width: 100%;
+        width: calc(100% - 16px);
         margin: 0;
+    }
+    ion-icon {
+        z-index: 60;
     }
 }
 
 .circle-base {
+    z-index: 60;
     border-radius: 50%;
     width: 50px;
     height: 50px;
