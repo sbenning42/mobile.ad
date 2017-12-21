@@ -76,4 +76,8 @@ export class CameraProvider {
     return pictures;
   }
 
+  has(): boolean {
+    return this.pictures && this.pictures.length > 0;
+  }
+
 }

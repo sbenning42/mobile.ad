@@ -1,13 +1,17 @@
 <!-- Generated template for the SlidesNavigatorComponent component -->
+
 <div class="navigator">
     <ng-container *ngFor="let step of steps; let index = index">
-
+        <ion-icon *ngIf="index" name="arrow-forward"></ion-icon>
+        <div class="circle-base type2" [class.incomplete]="!step.isCompleted" [class.complete]="step.isCompleted" [class.active]="stepNo === index" (click)="goto(index)">
+            <ion-icon name="{{ step?.icon }}"></ion-icon>
+        </div>
     </ng-container>
-    <ion-card class="navigator" [class.active]="stepNo === index" [ngStyle]="{'color': step.color}" (click)="goto(index)">
-        <ion-icon name="{{ step?.icon }}"></ion-icon>
-    </ion-card>
-    <ion-icon name="arrow-forward"></ion-icon>
 </div>
+
+<!--ion-card class="navigator" [class.active]="stepNo === index" [ngStyle]="{'color': step.color}" (click)="goto(index)">
+    <ion-icon name="{{ step?.icon }}"></ion-icon>
+</ion-card>
 <div class="circle-base type1"></div>
 <div class="circle-base type2"></div>
-<div class="circle-base type3"></div>
+<div class="circle-base type3"></div-->

@@ -91,15 +91,17 @@ export class AddPage {
   items$: Observable<{id: string, name: string}[]> = this._items$.asObservable();
 
   steps = [
-    {icon: 'camera', color: '#f44336'},
-    {icon: 'book', color: '#f44336'},
-    {icon: 'pin', color: '#f44336'},
-    {icon: 'ribbon', color: '#4caf50'}
+    {icon: 'camera', color: '#f44336', isCompleted: false},
+    {icon: 'book', color: '#f44336', isCompleted: false},
+    {icon: 'pin', color: '#f44336', isCompleted: false},
+    {icon: 'ribbon', color: '#4caf50', isCompleted: false}
   ];
   step = 0;
 
   sub: Subscription;
   saveSub: Subscription;
+  anotherSub: Subscription;
+  errSub: Subscription;
 
   constructor(
     public app: App,
@@ -117,11 +119,38 @@ export class AddPage {
   }
 
   ionViewDidLoad() {
+
+    this.anotherSub = Observable.interval(500).subscribe(() => {
+      if (this.article.name && this.camera.has()) {
+        this.steps[0].isCompleted = true;
+      } else {
+        this.steps[0].isCompleted = false;
+      }
+      if (this.article.price && this.article.price_by && this.article.description
+        && this.article.size_depth && this.article.size_height && this.article.size_width
+        && this.article.weight && this.article.quantity) {
+          this.steps[1].isCompleted = true;
+      } else {
+          this.steps[1].isCompleted = false;
+      }
+      if (this.article.number_of_packs && this.selected.address) {
+        this.steps[2].isCompleted = true;
+      } else {
+        this.steps[2].isCompleted = false;
+      }
+      if (this.selected.category.name && this.selected.style.name && this.selected.periods.name
+        && this.selected.condition.name && this.selected.color.name && this.selected.material.name) {
+          this.steps[3].isCompleted = true;
+        } else {
+          this.steps[3].isCompleted = false;
+        }
+    });
+
     this.addresses$ = this.api.getUserAddresses();
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
 
-    this.camera.errors$.subscribe((err) => {
+    this.errSub = this.camera.errors$.subscribe((err) => {
       if (!(err && err[0])) { return ; }
       const toast = this.toastCtrl.create({
         message: 'No Picture to add',
@@ -153,6 +182,7 @@ export class AddPage {
 
   ionViewDidLeave() {
     this.sub.unsubscribe();
+    this.errSub.unsubscribe();
   }
 
   takeOne() {
@@ -224,17 +254,12 @@ export class AddPage {
   saveDraft(observer?) {
     if (this.saveSub) { this.saveSub.unsubscribe(); }
 
-    let picturesFiles;
+    let picturesFiles = this.camera.deploy().map(picture => this.convertBase64Encoding(picture));
   
     let stream$ = this.article.id
-      ? this.pictures$.switchMap(pictures => {
-          picturesFiles = pictures.map(picture => this.convertBase64Encoding(picture));
-          return this.api.putProduct(this.article);
-        })
-      : this.pictures$.switchMap(pictures => {
-          picturesFiles = pictures.map(picture => picture);
-          return this.api.addProduct(this.article);
-        }).switchMap(apiArticle => {
+      ? this.api.putProduct(this.article)
+      : this.api.addProduct(this.article)
+        .switchMap(apiArticle => {
           this.article.id = apiArticle.id;
           return this.api.putProduct(this.article);
         });
@@ -242,7 +267,7 @@ export class AddPage {
     this.aggregateArticleAndSelection();
     
     if (picturesFiles) {
-      picturesFiles.foreach((file, index) => {
+      picturesFiles.forEach((file, index) => {
         stream$ = stream$.switchMap(apiData => {
           file.append('article_id', this.article.id);
           this.debug = JSON.stringify(file);

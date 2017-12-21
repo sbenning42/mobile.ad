@@ -18,11 +18,14 @@ export class Article {
         public color_id: string = '',
         public name: string = '',
         public description: string = '',
+        public quantity: string = '',
         public price: string = '',
+        public price_by: string = '',
         public size_height: string = '',
         public size_width: string = '',
         public size_depth: string = '',
         public weight: string = '',
+        public number_of_packs: string = '',
         public pictures?: any[]
     ) { }
 }

@@ -15,25 +15,21 @@ slides-navigator {
 
 .circle-base {
     border-radius: 50%;
-}
-
-.type1 {
-    width: 100px;
-    height: 100px;
-    background: yellow;
-    border: 3px solid red;
-}
-
-.type2 {
     width: 50px;
     height: 50px;
-    background: #ccc;
-    border: 3px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.type3 {
-    width: 25px;
-    height: 25px;
-    background: aqua;
-    border: 3px solid blue;
+.complete {
+    border: 3px solid #8bc34a;
+    background-color: #c5e1a5
 }
+
+.incomplete {
+    border: 3px solid #f44336;
+    background-color: #ef9a9a
+}
+
+.type2 {}
