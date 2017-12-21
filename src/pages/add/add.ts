@@ -60,6 +60,8 @@ export class ImageDataConverter {
 })
 export class AddPage {
 
+  debug: string;
+
   @ViewChild('categoryInput', {read: ElementRef}) private categoryEl: ElementRef;
   @ViewChild('styleInput', {read: ElementRef}) private styleEl: ElementRef;
   @ViewChild('periodsInput', {read: ElementRef}) private periodsEl: ElementRef;
@@ -242,6 +244,7 @@ export class AddPage {
       picturesFiles.foreach((file, index) => {
         stream$ = stream$.switchMap(apiData => {
           file.append('article_id', this.article.id);
+          this.debug = JSON.stringify(file);
           return this.api.uploadArticlePicture(this.article, file)
         });
       });
