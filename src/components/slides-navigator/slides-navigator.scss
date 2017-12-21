@@ -1,5 +1,6 @@
 slides-navigator {
     .navigator {
+        position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -11,6 +12,13 @@ slides-navigator {
     .active {
         border: solid 5px #00aed8;
     }
+    .test {
+        position: absolute;
+        top: 50%;
+        border-top: solid 1px #00aed8;
+        width: 100%;
+        margin: 0;
+    }
 }
 
 .circle-base {
@@ -20,6 +28,7 @@ slides-navigator {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 .complete {

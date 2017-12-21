@@ -320,11 +320,11 @@ export class AddPage {
       errorMsg = 'Product was not created. Title is missing';   
     }
     const loading = this.loading.create();
-    const callback = () => this.app.getRootNav().setRoot(TabsPage, { index: 1 });
     const observer = {
       next: (data) => {
-        this.toaster(successMsg, 1500, 'toast-success', callback);
+        this.toaster(successMsg, 1500, 'toast-success');
         loading.dismiss();
+        this.app.getRootNav().setRoot(TabsPage, { index: 3 })
       },
       error: (err) => {
         this.toaster(errorMsg, 3000, 'failure-toast');
