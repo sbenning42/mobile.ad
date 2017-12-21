@@ -1,4 +1,4 @@
-<ion-tabs *ngIf="(logged$|async)" selectedIndex="1">
+<ion-tabs *ngIf="(logged$|async)" selectedIndex="{{ selectedIndex }}">
     <ion-tab [root]="homeRoot" tabTitle="Home" tabIcon="cloud"></ion-tab>
     <ion-tab [root]="galleryRoot" tabTitle="Gallery" tabIcon="images"></ion-tab>
     <ion-tab [root]="addRoot" tabTitle="Add" tabIcon="add"></ion-tab>

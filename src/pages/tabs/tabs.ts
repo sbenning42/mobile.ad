@@ -14,6 +14,7 @@ import { ACcountPage } from '../a-ccount/a-ccount';
 import { CameraTabDefaultPagePage } from '../camera-tab-default-page/camera-tab-default-page';
 import { CartTabDefaultPagePage } from '../cart-tab-default-page/cart-tab-default-page';
 import { CloudTabDefaultPagePage } from '../cloud-tab-default-page/cloud-tab-default-page';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { CloudTabDefaultPagePage } from '../cloud-tab-default-page/cloud-tab-def
 })
 export class TabsPage {
 
+  selectedIndex = 1;
   homeRoot = HomePage;
   galleryRoot = GalleryPage;
   addRoot = AddPage;
@@ -31,8 +33,12 @@ export class TabsPage {
   logged$: Observable<boolean>;
 
   constructor(
-    private auth: AuthProvider
+    private auth: AuthProvider, public navParams: NavParams
   ) {
     this.logged$ = this.auth.isLoggedStream();
+    this.selectedIndex = this.navParams.get('index');
+    if (!this.selectedIndex) {
+      this.selectedIndex = 1;
+    }
   }
 }

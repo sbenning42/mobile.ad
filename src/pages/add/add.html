@@ -38,11 +38,11 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block disabled>Previous</button>
+            <button class="marged" ion-button icon-left block disabled><ion-icon name="arrow-backward"></ion-icon>Previous</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step + 1">Next</button>
+            <button class="marged" ion-button icon-right block (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
             <span class="spacer"></span>
         </ion-item>
 
@@ -100,11 +100,11 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step - 1">Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step + 1">Next</button>
+            <button class="marged" ion-button block icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
             <span class="spacer"></span>
         </ion-item>
     </ion-list>
@@ -135,11 +135,11 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step - 1">Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step + 1">Next</button>
+            <button class="marged" ion-button block icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
             <span class="spacer"></span>
         </ion-item>
     </ion-list>
@@ -289,11 +289,11 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="step = step - 1">Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block (click)="save()">Save</button>
             <span class="spacer"></span>
-            <button class="marged" ion-button block disabled>Next</button>
+            <button class="marged" ion-button block icon-right disabled>Next<ion-icon name="arrow-forward"></ion-icon></button>
             <span class="spacer"></span>
         </ion-item>
 

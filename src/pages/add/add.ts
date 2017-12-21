@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Article } from '../../models/article';
 import { ApiProvider } from '../../providers/api/api';
@@ -11,9 +11,9 @@ import { PicturesLoopComponent } from '../../components/pictures-loop/pictures-l
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AnnexesProvider } from '../../providers/annexes/annexes';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
-import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { ArticlePreviewPage } from '../article-preview/article-preview';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the AddPage page.
@@ -69,6 +69,7 @@ export class AddPage {
   saveSub: Subscription;
 
   constructor(
+    public app: App,
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public camera: CameraProvider,
@@ -77,6 +78,10 @@ export class AddPage {
     public api: ApiProvider,
     public annexes: AnnexesProvider
   ) { }
+
+  ionViewWillEnter() {
+    if (this.saveSub) { this.saveSub.unsubscribe(); }
+  }
 
   ionViewDidLoad() {
     this.addresses$ = this.api.getUserAddresses();
@@ -193,17 +198,13 @@ export class AddPage {
     
     if (picturesFiles) {
       picturesFiles.foreach((file, index) => {
-        stream$ = stream$.switchMap(apiData => {
-          console.log((index ? 'Picture: ' : 'Product: ') + JSON.stringify(apiData));
-          return this.api.uploadArticlePicture(this.article, file);
-        });
+        stream$ = stream$.switchMap(apiData => this.api.uploadArticlePicture(this.article, file));
       });
     }
 
     let toast;
     observer = observer ? observer : {
       next: (data) => {
-        console.log(`${this.article.id} draft has been saved!`);
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product draft was edited successfully' : 'Product draft was created successfully',
           duration: 3000,
@@ -212,9 +213,8 @@ export class AddPage {
         toast.present();
       },
       error: (err) => {
-        console.log(`A error occured while saving article draft: ` + JSON.stringify(err));
         toast = this.toastCtrl.create({
-          message: this.article.id ? 'Product draft was not edited' : 'Product draft was not created',
+          message: this.article.id ? 'Product draft was not edited' : 'Product draft was not created. Title is missing',
           duration: 3000,
           cssClass: 'failure-toast'
         });
@@ -246,16 +246,18 @@ export class AddPage {
     let toast;
     const observer = {
       next: (data) => {
-        console.log(`${this.article.id} has been saved!`);
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product was edited successfully' : 'Product was created successfully',
           duration: 3000,
           cssClass: 'success-toast'
         });
         toast.present();
+        toast.onDidDismiss(() => {
+          const nav = this.app.getRootNav();
+          nav.setRoot(TabsPage, { index: 1 });
+        });
       },
       error: (err) => {
-        console.log(`A error occured while saving article: ` + JSON.stringify(err));
         toast = this.toastCtrl.create({
           message: this.article.id ? 'Product was not edited' : 'Product was not created',
           duration: 3000,
@@ -263,10 +265,7 @@ export class AddPage {
         });
         toast.present();
       },
-      complete: () => {
-        console.log('Task Completed!');
-        toast.onDidDismiss(() => this.navCtrl.setRoot(TabsPage));
-      },
+      complete: () => {},
     };
     this.saveDraft(observer);
   }
