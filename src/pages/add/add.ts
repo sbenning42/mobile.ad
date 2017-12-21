@@ -152,11 +152,7 @@ export class AddPage {
 
     this.errSub = this.camera.errors$.throttleTime(500).subscribe((err) => {
       if (!(err && err[0])) { return ; }
-      const toast = this.toastCtrl.create({
-        message: 'No Picture to add',
-        duration: 1500
-      });
-      toast.present();
+      this.toaster('No Picture to add', 1500, 'failure-toast');
     });
   
     this.sub = this.focus$.switchMap(focus => {
@@ -181,8 +177,6 @@ export class AddPage {
   }
 
   ionViewDidLeave() {
-    this.sub.unsubscribe();
-    this.errSub.unsubscribe();
   }
 
   takeOne() {
