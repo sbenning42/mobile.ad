@@ -16,9 +16,11 @@ slides-navigator {
         z-index: 50;
         position: absolute;
         top: 50%;
+        left: 0;
         border-top: solid 1px #00aed8;
-        width: calc(100% - 16px);
-        margin: 0;
+        width: calc(100%);
+        margin-left: 8px;
+        margin-right: 8px;
     }
     ion-icon {
         z-index: 60;
