@@ -60,8 +60,6 @@ export class ImageDataConverter {
 })
 export class AddPage {
 
-  debug: string;
-
   @ViewChild('categoryInput', {read: ElementRef}) private categoryEl: ElementRef;
   @ViewChild('styleInput', {read: ElementRef}) private styleEl: ElementRef;
   @ViewChild('periodsInput', {read: ElementRef}) private periodsEl: ElementRef;
@@ -226,6 +224,12 @@ export class AddPage {
     });
   }
 
+  toaster(message, duration, cssClass, callback?) {
+    const toast = this.toastCtrl.create({message, duration, cssClass});
+    callback ? toast.onDidDismiss(callback) : undefined;
+    toast.present();
+  }
+
   aggregateArticleAndSelection() {
     this.article.address_id = this.selected.address.id;
     this.article.brand_id = this.selected.brand.id;
@@ -247,99 +251,61 @@ export class AddPage {
     data.append('fileSize', 'unknow');
     data.append('fileType', 'unknow');
     data.append('fileLastMod', 'unknow');
-    console.log(JSON.stringify(data));
     return data;
   }
 
   saveDraft(observer?) {
     if (this.saveSub) { this.saveSub.unsubscribe(); }
-
-    let picturesFiles = this.camera.deploy().map(picture => this.convertBase64Encoding(picture));
-  
-    let stream$ = this.article.id
-      ? this.api.putProduct(this.article)
-      : this.api.addProduct(this.article)
-        .switchMap(apiArticle => {
-          this.article.id = apiArticle.id;
-          return this.api.putProduct(this.article);
-        });
-    
-    this.aggregateArticleAndSelection();
-    
-    if (picturesFiles) {
-      picturesFiles.forEach((file, index) => {
-        stream$ = stream$.switchMap(apiData => {
-          file.append('article_id', this.article.id);
-          this.debug = JSON.stringify(file);
-          return this.api.uploadArticlePicture(this.article, file)
-        });
-      });
+    let successDraftMsg, errorDraftMsg;
+    if (this.article.id) {
+      successDraftMsg = 'Product draft was edited successfully';
+      errorDraftMsg = 'Product draft was not edited';
+    } else {
+      successDraftMsg = 'Product was created successfully';
+      errorDraftMsg = 'Product was not created. Title is missing'; 
     }
-
-    let toast;
-    observer = observer ? observer : {
-      next: (data) => {
-        toast = this.toastCtrl.create({
-          message: this.article.id ? 'Product draft was edited successfully' : 'Product draft was created successfully',
-          duration: 3000,
-          cssClass: 'success-toast'
-        });
-        toast.present();
-      },
-      error: (err) => {
-        toast = this.toastCtrl.create({
-          message: this.article.id ? 'Product draft was not edited' : 'Product draft was not created. Title is missing',
-          duration: 3000,
-          cssClass: 'failure-toast'
-        });
-        toast.present();
-      },
-      complete: () => console.log('Task Completed!')
-    };
-
-    this.saveSub = stream$.subscribe(observer);
-
-    /**
-     * Steps for saving:
-     * 
-     * User should get a feedback on the advance of the following proccess:
-     * 
-     * 1) save the name to get a valid edition id.
-     * 2) aggregate the relationals ids in the this.article: Article object.
-     *    All those ids lands on this.selected: { ... } literal object.
-     * 3) Once the edition id and the aggregate are done, edit the article.
-     * 4) Loop througth this.camera.pictures$: Observable<string[]> object to map
-     *    it to get valid part-data form for the backend to accept the files.
-     * 5) Save thoses files one by one
-     */
-
+    this.aggregateArticleAndSelection();
+    let picturesFiles = this.camera.deploy()
+      .map(picture => this.convertBase64Encoding(picture));
+    let creationStream$;
+    if (!this.article.id) {
+      creationStream$ = this.api.addProduct(this.article)
+        .do(apiArticle => this.article.id = apiArticle.id)
+        .do(apiArticle => picturesFiles.forEach(pictureFile => pictureFile.append('article_id', apiArticle.id)));
+    } else {
+      picturesFiles.forEach(pictureFile => pictureFile.append('article_id', this.article.id));
+    }
+    let picturesStreams$;
+    picturesFiles.forEach((file, index) => {
+      picturesStreams$ = picturesStreams$
+        ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file))
+        : this.api.uploadArticlePicture(this.article, file);
+    });
+    let stream$ = (creationStream$
+      ? creationStream$.switchMap(() => picturesStreams$)
+      : picturesStreams$)
+      .switchMap(() => this.api.putProduct(this.article));
     
+      this.saveSub = stream$.subscribe(observer ? observer : {
+      next: () => this.toaster(successDraftMsg, 1500, 'success-toast'),
+      error: () => this.toaster(errorDraftMsg, 3000, 'failure-toast')
+    });
+
   }
 
   save() {
-    let toast;
+    let successMsg, errorMsg;
+    if (this.article.id) {
+      successMsg = 'Product draft was edited successfully';
+      errorMsg = 'Product draft was not edited';
+    } else {
+      successMsg = 'Product was created successfully';
+      errorMsg = 'Product was not created. Title is missing';   
+    }
+    const callback = () => this.app.getRootNav().setRoot(TabsPage, { index: 1 });
     const observer = {
-      next: (data) => {
-        toast = this.toastCtrl.create({
-          message: this.article.id ? 'Product was edited successfully' : 'Product was created successfully',
-          duration: 3000,
-          cssClass: 'success-toast'
-        });
-        toast.present();
-        toast.onDidDismiss(() => {
-          const nav = this.app.getRootNav();
-          nav.setRoot(TabsPage, { index: 1 });
-        });
-      },
-      error: (err) => {
-        toast = this.toastCtrl.create({
-          message: this.article.id ? 'Product was not edited' : 'Product was not created',
-          duration: 3000,
-          cssClass: 'failure-toast'
-        });
-        toast.present();
-      },
-      complete: () => {},
+      next: (data) => this.toaster(successMsg, 1500, 'toast-success', callback),
+      error: (err) => this.toaster(errorMsg, 3000, 'failure-toast')
     };
     this.saveDraft(observer);
   }

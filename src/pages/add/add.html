@@ -41,7 +41,7 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button icon-left block disabled><ion-icon name="arrow-backward"></ion-icon>Previous</button>
+            <button class="marged" ion-button icon-left block disabled><ion-icon name="arrow-back"></ion-icon>Prev</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
@@ -103,7 +103,7 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
@@ -138,7 +138,7 @@
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
             <span class="spacer"></span>
@@ -290,13 +290,9 @@
             </ion-item-divider>
         </ng-container>
 
-        <div>
-            {{ debug }}
-        </div>
-
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-backward"></ion-icon>Previous</button>
+            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
             <span class="spacer"></span>
             <button class="marged" ion-button block (click)="save()">Save</button>
             <span class="spacer"></span>
