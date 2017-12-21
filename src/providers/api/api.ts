@@ -105,16 +105,7 @@ export class ApiProvider {
   }
 
   uploadArticlePicture(article: Article, picture: any): Observable<any> {
-    let data = new FormData();
-    data.append('file_name', 'file');
-    data.append('file', picture);
-    data.append('fileName', picture.name);
-    data.append('fileSize', picture.size.toString());
-    data.append('fileType', picture.type);
-    data.append('fileLastMod', picture.lastModifiedDate);
-    data.append('article_id', article.id);
-      
-    return this.http.post(Api.uploadArticlePicture, data);
+    return this.http.post(Api.uploadArticlePicture, picture);
   }
 
 }

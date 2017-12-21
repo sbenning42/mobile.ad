@@ -9,6 +9,31 @@ slides-navigator {
         margin: 8px;
     }
     .active {
-        border: solid 1px #00aed8;
+        border: solid 5px #00aed8;
     }
+}
+
+.circle-base {
+    border-radius: 50%;
+}
+
+.type1 {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    border: 3px solid red;
+}
+
+.type2 {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border: 3px solid #000;
+}
+
+.type3 {
+    width: 25px;
+    height: 25px;
+    background: aqua;
+    border: 3px solid blue;
 }

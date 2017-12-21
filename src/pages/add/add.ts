@@ -217,6 +217,7 @@ export class AddPage {
     data.append('fileSize', 'unknow');
     data.append('fileType', 'unknow');
     data.append('fileLastMod', 'unknow');
+    console.log(JSON.stringify(data));
     return data;
   }
 
