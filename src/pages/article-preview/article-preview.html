@@ -88,7 +88,7 @@
         </ion-item>
 
         <ion-item (click)="selected.address ? undefined : goto(2)">
-            <ion-icon item-start name="{{ selected.address ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.address ? '#00aed8' : '#f44336' }"></ion-icon>
+            <ion-icon item-start name="{{ selected.address.type ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.address.type ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Address Location</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.address?.type }} </p>
         </ion-item>
@@ -99,50 +99,50 @@
             <p style="white-space: pre-line" item-end> {{ article.number_of_packs }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.category ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.category ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.category ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.category.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.category.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.category.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Category</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.category?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.style ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.style ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.style ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.style.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.style.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.style.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Style</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.style?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.periods ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.periods ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.periods ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.periods.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.periods.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.periods.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Period</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.periods?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.condition ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.condition ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.condition ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.condition.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.condition.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.condition.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Condition</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.condition?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.material ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.material ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.material ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.material.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.material.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.material.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Material</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.material?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.color ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.color ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.color ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.color.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.color.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.color.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Color</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.color?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.designer ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.designer ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.designer ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.designer.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.designer.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.designer.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Designer</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.designer?.name }} </p>
         </ion-item>
 
-        <ion-item (click)="selected.brand ? undefined : goto(3)">
-            <ion-icon item-start name="{{ selected.brand ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.brand ? '#00aed8' : '#f44336' }"></ion-icon>
+        <ion-item (click)="selected.brand.name ? undefined : goto(3)">
+            <ion-icon item-start name="{{ selected.brand.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.brand.name ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-label item-start>Brand</ion-label>
             <p style="white-space: pre-line" item-end> {{ selected.brand?.name }} </p>
         </ion-item>

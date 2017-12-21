@@ -280,8 +280,8 @@ export class AddPage {
     let picturesStreams$;
     picturesFiles.forEach((file, index) => {
       picturesStreams$ = picturesStreams$
-        ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file))
-        : this.api.uploadArticlePicture(this.article, file);
+        ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file).do(() => this.toaster('Picture Saved !', 1500, 'success-toast')))
+        : this.api.uploadArticlePicture(this.article, file).do(() => this.toaster('Picture Saved !', 1500, 'success-toast'));
     });
 
     let stream$ = creationStream$ && picturesStreams$
@@ -322,7 +322,7 @@ export class AddPage {
     const loading = this.loading.create();
     const observer = {
       next: (data) => {
-        this.toaster(successMsg, 1500, 'toast-success');
+        this.toaster(successMsg, 1500, 'success-toast');
         loading.dismiss();
         this.app.getRootNav().setRoot(TabsPage, { index: 3 })
       },
