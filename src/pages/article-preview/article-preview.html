@@ -19,7 +19,7 @@
 
         <ion-item (click)="goto(0)">
             <ion-label>Cover</ion-label>
-            <ion-icon item-start name="{{ (pictures$|async)[0] ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': (pictures$|async)[0] ? '#00aed8' : '#f44336' }"></ion-icon>
+            <ion-icon item-start name="{{ (pictures$|async).length ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': (pictures$|async).length ? '#00aed8' : '#f44336' }"></ion-icon>
             <ion-thumbnail item-end><img src="{{ (pictures$|async)[0] }}"></ion-thumbnail>
         </ion-item>
 

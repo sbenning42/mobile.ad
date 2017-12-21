@@ -35,6 +35,7 @@ import { ACcountPage } from '../pages/a-ccount/a-ccount';
 import { CameraTabDefaultPagePage } from '../pages/camera-tab-default-page/camera-tab-default-page';
 import { CartTabDefaultPagePage } from '../pages/cart-tab-default-page/cart-tab-default-page';
 import { CloudTabDefaultPagePage } from '../pages/cloud-tab-default-page/cloud-tab-default-page';
+import { ArticlePreviewPage } from '../pages/article-preview/article-preview';
 
 import { SlidesNavigatorComponent, PicturesLoopComponent } from '../components/components.module';
 
@@ -74,6 +75,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CameraTabDefaultPagePage,
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
+    ArticlePreviewPage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   imports: [
@@ -105,6 +107,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CameraTabDefaultPagePage,
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
+    ArticlePreviewPage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   providers: [

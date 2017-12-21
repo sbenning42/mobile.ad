@@ -27,8 +27,11 @@ export class ArticlePreviewPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArticlePreviewPage');
     this.article = this.navParams.get('article');
+    console.log('article: ' + this.article);
     this.selected = this.navParams.get('selected');
+    console.log('selected: ' + this.selected);
     this.pictures$ = this.navParams.get('pictures$');
+    console.log('pictures$: ' + this.pictures$);
   }
 
   goto(x) {
