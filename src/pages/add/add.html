@@ -12,9 +12,13 @@
 
 <ion-content>
 
-    <ion-list #step0 *ngIf="step === 0">
+    <ion-list *ngIf="step === 0" class="full">
 
-        <ion-list-header>Article Cover</ion-list-header>
+        <ion-list-header class="box-row">
+            Article Cover
+            <span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button>
+        </ion-list-header>
 
         <ion-item>
             <ion-label>Title<span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
@@ -22,15 +26,6 @@
         </ion-item>
 
         <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
-
-        <!--ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
-            <p item-start style="white-space: pre-line; width: 50%">{{ error }}</p>
-            <button class="special-button" item-end ion-button icon-left><ion-icon name="delete"></ion-icon>Remove</button>
-        </ion-item-->
-
-        <!--ion-item text-center (click)="takeLoop()">
-            <button ion-button icon-left><ion-icon name="camera"></ion-icon>Add a Picture</button>
-        </ion-item-->
 
         <div class="gallery-wrapper">
             <div class="gallery-box">
@@ -41,21 +36,26 @@
             </div>
         </div>
 
-        <ion-item *ngFor="let picture of pictures$|async; let index = index">
-            <ion-thumbnail item-start>
-                <img src="{{ picture }}">
-            </ion-thumbnail>
-            <ion-icon item-end name="remove" (click)="remove(index)"></ion-icon>
-        </ion-item>
-
-        <ion-item text-center>
-            <button ion-button (click)="saveDraft()">Save Draft</button>
+        <ion-item class="actions" no-lines>
+            <span class="spacer"></span>
+            <button ion-button disabled>Previous</button>
+            <span class="spacer"></span>
+            <button ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step + 1">Next</button>
+            <span class="spacer"></span>
         </ion-item>
 
     </ion-list>
 
-    <ion-list #step1 *ngIf="step === 1">
-        <ion-list-header>Article Infos</ion-list-header>
+    <ion-list *ngIf="step === 1" class="full">
+
+        <ion-list-header class="box-row">
+            Article Infos
+            <span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button>
+        </ion-list-header>
+
         <ion-item>
             <ion-label>Description <span [ngStyle]="{'color': article.description ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-textarea [(ngModel)]="article.description"></ion-textarea>
@@ -97,33 +97,59 @@
                 <ion-radio value="set"></ion-radio>
             </ion-item>
         </ion-list>
-        <ion-item-divider></ion-item-divider>
-        <ion-item>
-            <button ion-button (click)="saveDraft()">Save Draft</button>
+
+        <ion-item class="actions" no-lines>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step - 1">Previous</button>
+            <span class="spacer"></span>
+            <button ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step + 1">Next</button>
+            <span class="spacer"></span>
         </ion-item>
     </ion-list>
 
-    <ion-list #step2 *ngIf="step === 2">
-        <ion-list-header>Transport</ion-list-header>
+    <ion-list *ngIf="step === 2" class="full">
+
+        <ion-list-header class="box-row">
+            Transport
+            <span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button>
+        </ion-list-header>
+
         <ion-item>
             <ion-label>Location <span [ngStyle]="{'color': selected.address.type ? '#00aed8' : '#f44336'}">*</span> :</ion-label>
             <ion-input disabled value="{{ selected?.address?.type }}"></ion-input>
         </ion-item>
+
         <ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address" [class.selected]="address.type === selected.address.type">
             {{ address.type }} -- {{ address.address }}, {{ address.city }}
         </ion-item>
+
         <ion-item-divider></ion-item-divider>
+
         <ion-item>
             <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.number_of_packs"></ion-input>
         </ion-item>
-        <ion-item>
-            <button ion-button (click)="saveDraft()">Save Draft</button>
+
+        <ion-item class="actions" no-lines>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step - 1">Previous</button>
+            <span class="spacer"></span>
+            <button ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step + 1">Next</button>
+            <span class="spacer"></span>
         </ion-item>
     </ion-list>
 
-    <ion-list #step3 *ngIf="step === 3">
-        <ion-list-header>Article Qualification</ion-list-header>
+    <ion-list *ngIf="step === 3" class="full">
+        <ion-list-header class="box-row">
+            Article Qualification
+            <span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button>
+        </ion-list-header>
 
         <ion-item>
             <ion-label>Category <span [ngStyle]="{'color': selected.category ? '#00aed8' : '#f44336'}">*</span></ion-label>
@@ -261,149 +287,30 @@
             </ion-item-divider>
         </ng-container>
 
-        <ion-item>
-            <button ion-button (click)="saveDraft()">Save Draft</button>
-        </ion-item>
-
-    </ion-list>
-
-    <ion-list #step4 *ngIf="step === 4">
-        <ion-list-header>Article Resume</ion-list-header>
-
-        <ion-item (click)="step = 0">
-            <ion-label>Cover</ion-label>
-            <ion-icon item-start name="{{ (pictures$|async)[0] ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': (pictures$|async)[0] ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-thumbnail item-end><img src="{{ (pictures$|async)[0] }}"></ion-thumbnail>
-        </ion-item>
-
-        <ion-item-divider>Pictures - {{ (pictures$|async)?.length }}</ion-item-divider>
-
-        <ng-container *ngFor="let picture of pictures$|async; let index = index">
-            <ion-item *ngIf="index !== 0">
-                <ion-thumbnail><img src="{{ picture }}"></ion-thumbnail>
-            </ion-item>
-        </ng-container>
-
-        <ion-item-divider></ion-item-divider>
-        <ion-item (click)="article.name ? undefined : (step = 0)">
-            <ion-icon item-start name="{{ article.name ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.name ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Name</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.description ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.description ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.description ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Desc.</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.description }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.size_height ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.size_height ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.size_height ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Height</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.size_height }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.size_width ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.size_width ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.size_width ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Width</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.size_width }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.size_depth ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.size_depth ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.size_depth ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Depth</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.size_depth }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.weight ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.weight ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.weight ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Weight</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.weight }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.quantity ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.quantity ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.quantity ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Quantity</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.quantity }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.price ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.price ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.price ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Price</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.price }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.price_by ? undefined : (step = 1)">
-            <ion-icon item-start name="{{ article.price_by ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.price_by ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Price by</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.price_by }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.address ? undefined : (step = 2)">
-            <ion-icon item-start name="{{ selected.address ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.address ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Address Location</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.address?.type }} </p>
-        </ion-item>
-
-        <ion-item (click)="article.number_of_packs ? undefined : (step = 2)">
-            <ion-icon item-start name="{{ article.number_of_packs ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': article.number_of_packs ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Nb of Packs</ion-label>
-            <p style="white-space: pre-line" item-end> {{ article.number_of_packs }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.category ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.category ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.category ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Category</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.category?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.style ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.style ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.style ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Style</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.style?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.periods ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.periods ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.periods ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Period</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.periods?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.condition ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.condition ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.condition ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Condition</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.condition?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.material ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.material ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.material ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Material</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.material?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.color ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.color ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.color ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Color</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.color?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.designer ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.designer ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.designer ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Designer</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.designer?.name }} </p>
-        </ion-item>
-
-        <ion-item (click)="selected.brand ? undefined : (step = 3)">
-            <ion-icon item-start name="{{ selected.brand ? 'checkmark' : 'alert' }}" [ngStyle]="{ 'color': selected.brand ? '#00aed8' : '#f44336' }"></ion-icon>
-            <ion-label item-start>Brand</ion-label>
-            <p style="white-space: pre-line" item-end> {{ selected.brand?.name }} </p>
-        </ion-item>
-
-        <ion-item>
+        <ion-item class="actions" no-lines>
+            <span class="spacer"></span>
+            <button ion-button (click)="step = step - 1">Previous</button>
+            <span class="spacer"></span>
             <button ion-button (click)="save()">Save</button>
+            <span class="spacer"></span>
+            <button ion-button disabled>Next</button>
+            <span class="spacer"></span>
         </ion-item>
 
     </ion-list>
-
 
 </ion-content>
+
+<!--ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
+    <p item-start style="white-space: pre-line; width: 50%">{{ error }}</p>
+    <button class="special-button" item-end ion-button icon-left><ion-icon name="delete"></ion-icon>Remove</button>
+</ion-item-->
+<!--ion-item text-center (click)="takeLoop()">
+    <button ion-button icon-left><ion-icon name="camera"></ion-icon>Add a Picture</button>
+</ion-item-->
+<!--ion-item *ngFor="let picture of pictures$|async; let index = index">
+    <ion-thumbnail item-start>
+        <img src="{{ picture }}">
+    </ion-thumbnail>
+    <ion-icon item-end name="remove" (click)="remove(index)"></ion-icon>
+</ion-item-->

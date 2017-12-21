@@ -13,6 +13,7 @@ import { AnnexesProvider } from '../../providers/annexes/annexes';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { TabsPage } from '../tabs/tabs';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { ArticlePreviewPage } from '../article-preview/article-preview';
 
 /**
  * Generated class for the AddPage page.
@@ -60,8 +61,7 @@ export class AddPage {
     {icon: 'camera', color: '#f44336'},
     {icon: 'book', color: '#f44336'},
     {icon: 'pin', color: '#f44336'},
-    {icon: 'ribbon', color: '#4caf50'},
-    {icon: 'document', color: '#4caf50'}
+    {icon: 'ribbon', color: '#4caf50'}
   ];
   step = 0;
 
@@ -83,7 +83,8 @@ export class AddPage {
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
 
-    this.camera.errors$.subscribe(() => {
+    this.camera.errors$.subscribe((err) => {
+      if (!(err && err[0])) { return ; }
       const toast = this.toastCtrl.create({
         message: 'No Picture to add',
         duration: 3000
@@ -148,6 +149,15 @@ export class AddPage {
     this.step = $event;
   }
 
+  preview() {
+    this.navCtrl.push(ArticlePreviewPage, {
+      article: this.article,
+      selected: this.selected,
+      pictures$: this.pictures$,
+      delegate: this
+    });
+  }
+
   aggregateArticleAndSelection() {
     this.article.address_id = this.selected.address.id;
     this.article.brand_id = this.selected.brand.id;
@@ -189,6 +199,29 @@ export class AddPage {
         });
       });
     }
+
+    let toast;
+    observer = observer ? observer : {
+      next: (data) => {
+        console.log(`${this.article.id} draft has been saved!`);
+        toast = this.toastCtrl.create({
+          message: this.article.id ? 'Product draft was edited successfully' : 'Product draft was created successfully',
+          duration: 3000
+        });
+        toast.cssClass = 'success-toast';
+        toast.present();
+      },
+      error: (err) => {
+        console.log(`A error occured while saving article draft: ` + JSON.stringify(err));
+        toast = this.toastCtrl.create({
+          message: this.article.id ? 'Product draft was not edited' : 'Product draft was not created',
+          duration: 3000
+        });
+        toast.cssClass = 'failure-toast';
+        toast.present();
+      },
+      complete: () => console.log('Task Completed!')
+    };
 
     this.saveSub = stream$.subscribe(observer);
 
@@ -243,8 +276,8 @@ export class AddPage {
     this._focus$.next(key);
   }
 
-  getItems(search: string) {
-    const items = this.items.filter(item => item.name.search(search) < 0 ? false : true);
+  getItems(search: any) {
+    const items = this.items.filter(item => item.name.search(search.name) < 0 ? false : true);
     this._items$.next(items);
   }
 
