@@ -25,7 +25,6 @@ export class TabsPage {
   galleryRoot = GalleryPage;
   addRoot = AddPage;
   stockRoot = StockPage;
-  // accountRoot = AccountPage;
   accountRoot = ACcountPage;
   loginRoot = LoginPage;
 

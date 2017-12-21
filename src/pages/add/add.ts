@@ -10,6 +10,9 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { PicturesLoopComponent } from '../../components/pictures-loop/pictures-loop';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AnnexesProvider } from '../../providers/annexes/annexes';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { TabsPage } from '../tabs/tabs';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 /**
  * Generated class for the AddPage page.
@@ -67,8 +70,10 @@ export class AddPage {
 
   constructor(
     public navCtrl: NavController,
+    public viewCtrl: ViewController,
     public camera: CameraProvider,
     public modalCtrl: ModalController,
+    public toastCtrl: ToastController,
     public api: ApiProvider,
     public annexes: AnnexesProvider
   ) { }
@@ -77,6 +82,14 @@ export class AddPage {
     this.addresses$ = this.api.getUserAddresses();
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
+
+    this.camera.errors$.subscribe(() => {
+      const toast = this.toastCtrl.create({
+        message: 'No Picture to add',
+        duration: 3000
+      });
+      toast.present();
+    });
   
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
@@ -96,11 +109,15 @@ export class AddPage {
       return this.items$;
     }).subscribe();
   
-    this.takeLoop();
+    this.takeOne();
   }
 
   ionViewDidLeave() {
     this.sub.unsubscribe();
+  }
+
+  takeOne() {
+    this.camera.takeOne();
   }
 
   takeLoop() {
@@ -144,18 +161,23 @@ export class AddPage {
 
   }
 
-  saveDraft() {
+  saveDraft(observer?) {
     if (this.saveSub) { this.saveSub.unsubscribe(); }
-    
+
     let picturesFiles;
   
-    let stream$ = this.pictures$.switchMap(pictures => {
-        picturesFiles = pictures.map(picture => picture);
-        return this.api.addProduct(this.article);
-      }).switchMap(apiArticle => {
-        this.article.id = apiArticle.id;
-        return this.api.putProduct(this.article);
-      });
+    let stream$ = this.article.id
+      ? this.pictures$.switchMap(pictures => {
+          picturesFiles = pictures.map(picture => picture);
+          return this.api.putProduct(this.article);
+        })
+      : this.pictures$.switchMap(pictures => {
+          picturesFiles = pictures.map(picture => picture);
+          return this.api.addProduct(this.article);
+        }).switchMap(apiArticle => {
+          this.article.id = apiArticle.id;
+          return this.api.putProduct(this.article);
+        });
     
     this.aggregateArticleAndSelection();
     
@@ -168,11 +190,7 @@ export class AddPage {
       });
     }
 
-    this.saveSub = stream$.subscribe(
-      () => console.log('Yiha'),
-      (err) => console.log('Erf...: ' + JSON.stringify(err)),
-      () => console.log('What Next ?!!')
-    );
+    this.saveSub = stream$.subscribe(observer);
 
     /**
      * Steps for saving:
@@ -192,7 +210,32 @@ export class AddPage {
   }
 
   save() {
-    this.saveDraft();
+    let toast;
+    const observer = {
+      next: (data) => {
+        console.log(`${this.article.id} has been saved!`);
+        toast = this.toastCtrl.create({
+          message: this.article.id ? 'Product was edited successfully' : 'Product was created successfully',
+          duration: 3000
+        });
+        toast.cssClass = 'success-toast';
+        toast.present();
+      },
+      error: (err) => {
+        console.log(`A error occured while saving article: ` + JSON.stringify(err));
+        toast = this.toastCtrl.create({
+          message: this.article.id ? 'Product was not edited' : 'Product was not created',
+          duration: 3000
+        });
+        toast.cssClass = 'failure-toast';
+        toast.present();
+      },
+      complete: () => {
+        console.log('Task Completed!');
+        toast.onDidDismiss(() => this.navCtrl.setRoot(TabsPage));
+      },
+    };
+    this.saveDraft(observer);
   }
 
   setFocus(key: string) {

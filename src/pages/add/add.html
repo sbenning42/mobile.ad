@@ -13,28 +13,45 @@
 <ion-content>
 
     <ion-list #step0 *ngIf="step === 0">
+
         <ion-list-header>Article Cover</ion-list-header>
+
         <ion-item>
-            <ion-label>Name <span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-label>Title<span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input [(ngModel)]="article.name"></ion-input>
         </ion-item>
+
         <ion-item-divider>{{ (pictures$|async)?.length }} Pictures</ion-item-divider>
-        <ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
+
+        <!--ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
             <p item-start style="white-space: pre-line; width: 50%">{{ error }}</p>
-            <button item-end ion-button icon-left><ion-icon name="close"></ion-icon>Remove</button>
-        </ion-item>
-        <ion-item (click)="takeLoop()">
+            <button class="special-button" item-end ion-button icon-left><ion-icon name="delete"></ion-icon>Remove</button>
+        </ion-item-->
+
+        <!--ion-item text-center (click)="takeLoop()">
             <button ion-button icon-left><ion-icon name="camera"></ion-icon>Add a Picture</button>
-        </ion-item>
+        </ion-item-->
+
+        <div class="gallery-wrapper">
+            <div class="gallery-box">
+                <div class="gallery-item" *ngFor="let picture of pictures$|async; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
+                </div>
+                <div class="gallery-item gallery-item-more" (click)="takeOne()">
+                </div>
+            </div>
+        </div>
+
         <ion-item *ngFor="let picture of pictures$|async; let index = index">
             <ion-thumbnail item-start>
                 <img src="{{ picture }}">
             </ion-thumbnail>
             <ion-icon item-end name="remove" (click)="remove(index)"></ion-icon>
         </ion-item>
-        <ion-item>
+
+        <ion-item text-center>
             <button ion-button (click)="saveDraft()">Save Draft</button>
         </ion-item>
+
     </ion-list>
 
     <ion-list #step1 *ngIf="step === 1">
