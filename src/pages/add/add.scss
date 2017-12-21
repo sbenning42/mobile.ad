@@ -39,12 +39,6 @@ page-add {
     .label {
         display: flex;
     }
-    .success-toast {
-        background-color: #00aed8;
-    }
-    .failure-toast {
-        background-color: #f44336;
-    }
     .gallery-box {
         display: flex;
         flex-wrap: wrap;
@@ -72,5 +66,17 @@ page-add {
     }
     .marged {
         margin: 4px;
+    }
+}
+
+.success-toast {
+    >div {
+        background-color: #00aed8!important;
+    }
+}
+
+.failure-toast {
+    >div {
+        background-color: #f44336!important;
     }
 }

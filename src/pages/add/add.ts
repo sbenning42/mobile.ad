@@ -154,7 +154,7 @@ export class AddPage {
       if (!(err && err[0])) { return ; }
       const toast = this.toastCtrl.create({
         message: 'No Picture to add',
-        duration: 3000
+        duration: 1500
       });
       toast.present();
     });
@@ -303,7 +303,7 @@ export class AddPage {
         loading.dismiss();
       },
       error: () => {
-        this.toaster(errorDraftMsg, 3000, 'failure-toast');
+        this.toaster(errorDraftMsg, 1500, 'failure-toast');
         loading.dismiss();
       }
     });
@@ -327,7 +327,7 @@ export class AddPage {
         this.app.getRootNav().setRoot(TabsPage, { index: 3 })
       },
       error: (err) => {
-        this.toaster(errorMsg, 3000, 'failure-toast');
+        this.toaster(errorMsg, 1500, 'failure-toast');
         loading.dismiss();
       }
     };
