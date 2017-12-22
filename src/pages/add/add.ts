@@ -15,6 +15,7 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 import { ArticlePreviewPage } from '../article-preview/article-preview';
 import { TabsPage } from '../tabs/tabs';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { NewTitleArticlePage } from '../new-title-article/new-title-article';
 
 /**
  * Generated class for the AddPage page.
@@ -172,8 +173,10 @@ export class AddPage {
       this._items$.next(this.items);
       return this.items$;
     }).subscribe();
+
+    this.modder(NewTitleArticlePage, { delegate: this }, () => this.takeOne());
   
-    this.takeOne();
+    // this.takeOne();
   }
 
   ionViewDidLeave() {
@@ -345,6 +348,15 @@ export class AddPage {
     } else {
       this._focus$.next(this.focus);
     }
+  }
+
+  modder(page, data?, callback?) {
+    const modal = this.modalCtrl.create(page, data);
+    if (callback) {
+      modal.onDidDismiss(callback);
+    }
+    modal.present();
+    return modal;
   }
 
 }
