@@ -26,6 +26,6 @@ export class Article {
         public size_depth: string = '',
         public weight: string = '',
         public number_of_packs: string = '',
-        public pictures?: any[]
+        public pictures: any[] = []
     ) { }
 }

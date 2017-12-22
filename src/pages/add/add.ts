@@ -73,7 +73,7 @@ export class AddPage {
   @ViewChild('designerInput', {read: ElementRef}) private designerEl: ElementRef;
   @ViewChild('brandInput', {read: ElementRef}) private brandEl: ElementRef; 
 
-  article: Article = new Article();
+  article: Article;
   selected = {
     category: {id: '0', name: ''}, style: {id: '0', name: ''}, periods: {id: '0', name: ''},
     condition: {id: '0', name: ''}, material: {id: '0', name: ''}, color: {id: '0', name: ''},
@@ -109,6 +109,7 @@ export class AddPage {
     public app: App,
     public navCtrl: NavController,
     public viewCtrl: ViewController,
+    public navParams: NavParams,
     public camera: CameraProvider,
     public modalCtrl: ModalController,
     public toastCtrl: ToastController,
@@ -123,8 +124,24 @@ export class AddPage {
 
   ionViewDidLoad() {
 
+    const article = this.navParams.get('article');
+    
+    this.article = article ? article : new Article();
+
+    if (this.article.id) {
+      this.selected.address = this.article['address'] ? this.article['address'] : {id: 0, name: ''};
+      this.selected.category = this.article['category'] ? this.article['category'] : {id: 0, name: ''};
+      this.selected.periods = this.article['periods'] ? this.article['periods'] : {id: 0, name: ''};
+      this.selected.style = this.article['style'] ? this.article['style'] : {id: 0, name: ''};
+      this.selected.material = this.article['material'] ? this.article['material'] : {id: 0, name: ''};
+      this.selected.color = this.article['color'] ? this.article['color'] : {id: 0, name: ''};
+      this.selected.condition = this.article['condition'] ? this.article['condition'] : {id: 0, name: ''};
+      this.selected.designer = this.article['designer'] ? this.article['designer'] : {id: 0, name: ''};
+      this.selected.brand = this.article['brand'] ? this.article['brand'] : {id: 0, name: ''};
+    }
+
     this.anotherSub = Observable.interval(500).subscribe(() => {
-      if (this.article.name && this.camera.has()) {
+      if (this.article.name && (this.camera.has() || (this.article.pictures && this.article.pictures.length))) {
         this.steps[0].isCompleted = true;
       } else {
         this.steps[0].isCompleted = false;
@@ -279,8 +296,12 @@ export class AddPage {
     let picturesStreams$;
     picturesFiles.forEach((file, index) => {
       picturesStreams$ = picturesStreams$
-        ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file).do(() => this.toaster('Picture Saved !', 1500, 'success-toast')))
-        : this.api.uploadArticlePicture(this.article, file).do(() => this.toaster('Picture Saved !', 1500, 'success-toast'));
+        ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file)
+          .do(picture => this.article.pictures.push(picture))
+          .do(() => this.toaster('Picture Saved !', 1500, 'success-toast')))
+        : this.api.uploadArticlePicture(this.article, file)
+          .do(picture => this.article.pictures.push(picture))
+          .do(() => this.toaster('Picture Saved !', 1500, 'success-toast'));
     });
 
     let stream$ = creationStream$ && picturesStreams$

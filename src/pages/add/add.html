@@ -23,7 +23,7 @@
     <ion-list *ngIf="step === 0" class="full">
 
         <ion-list-header>
-            {{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span>
+            {{ (pictures$|async)?.length }} Pictures in Camera<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span>
         </ion-list-header>
 
         <div class="gallery-wrapper">
@@ -31,6 +31,17 @@
                 <div class="gallery-item" *ngFor="let picture of pictures$|async; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
                 </div>
                 <div class="gallery-item gallery-item-more" (click)="takeOne()">
+                </div>
+            </div>
+        </div>
+
+        <ion-list-header>
+            {{ (article?.pictures)?.length }} Pictures on the Article
+        </ion-list-header>
+
+        <div class="gallery-wrapper" *ngIf="article?.pictures">
+            <div class="gallery-box">
+                <div class="gallery-item" *ngFor="let picture of article?.pictures; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
                 </div>
             </div>
         </div>
