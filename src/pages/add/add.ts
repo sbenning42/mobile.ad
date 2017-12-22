@@ -160,14 +160,14 @@ export class AddPage {
   
     this.sub = this.focus$.switchMap(focus => {
       switch (focus) {
-        case 'category': { this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.categories; break ; }
-        case 'style': { this.styleEl ? this.styleEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.styles; break ; }
-        case 'periods': { this.periodsEl ? this.periodsEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.periods; break ; }
-        case 'condition': { this.conditionEl ? this.conditionEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.conditions; break ; }
-        case 'material': { this.materialEl ? this.materialEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.materials; break ; }
-        case 'color': { this.colorEl ? this.colorEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.colors; break ; }
-        case 'designer': { this.designerEl ? this.designerEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.designers; break ; }
-        case 'brand': { this.brandEl ? this.brandEl.nativeElement.scrollIntoView() : undefined; this.items = this.annexes.brands; break ; }
+        case 'category': { /*this.categoryEl ? this.categoryEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.categories; break ; }
+        case 'style': { /*this.styleEl ? this.styleEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.styles; break ; }
+        case 'periods': { /*this.periodsEl ? this.periodsEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.periods; break ; }
+        case 'condition': { /*this.conditionEl ? this.conditionEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.conditions; break ; }
+        case 'material': { /*this.materialEl ? this.materialEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.materials; break ; }
+        case 'color': { /*this.colorEl ? this.colorEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.colors; break ; }
+        case 'designer': { /*this.designerEl ? this.designerEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.designers; break ; }
+        case 'brand': { /*this.brandEl ? this.brandEl.nativeElement.scrollIntoView() : undefined; */this.items = this.annexes.brands; break ; }
         default: {
           this.items = [];
         }

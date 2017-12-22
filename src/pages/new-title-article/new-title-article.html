@@ -20,13 +20,10 @@
         <ion-input [(ngModel)]="name"></ion-input>
     </ion-item>
 
-    <ion-item class="actions" no-lines>
-        <span class="spacer"></span>
-        <button class="marged accent" ion-button block (click)="cancel()">Cancel</button>
-        <span class="spacer"></span>
-        <button class="marged" ion-button block (click)="save()" [disabled]="!name">Take Pictures</button>
-        <span class="spacer"></span>
-    </ion-item>
+    <div class="actions">
+        <button class="marged accent" ion-button (click)="cancel()">Cancel</button>
+        <button class="marged" ion-button (click)="save()" [disabled]="!name">Take Pictures</button>
+    </div>
 
 
 </ion-content>

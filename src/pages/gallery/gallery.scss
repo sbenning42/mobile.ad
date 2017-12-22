@@ -5,7 +5,8 @@ page-gallery {
         justify-content: center;
     }
     .flex-box>* {
-        width: 31%;
+        width: calc(33vw - 4px);
+        border: solid 1px white;
     }
     .flex-item>img {
         width: 100%;

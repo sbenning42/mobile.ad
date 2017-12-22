@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { basePicturesApi } from './../../api/api';
 import { Article } from '../../models/article';
 import { ChannelsProvider } from '../../providers/channels/channels';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 /**
  * Generated class for the StockDetailPage page.
@@ -55,7 +56,8 @@ export class StockDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public channelsProvider: ChannelsProvider
+    public channelsProvider: ChannelsProvider,
+    public toaster: ToastController
   ) {
     this.article = this.navParams.get('article');
     this.channels = this.navParams.get('channels');
@@ -143,6 +145,12 @@ export class StockDetailPage {
     if (this.sub) {
       this.sub.unsubscribe();
     }
+  }
+
+  sold() {
+    const message = '';
+    const duration = 3000;
+    this.toaster.create({message, duration}).present();
   }
 
 

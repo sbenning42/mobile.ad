@@ -1,6 +1,14 @@
 page-new-pricing-article {
     .actions {
-        margin-top: auto;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .actions {
+        margin-top: 64px;
+        display: flex;
+        width: 100%;
+        justify-content: center;
     }
     .marged {
         margin: 4px;

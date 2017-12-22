@@ -26,13 +26,6 @@
             {{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span>
         </ion-list-header>
 
-        <!--ion-item>
-            <ion-label>Title<span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input [(ngModel)]="article.name"></ion-input>
-        </ion-item>
-
-        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span></ion-item-divider-->
-
         <div class="gallery-wrapper">
             <div class="gallery-box">
                 <div class="gallery-item" *ngFor="let picture of pictures$|async; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
@@ -42,15 +35,11 @@
             </div>
         </div>
 
-        <ion-item class="actions" no-lines>
-            <span class="spacer"></span>
-            <button class="marged" ion-button icon-left block disabled><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <span class="spacer"></span>
-            <button class="marged accent" ion-button block (click)="saveDraft()">Save Draft</button>
-            <span class="spacer"></span>
-            <button class="marged" ion-button icon-right block (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
-            <span class="spacer"></span>
-        </ion-item>
+        <div class="actions">
+            <button class="marged" ion-button icon-left disabled><ion-icon name="arrow-back"></ion-icon>Prev</button>
+            <button class="marged accent" ion-button (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
+        </div>
 
     </ion-list>
 
@@ -58,14 +47,7 @@
 
         <ion-list-header class="box-row">
             Article Infos
-            <!--span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
-
-        <!--ion-item>
-            <ion-label>Description <span [ngStyle]="{'color': article.description ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-textarea [(ngModel)]="article.description"></ion-textarea>
-        </ion-item-->
 
         <ion-item>
             <ion-label item-start>Title <span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
@@ -103,48 +85,23 @@
             <ion-label>Weight - kg <span [ngStyle]="{'color': article.weight ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.weight"></ion-input>
         </ion-item>
-        <!--ion-item-divider>Pricing - €</ion-item-divider>
-        <ion-item>
-            <ion-label>Quantity <span [ngStyle]="{'color': article.quantity ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input type="number" [(ngModel)]="article.quantity"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Price <span [ngStyle]="{'color': article.price ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input type="number" [(ngModel)]="article.price"></ion-input>
-        </ion-item>
-        <ion-item-divider>Price by <span [ngStyle]="{'color': article.price_by ? '#00aed8' : '#f44336'}">*</span></ion-item-divider>
-        <ion-list radio-group [(ngModel)]="article.price_by">
-            <ion-item>
-                <ion-label>Unit</ion-label>
-                <ion-radio value="unit" checked></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>Set</ion-label>
-                <ion-radio value="set"></ion-radio>
-            </ion-item>
-        </ion-list-->
 
-        <ion-item class="actions" no-lines>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <span class="spacer"></span>
-            <button class="marged accent" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
-            <span class="spacer"></span>
-        </ion-item>
+        <div class="actions">
+            <button class="marged" ion-button icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
+            <button class="marged accent" ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
+        </div>
     </ion-list>
 
     <ion-list *ngIf="step === 2" class="full">
 
         <ion-list-header class="box-row">
             Transport
-            <!--span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
 
-        <ion-item>
+        <ion-item no-lines>
             <ion-label>Location <span [ngStyle]="{'color': selected.address.type ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-icon item-end *ngIf="selected.address?.type" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
         </ion-item>
 
         <div class="box-row forbuttons">
@@ -154,14 +111,12 @@
                 <span class="spacer"></span>
             </ng-container>
         </div>
-        <!--ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address" [class.selected]="address.type === selected.address.type">
-            <button ion-button [class.accent]="selected.address.type === address.type">{{ address.type }}</button>
-        </ion-item-->
 
         <ion-item-divider></ion-item-divider>
 
-        <ion-item>
+        <ion-item no-lines>
             <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-icon item-end *ngIf="article.number_of_packs" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
         </ion-item>
         <div class="box-row forbuttons">
             <span class="spacer"></span>
@@ -176,22 +131,16 @@
         </div>
 
 
-        <ion-item class="actions" no-lines>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <span class="spacer"></span>
-            <button class="marged accent" ion-button block color="accent" (click)="saveDraft()">Save Draft</button>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
-            <span class="spacer"></span>
-        </ion-item>
+        <div class="actions">
+            <button class="marged" ion-button icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
+            <button class="marged accent" ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
+        </div>
     </ion-list>
 
     <ion-list *ngIf="step === 3" class="full">
         <ion-list-header class="box-row">
             Article Qualification
-            <!--span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
 
         <ion-item>
@@ -330,15 +279,11 @@
             </ion-item-divider>
         </ng-container>
 
-        <ion-item class="actions" no-lines>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block (click)="save()">Save</button>
-            <span class="spacer"></span>
-            <button class="marged" ion-button block icon-right disabled>Next<ion-icon name="arrow-forward"></ion-icon></button>
-            <span class="spacer"></span>
-        </ion-item>
+        <div class="actions">
+            <button class="marged" ion-button icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
+            <button class="marged" ion-button (click)="save()">Save</button>
+            <button class="marged" ion-button icon-right disabled>Next<ion-icon name="arrow-forward"></ion-icon></button>
+        </div>
 
     </ion-list>
 

@@ -24,29 +24,21 @@
         <ion-input type="number" [(ngModel)]="price"></ion-input>
     </ion-item>
 
-    <ion-item-divider></ion-item-divider>
-
-    <ion-item>
-        Price by <span [ngStyle]="{'color': price_by ? '#00aed8' : '#f44336'}">*</span>
+    <ion-item no-lines>
+        <ion-label>Price by<span [ngStyle]="{'color': price_by ? '#00aed8' : '#f44336'}">*</span></ion-label>
     </ion-item>
 
-    <ion-list radio-group [(ngModel)]="price_by">
-        <ion-item>
-            <ion-label>Unit</ion-label>
-            <ion-radio value="unit" checked></ion-radio>
-        </ion-item>
-        <ion-item>
-            <ion-label>Set</ion-label>
-            <ion-radio value="set"></ion-radio>
-        </ion-item>
-    </ion-list>
+    <div class="action">
+        <span class="spacer"></span>
+        <button class="marged" [class.accent]="price_by === 'unit'" ion-button (click)="price_by = 'unit'">Unit</button>
+        <span class="spacer"></span>
+        <button class="marged" [class.accent]="price_by === 'set'" ion-button (click)="price_by = 'set'">Set</button>
+        <span class="spacer"></span>
+    </div>
 
-    <ion-item class="actions" no-lines>
-        <span class="spacer"></span>
-        <button class="marged accent" ion-button block (click)="cancel()">Cancel</button>
-        <span class="spacer"></span>
-        <button class="marged" ion-button block (click)="save()" [disabled]="!price || !quantity || !price_by">Save Pricing</button>
-        <span class="spacer"></span>
-    </ion-item>
+    <div class="actions">
+        <button class="marged accent" ion-button (click)="cancel()">Cancel</button>
+        <button class="marged" ion-button (click)="save()" [disabled]="!price || !quantity || !price_by">Save Pricing</button>
+    </div>
 
 </ion-content>

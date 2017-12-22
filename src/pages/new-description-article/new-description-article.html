@@ -15,17 +15,16 @@
 
 <ion-content padding>
 
-    <ion-item>
+    <ion-item no-lines>
         <ion-label>Description<span [ngStyle]="{'color': description ? '#00aed8' : '#f44336'}">*</span></ion-label>
-        <ion-textarea [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-textarea rows="6" [(ngModel)]="description"></ion-textarea>
     </ion-item>
 
-    <ion-item class="actions" no-lines>
-        <span class="spacer"></span>
-        <button class="marged accent" ion-button block (click)="cancel()">Cancel</button>
-        <span class="spacer"></span>
-        <button class="marged" ion-button block (click)="save()" [disabled]="!description">Save Description</button>
-        <span class="spacer"></span>
-    </ion-item>
+    <div class="actions" no-lines>
+        <button class="marged accent" ion-button (click)="cancel()">Cancel</button>
+        <button class="marged" ion-button (click)="save()" [disabled]="!description">Save Description</button>
+    </div>
 
 </ion-content>

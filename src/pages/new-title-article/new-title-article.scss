@@ -1,9 +1,12 @@
 page-new-title-article {
     .actions {
-        margin-top: auto;
+        margin-top: 64px;
+        display: flex;
+        width: 100%;
     }
     .marged {
         margin: 4px;
+        flex: 1;
     }
     .spacer {
         flex: 1;

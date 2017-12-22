@@ -7,6 +7,8 @@ page-add {
     }
     .actions {
         margin-top: auto;
+        display: flex;
+        justify-content: center;
     }
     .box-col {
         display: flex;
@@ -71,6 +73,7 @@ page-add {
     }
     .marged {
         margin: 4px;
+        flex: 1;
     }
     .accent {
         background-color: #f44336!important;
