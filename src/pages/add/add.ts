@@ -128,7 +128,6 @@ export class AddPage {
   ionViewDidLoad() {
 
     const article = this.navParams.get('article');
-    
     this.article = article ? article : new Article();
 
     if (this.article.id) {
@@ -196,7 +195,8 @@ export class AddPage {
       return this.items$;
     }).subscribe();
 
-    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name }, () => this.article.id ? this.takeOne() : undefined);
+    const func = this.article.id ? undefined : this.takeOne;
+    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name }, () => this.article.id ? func : undefined);
   
     // this.takeOne();
   }
