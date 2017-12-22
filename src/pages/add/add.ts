@@ -300,10 +300,16 @@ export class AddPage {
     picturesFiles.forEach((file, index) => {
       picturesStreams$ = picturesStreams$
         ? picturesStreams$.switchMap(() => this.api.uploadArticlePicture(this.article, file)
-          .do(picture => this.article.pictures.push(picture))
+          .do(picture => {
+            this.article.pictures.push(picture);
+            this.article.pictures = this.article.pictures.map(p => p);
+          })
           .do(() => this.toaster('Picture Saved !', 1500, 'success-toast')))
         : this.api.uploadArticlePicture(this.article, file)
-          .do(picture => this.article.pictures.push(picture))
+          .do(picture => {
+            this.article.pictures.push(picture);
+            this.article.pictures = this.article.pictures.map(p => p);
+          })
           .do(() => this.toaster('Picture Saved !', 1500, 'success-toast'));
     });
 
