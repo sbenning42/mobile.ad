@@ -38,9 +38,6 @@ export class ArticlePreviewPage {
     this.article = this.navParams.get('article');
     this.selected = this.navParams.get('selected');
     this.pictures = this.article.pictures.map(picture => this.basePicturesApi + picture.url_thumb);
-    console.log('article: ' + this.article);
-    console.log('selected: ' + this.selected);
-    console.log('pictures$: ' + this.pictures$);
   }
 
   goto(x) {

@@ -195,14 +195,12 @@ export class AddPage {
       return this.items$;
     }).subscribe();
 
-    const func = this.article.id ? undefined : this.takeOne;
-    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name }, () => this.article.id ? func : undefined);
+    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name });
   
     // this.takeOne();
   }
 
   ionViewWillLeave() {
-    this.app.getRootNav().setRoot(TabsPage, { index: 3 });
   }
 
   takeOne() {
