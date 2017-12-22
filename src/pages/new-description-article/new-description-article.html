@@ -1,5 +1,5 @@
 <!--
-  Generated template for the NewTitleArticlePage page.
+  Generated template for the NewDescriptionArticlePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>New Article Title</ion-title>
+        <ion-title>New Article Description</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -16,17 +16,16 @@
 <ion-content padding>
 
     <ion-item>
-        <ion-label>Title<span [ngStyle]="{'color': name ? '#00aed8' : '#f44336'}">*</span></ion-label>
-        <ion-input [(ngModel)]="name"></ion-input>
+        <ion-label>Description<span [ngStyle]="{'color': description ? '#00aed8' : '#f44336'}">*</span></ion-label>
+        <ion-textarea [(ngModel)]="description"></ion-textarea>
     </ion-item>
 
     <ion-item class="actions" no-lines>
         <span class="spacer"></span>
         <button class="marged accent" ion-button block (click)="cancel()">Cancel</button>
         <span class="spacer"></span>
-        <button class="marged" ion-button block (click)="save()" [disabled]="!name">Take Pictures</button>
+        <button class="marged" ion-button block (click)="save()" [disabled]="!description">Save Description</button>
         <span class="spacer"></span>
     </ion-item>
-
 
 </ion-content>

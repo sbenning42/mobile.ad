@@ -15,6 +15,11 @@ page-add {
     .box-row {
         display: flex;
     }
+    .forbuttons {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
     .error {
         border: solid 2px #f44336;
     }

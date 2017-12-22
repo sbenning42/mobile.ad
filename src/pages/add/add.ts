@@ -16,6 +16,8 @@ import { ArticlePreviewPage } from '../article-preview/article-preview';
 import { TabsPage } from '../tabs/tabs';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 import { NewTitleArticlePage } from '../new-title-article/new-title-article';
+import { NewDescriptionArticlePage } from '../new-description-article/new-description-article';
+import { NewPricingArticlePage } from '../new-pricing-article/new-pricing-article';
 
 /**
  * Generated class for the AddPage page.
@@ -134,7 +136,7 @@ export class AddPage {
       } else {
           this.steps[1].isCompleted = false;
       }
-      if (this.article.number_of_packs && this.selected.address) {
+      if (this.article.number_of_packs && this.selected.address && this.selected.address['type']) {
         this.steps[2].isCompleted = true;
       } else {
         this.steps[2].isCompleted = false;
@@ -174,7 +176,7 @@ export class AddPage {
       return this.items$;
     }).subscribe();
 
-    this.modder(NewTitleArticlePage, { delegate: this }, () => this.takeOne());
+    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name }, () => this.article.id ? this.takeOne() : undefined);
   
     // this.takeOne();
   }
@@ -321,7 +323,7 @@ export class AddPage {
       next: (data) => {
         this.toaster(successMsg, 1500, 'success-toast');
         loading.dismiss();
-        this.app.getRootNav().setRoot(TabsPage, { index: 3 })
+        this.app.getRootNav().setRoot(TabsPage, { index: 3 });
       },
       error: (err) => {
         this.toaster(errorMsg, 1500, 'failure-toast');
@@ -357,6 +359,19 @@ export class AddPage {
     }
     modal.present();
     return modal;
+  }
+
+  openDescription() {
+    this.modder(NewDescriptionArticlePage, { delegate: this, description: this.article.description });
+  }
+
+  openPricing() {
+    this.modder(NewPricingArticlePage, {
+      delegate: this,
+      price: this.article.price,
+      quantity: this.article.quantity,
+      price_by: this.article.price_by
+    });
   }
 
 }

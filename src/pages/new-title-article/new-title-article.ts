@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { Article } from '../../models/article';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { TabsPage } from '../tabs/tabs';
+import { App } from 'ionic-angular/components/app/app';
 
 /**
  * Generated class for the NewTitleArticlePage page.
@@ -20,11 +22,12 @@ export class NewTitleArticlePage {
 
   name: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider, public toastCtrl: ToastController, public app: App) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewTitleArticlePage');
+    this.name = this.navParams.get('name');
   }
 
   toaster(message, duration, cssClass, callback?) {
@@ -36,15 +39,22 @@ export class NewTitleArticlePage {
   save() {
     this.api.addProduct(<Article>{ name: this.name }).subscribe(
       apiArticle => {
-        this.navParams.get('delegate').article.id = apiArticle.id;
+        const delegateArticle = this.navParams.get('delegate').article;
+        delegateArticle.id = apiArticle.id;
+        delegateArticle.name = apiArticle.name;
         this.navCtrl.pop();
       },
       errors => {
         this.toaster(
           'Article Title must be at least 4 characters long.',
-          1500, 'failure-toat');
+          1500, 'failure-toast');
       }
     );
+  }
+
+  cancel() {
+    this.navCtrl.pop();
+    this.app.getRootNav().setRoot(TabsPage, { index: 3 });
   }
 
 }

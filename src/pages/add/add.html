@@ -7,6 +7,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>New Article</ion-title>
+        <ion-buttons right>
+            <button ion-button (click)="preview()">
+                <ion-icon name="eye"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
     <ion-navbar>
         <slides-navigator [steps]="steps" [stepNo]="step" (upEvent)="stepUp()" (downEvent)="stepDown()" (gotoEvent)="gotoStep($event)"></slides-navigator>
@@ -17,18 +22,16 @@
 
     <ion-list *ngIf="step === 0" class="full">
 
-        <ion-list-header class="box-row">
-            Article Cover
-            <span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button>
+        <ion-list-header>
+            {{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span>
         </ion-list-header>
 
-        <ion-item>
+        <!--ion-item>
             <ion-label>Title<span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input [(ngModel)]="article.name"></ion-input>
         </ion-item>
 
-        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span></ion-item-divider>
+        <ion-item-divider>{{ (pictures$|async)?.length }} Pictures<span [ngStyle]="{'color': camera.has() ? '#00aed8' : '#f44336'}">*</span></ion-item-divider-->
 
         <div class="gallery-wrapper">
             <div class="gallery-box">
@@ -55,15 +58,35 @@
 
         <ion-list-header class="box-row">
             Article Infos
-            <span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button>
+            <!--span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
 
-        <ion-item>
+        <!--ion-item>
             <ion-label>Description <span [ngStyle]="{'color': article.description ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-textarea [(ngModel)]="article.description"></ion-textarea>
+        </ion-item-->
+
+        <ion-item>
+            <ion-label item-start>Title <span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-icon item-end *ngIf="article.name" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
+            <button ion-button item-end disabled>Open</button>
         </ion-item>
+
+        <ion-item (click)="openDescription()">
+            <ion-label item-start>Description <span [ngStyle]="{'color': article.description ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-icon item-end *ngIf="article.description" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
+            <button ion-button item-end>Open</button>
+        </ion-item>
+
+        <ion-item (click)="openPricing()">
+            <ion-label item-start>Pricing <span [ngStyle]="{'color': article.price && article.quantity && article.price_by ? '#00aed8' : '#f44336'}">*</span></ion-label>
+            <ion-icon item-end *ngIf="article.price && article.quantity && article.price_by" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
+            <button ion-button item-end>Open</button>
+        </ion-item>
+
         <ion-item-divider>Dimention</ion-item-divider>
+
         <ion-item>
             <ion-label>Height - cm <span [ngStyle]="{'color': article.size_height ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.size_height"></ion-input>
@@ -80,7 +103,7 @@
             <ion-label>Weight - kg <span [ngStyle]="{'color': article.weight ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.weight"></ion-input>
         </ion-item>
-        <ion-item-divider>Pricing - €</ion-item-divider>
+        <!--ion-item-divider>Pricing - €</ion-item-divider>
         <ion-item>
             <ion-label>Quantity <span [ngStyle]="{'color': article.quantity ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-input type="number" [(ngModel)]="article.quantity"></ion-input>
@@ -99,7 +122,7 @@
                 <ion-label>Set</ion-label>
                 <ion-radio value="set"></ion-radio>
             </ion-item>
-        </ion-list>
+        </ion-list-->
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
@@ -116,25 +139,42 @@
 
         <ion-list-header class="box-row">
             Transport
-            <span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button>
+            <!--span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
 
         <ion-item>
-            <ion-label>Location <span [ngStyle]="{'color': selected.address.type ? '#00aed8' : '#f44336'}">*</span> :</ion-label>
-            <ion-input disabled value="{{ selected?.address?.type }}"></ion-input>
+            <ion-label>Location <span [ngStyle]="{'color': selected.address.type ? '#00aed8' : '#f44336'}">*</span></ion-label>
         </ion-item>
 
-        <ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address" [class.selected]="address.type === selected.address.type">
-            {{ address.type }} -- {{ address.address }}, {{ address.city }}
-        </ion-item>
+        <div class="box-row forbuttons">
+            <ng-container *ngFor="let address of addresses$|async; let index = index">
+                <span class="spacer" *ngIf="!index"></span>
+                <button ion-button [class.accent]="selected.address.type === address.type" (click)="selected.address = address">{{ address.type }}</button>
+                <span class="spacer"></span>
+            </ng-container>
+        </div>
+        <!--ion-item *ngFor="let address of addresses$|async" (click)="selected.address = address" [class.selected]="address.type === selected.address.type">
+            <button ion-button [class.accent]="selected.address.type === address.type">{{ address.type }}</button>
+        </ion-item-->
 
         <ion-item-divider></ion-item-divider>
 
         <ion-item>
             <ion-label>Number of packs <span [ngStyle]="{'color': article.number_of_packs ? '#00aed8' : '#f44336'}">*</span></ion-label>
-            <ion-input type="number" [(ngModel)]="article.number_of_packs"></ion-input>
         </ion-item>
+        <div class="box-row forbuttons">
+            <span class="spacer"></span>
+            <button ion-button (click)="article.number_of_packs = 1" [class.accent]="article.number_of_packs === 1">1</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="article.number_of_packs = 2" [class.accent]="article.number_of_packs === 2">2</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="article.number_of_packs = 3" [class.accent]="article.number_of_packs === 3">3</button>
+            <span class="spacer"></span>
+            <button ion-button (click)="article.number_of_packs = 4" [class.accent]="article.number_of_packs === 4">4</button>
+            <span class="spacer"></span>
+        </div>
+
 
         <ion-item class="actions" no-lines>
             <span class="spacer"></span>
@@ -150,8 +190,8 @@
     <ion-list *ngIf="step === 3" class="full">
         <ion-list-header class="box-row">
             Article Qualification
-            <span class="spacer"></span>
-            <button ion-button (click)="preview()">Preview</button>
+            <!--span class="spacer"></span>
+            <button ion-button (click)="preview()">Preview</button-->
         </ion-list-header>
 
         <ion-item>
