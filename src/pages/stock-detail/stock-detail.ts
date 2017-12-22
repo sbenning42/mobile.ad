@@ -147,10 +147,18 @@ export class StockDetailPage {
     }
   }
 
-  sold() {
-    const message = '';
+  commingSoon() {
+    const message = 'Comming Soon !';
     const duration = 3000;
     this.toaster.create({message, duration}).present();
+  }
+
+  sold() {
+    this.commingSoon();
+  }
+
+  modify() {
+    this.commingSoon();
   }
 
 

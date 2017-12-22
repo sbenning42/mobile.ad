@@ -1,5 +1,5 @@
 page-new-pricing-article {
-    .actions {
+    .action {
         display: flex;
         width: 100%;
         justify-content: center;
@@ -12,6 +12,7 @@ page-new-pricing-article {
     }
     .marged {
         margin: 4px;
+        flex: 1;
     }
     .spacer {
         flex: 1;
