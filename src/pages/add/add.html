@@ -48,7 +48,7 @@
 
         <div class="actions">
             <button class="marged" ion-button icon-left disabled><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <button class="marged accent" ion-button (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button (click)="save()">Save</button>
             <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
         </div>
 
@@ -99,7 +99,7 @@
 
         <div class="actions">
             <button class="marged" ion-button icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <button class="marged accent" ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button (click)="save()">Save</button>
             <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
         </div>
     </ion-list>
@@ -144,7 +144,7 @@
 
         <div class="actions">
             <button class="marged" ion-button icon-left (click)="step = step - 1"><ion-icon name="arrow-back"></ion-icon>Prev</button>
-            <button class="marged accent" ion-button color="accent" (click)="saveDraft()">Save Draft</button>
+            <button class="marged" ion-button (click)="save()">Save</button>
             <button class="marged" ion-button icon-right (click)="step = step + 1">Next<ion-icon name="arrow-forward"></ion-icon></button>
         </div>
     </ion-list>
@@ -299,17 +299,3 @@
     </ion-list>
 
 </ion-content>
-
-<!--ion-item class="error" *ngFor="let error of errors$|async; let index = index" (click)="removeError(index)">
-    <p item-start style="white-space: pre-line; width: 50%">{{ error }}</p>
-    <button class="special-button" item-end ion-button icon-left><ion-icon name="delete"></ion-icon>Remove</button>
-</ion-item-->
-<!--ion-item text-center (click)="takeLoop()">
-    <button ion-button icon-left><ion-icon name="camera"></ion-icon>Add a Picture</button>
-</ion-item-->
-<!--ion-item *ngFor="let picture of pictures$|async; let index = index">
-    <ion-thumbnail item-start>
-        <img src="{{ picture }}">
-    </ion-thumbnail>
-    <ion-icon item-end name="remove" (click)="remove(index)"></ion-icon>
-</ion-item-->
