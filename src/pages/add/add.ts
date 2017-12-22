@@ -385,6 +385,10 @@ export class AddPage {
     return modal;
   }
 
+  openTitle() {
+    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name });
+  }
+
   openDescription() {
     this.modder(NewDescriptionArticlePage, { delegate: this, description: this.article.description });
   }

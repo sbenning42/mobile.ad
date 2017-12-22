@@ -21,6 +21,7 @@ import { App } from 'ionic-angular/components/app/app';
 export class NewTitleArticlePage {
 
   name: string;
+  delegateArticle: Article;
 
   @ViewChild('inputToFocus') input: any;
 
@@ -33,6 +34,7 @@ export class NewTitleArticlePage {
       this.input.setFocus();
     },200)
     this.name = this.navParams.get('name');
+    this.delegateArticle = this.navParams.get('delegate').article;
   }
 
   toaster(message, duration, cssClass, callback?) {
@@ -42,9 +44,8 @@ export class NewTitleArticlePage {
   }
 
   save() {
-    const delegateArticle = this.navParams.get('delegate').article;
-    delegateArticle.name = this.name;
-    const stream$ = delegateArticle.id ? this.api.putProduct(delegateArticle) : this.api.addProduct(<Article>{ name: this.name });
+    this.delegateArticle.name = this.name;
+    const stream$ = this.delegateArticle.id ? this.api.putProduct(this.delegateArticle) : this.api.addProduct(<Article>{ name: this.name });
     stream$.subscribe(
       apiArticle => {
         const delegateArticle = this.navParams.get('delegate').article;

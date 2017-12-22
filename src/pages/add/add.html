@@ -60,10 +60,10 @@
             Article Infos
         </ion-list-header>
 
-        <ion-item>
+        <ion-item (click)="openTitle()">
             <ion-label item-start>Title <span [ngStyle]="{'color': article.name ? '#00aed8' : '#f44336'}">*</span></ion-label>
             <ion-icon item-end *ngIf="article.name" name="checkmark" [ngStyle]="{ 'color': '#00aed8'  }"></ion-icon>
-            <button ion-button item-end disabled>Open</button>
+            <button ion-button item-end>Open</button>
         </ion-item>
 
         <ion-item (click)="openDescription()">

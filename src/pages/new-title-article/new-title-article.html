@@ -22,7 +22,7 @@
 
     <div class="actions">
         <button class="marged accent" ion-button (click)="cancel()">Cancel</button>
-        <button class="marged" ion-button (click)="save()" [disabled]="!name">Take Pictures</button>
+        <button class="marged" ion-button (click)="save()" [disabled]="!name">{{ delegateArticle && delegateArticle.id ? 'Save Title' : 'Take Pictures' }}</button>
     </div>
 
 
