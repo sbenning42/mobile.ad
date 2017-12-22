@@ -107,7 +107,7 @@
         <div class="box-row forbuttons">
             <ng-container *ngFor="let address of addresses$|async; let index = index">
                 <span class="spacer" *ngIf="!index"></span>
-                <button ion-button [class.accent]="selected.address.type === address.type" (click)="selected.address = address">{{ address.type }}</button>
+                <button ion-button outline [class.select]="selected.address.type === address.type" (click)="selected.address = address">{{ address.type }}</button>
                 <span class="spacer"></span>
             </ng-container>
         </div>
@@ -120,13 +120,13 @@
         </ion-item>
         <div class="box-row forbuttons">
             <span class="spacer"></span>
-            <button ion-button (click)="article.number_of_packs = 1" [class.accent]="article.number_of_packs === 1">1</button>
+            <button ion-button outline (click)="article.number_of_packs = 1" [class.select]="article.number_of_packs === 1">1</button>
             <span class="spacer"></span>
-            <button ion-button (click)="article.number_of_packs = 2" [class.accent]="article.number_of_packs === 2">2</button>
+            <button ion-button outline (click)="article.number_of_packs = 2" [class.select]="article.number_of_packs === 2">2</button>
             <span class="spacer"></span>
-            <button ion-button (click)="article.number_of_packs = 3" [class.accent]="article.number_of_packs === 3">3</button>
+            <button ion-button outline (click)="article.number_of_packs = 3" [class.select]="article.number_of_packs === 3">3</button>
             <span class="spacer"></span>
-            <button ion-button (click)="article.number_of_packs = 4" [class.accent]="article.number_of_packs === 4">4</button>
+            <button ion-button outline (click)="article.number_of_packs = 4" [class.select]="article.number_of_packs === 4">4</button>
             <span class="spacer"></span>
         </div>
 

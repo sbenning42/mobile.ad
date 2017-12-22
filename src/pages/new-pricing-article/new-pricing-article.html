@@ -30,9 +30,9 @@
 
     <div class="action">
         <span class="spacer"></span>
-        <button [class.accent]="price_by === 'unit'" ion-button (click)="price_by = 'unit'">Unit</button>
+        <button [class.select]="price_by === 'unit'" ion-button outline (click)="price_by = 'unit'">Unit</button>
         <span class="spacer"></span>
-        <button [class.accent]="price_by === 'set'" ion-button (click)="price_by = 'set'">Set</button>
+        <button [class.select]="price_by === 'set'" ion-button outline (click)="price_by = 'set'">Set</button>
         <span class="spacer"></span>
     </div>
 
