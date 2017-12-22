@@ -201,7 +201,8 @@ export class AddPage {
     // this.takeOne();
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
+    this.app.getRootNav().setRoot(TabsPage, { index: 3 });
   }
 
   takeOne() {
