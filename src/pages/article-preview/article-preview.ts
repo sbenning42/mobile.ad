@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Article } from '../../models/article';
 import { Observable } from 'rxjs/Observable';
 import { CameraProvider } from '../../providers/camera/camera';
+import { basePicturesApi } from '../../api/api';
 
 /**
  * Generated class for the ArticlePreviewPage page.
@@ -25,6 +26,8 @@ export class ArticlePreviewPage {
     designer: {id: '0', name: ''}, brand: {id: '0', name: ''}, address: {id: '0', name: ''}
   };
   pictures$: Observable<string[]>;
+  pictures: string[];
+  basePicturesApi = basePicturesApi;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public camera: CameraProvider) {
   }
@@ -34,6 +37,7 @@ export class ArticlePreviewPage {
     this.pictures$ = this.camera.pictures$;
     this.article = this.navParams.get('article');
     this.selected = this.navParams.get('selected');
+    this.pictures = this.article.pictures.map(picture => this.basePicturesApi + picture.url_thumb);
     console.log('article: ' + this.article);
     console.log('selected: ' + this.selected);
     console.log('pictures$: ' + this.pictures$);

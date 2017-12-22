@@ -17,7 +17,7 @@
     <ion-list>
         <ion-list-header>Article Resume</ion-list-header>
 
-        <ion-item-divider (click)="goto(0)"> Pictures - {{ (pictures$|async)?.length }}</ion-item-divider>
+        <ion-item-divider (click)="goto(0)"> Pictures - {{ (pictures$|async)?.length + pictures?.length }}</ion-item-divider>
         <ng-container *ngFor="let picture of pictures$|async; let index = index">
             <ion-item *ngIf="index === 0" (click)="goto(0)">
                 <ion-label>Cover</ion-label>
@@ -28,6 +28,8 @@
         <div class="gallery-wrapper">
             <div class="gallery-box">
                 <div class="gallery-item" *ngFor="let picture of pictures$|async; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
+                </div>
+                <div class="gallery-item" *ngFor="let picture of pictures; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
                 </div>
             </div>
         </div>

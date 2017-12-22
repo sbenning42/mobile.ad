@@ -106,7 +106,7 @@ export class AddPage {
   anotherSub: Subscription;
   errSub: Subscription;
   
-  basePictureApi = basePicturesApi;
+  basePicturesApi = basePicturesApi;
 
   constructor(
     public app: App,
@@ -173,7 +173,7 @@ export class AddPage {
     this.pictures$ = this.camera.pictures$;
     this.errors$ = this.camera.errors$;
 
-    this.errSub = this.camera.errors$.throttleTime(500).subscribe((err) => {
+    this.errSub = this.camera.errors$.throttleTime(1000).subscribe((err) => {
       if (!(err && err[0])) { return ; }
       this.toaster('No Picture to add', 1500, 'failure-toast');
     });

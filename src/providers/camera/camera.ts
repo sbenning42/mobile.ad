@@ -64,7 +64,6 @@ export class CameraProvider {
 
   removeError(index: number) {
     this.errors = this.errors.filter((error, i) => i !== index);
-    this.publishErrors();
   }
 
   deploy(): string[] {
