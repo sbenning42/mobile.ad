@@ -41,7 +41,7 @@
 
         <div class="gallery-wrapper" *ngIf="article?.pictures">
             <div class="gallery-box">
-                <div class="gallery-item" *ngFor="let picture of article?.pictures; let index = index" [ngStyle]="{ 'background-image': 'url(' + picture + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
+                <div class="gallery-item" *ngFor="let picture of article?.pictures; let index = index" [ngStyle]="{ 'background-image': 'url(' + basePicturesApi + picture.url_thumb + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': '50% 50%' }">
                 </div>
             </div>
         </div>

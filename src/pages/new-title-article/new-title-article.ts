@@ -42,7 +42,10 @@ export class NewTitleArticlePage {
   }
 
   save() {
-    this.api.addProduct(<Article>{ name: this.name }).subscribe(
+    const delegateArticle = this.navParams.get('delegate').article;
+    delegateArticle.name = this.name;
+    const stream$ = delegateArticle.id ? this.api.putProduct(delegateArticle) : this.api.addProduct(<Article>{ name: this.name });
+    stream$.subscribe(
       apiArticle => {
         const delegateArticle = this.navParams.get('delegate').article;
         delegateArticle.id = apiArticle.id;

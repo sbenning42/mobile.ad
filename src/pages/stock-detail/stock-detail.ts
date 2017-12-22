@@ -7,6 +7,7 @@ import { basePicturesApi } from './../../api/api';
 import { Article } from '../../models/article';
 import { ChannelsProvider } from '../../providers/channels/channels';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { AddPage } from '../add/add';
 
 /**
  * Generated class for the StockDetailPage page.
@@ -158,7 +159,7 @@ export class StockDetailPage {
   }
 
   modify() {
-    this.commingSoon();
+    this.navCtrl.push(AddPage, { article: this.article });
   }
 
 

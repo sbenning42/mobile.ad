@@ -18,6 +18,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 import { NewTitleArticlePage } from '../new-title-article/new-title-article';
 import { NewDescriptionArticlePage } from '../new-description-article/new-description-article';
 import { NewPricingArticlePage } from '../new-pricing-article/new-pricing-article';
+import { basePicturesApi } from '../../api/api';
 
 /**
  * Generated class for the AddPage page.
@@ -104,6 +105,8 @@ export class AddPage {
   saveSub: Subscription;
   anotherSub: Subscription;
   errSub: Subscription;
+  
+  basePictureApi = basePicturesApi;
 
   constructor(
     public app: App,
