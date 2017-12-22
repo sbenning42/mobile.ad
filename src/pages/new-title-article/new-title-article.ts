@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { Article } from '../../models/article';
@@ -22,11 +22,16 @@ export class NewTitleArticlePage {
 
   name: string;
 
+  @ViewChild('inputToFocus') input: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider, public toastCtrl: ToastController, public app: App) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewTitleArticlePage');
+    setTimeout(() => {
+      this.input.setFocus();
+    },200)
     this.name = this.navParams.get('name');
   }
 

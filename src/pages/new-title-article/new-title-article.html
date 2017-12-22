@@ -17,7 +17,7 @@
 
     <ion-item>
         <ion-label>Title<span [ngStyle]="{'color': name ? '#00aed8' : '#f44336'}">*</span></ion-label>
-        <ion-input [(ngModel)]="name"></ion-input>
+        <ion-input #inputToFocus [(ngModel)]="name"></ion-input>
     </ion-item>
 
     <div class="actions">
