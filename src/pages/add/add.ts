@@ -387,7 +387,7 @@ export class AddPage {
   }
 
   openTitle() {
-    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name });
+    this.modder(NewTitleArticlePage, { delegate: this, name: this.article.name, from: 'here' });
   }
 
   openDescription() {
