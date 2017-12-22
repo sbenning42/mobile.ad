@@ -38,6 +38,7 @@ import { CameraTabDefaultPagePage } from '../pages/camera-tab-default-page/camer
 import { CartTabDefaultPagePage } from '../pages/cart-tab-default-page/cart-tab-default-page';
 import { CloudTabDefaultPagePage } from '../pages/cloud-tab-default-page/cloud-tab-default-page';
 import { ArticlePreviewPage } from '../pages/article-preview/article-preview';
+import { NewTitleArticlePage } from '../pages/new-title-article/new-title-article';
 
 import { SlidesNavigatorComponent, PicturesLoopComponent } from '../components/components.module';
 
@@ -78,6 +79,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
     ArticlePreviewPage,
+    NewTitleArticlePage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   imports: [
@@ -110,6 +112,7 @@ import { CameraProvider } from '../providers/camera/camera';
     CartTabDefaultPagePage,
     CloudTabDefaultPagePage,
     ArticlePreviewPage,
+    NewTitleArticlePage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   providers: [
