@@ -204,7 +204,7 @@ export class AddPage {
   }
 
   debugPurposeOnly() {
-    this.camera.takeOneSpecial()
+    this.camera.takeOneSpecial();
   }
 
   takeOne() {

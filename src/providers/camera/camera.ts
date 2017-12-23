@@ -72,7 +72,11 @@ export class CameraProvider {
 
   takeOneSpecial() {
     this.camera.getPicture(this.specialOptions).then(
-      imageData => this.publishPictures(imageData.toDataURL()),
+      imageData => {
+        getDataUri(imageData, function(dataUri) {
+          this.publishPictures(dataUri);
+        });
+      },
       error => this.publishErrors('CameraProvider@takeOne,err: ' + JSON.stringify(error)));
   }
 
@@ -98,4 +102,18 @@ export class CameraProvider {
     return this.pictures && this.pictures.length > 0;
   }
 
+}
+
+function getDataUri(url, callback) {
+  var image = new Image();
+
+  image.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = image.naturalWidth; // or 'width' if you want a special/scaled size
+      canvas.height = image.naturalHeight; // or 'height' if you want a special/scaled size
+      canvas.getContext('2d').drawImage(<HTMLImageElement>image, 0, 0);
+      callback(canvas.toDataURL('image/png'));
+  };
+
+  image.src = url;
 }
