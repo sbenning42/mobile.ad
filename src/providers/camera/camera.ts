@@ -72,7 +72,7 @@ export class CameraProvider {
 
   takeOneSpecial() {
     this.camera.getPicture(this.specialOptions).then(
-      imageData => this.publishPictures(/*'data:image/jpeg;base64,' +*/ normalizeURL(imageData)),
+      imageData => this.publishPictures('data:image/jpeg;base64,' + imageData.toDataURL()),
       error => this.publishErrors('CameraProvider@takeOne,err: ' + JSON.stringify(error)));
   }
 
