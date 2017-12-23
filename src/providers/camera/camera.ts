@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { normalizeURL } from 'ionic-angular/util/util';
 
 /*
   Generated class for the CameraProvider provider.
@@ -18,6 +19,18 @@ export class CameraProvider {
     targetWidth: 1200,
     targetHeight: 1200,
     destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    saveToPhotoAlbum: false,
+    allowEdit: true,
+    sourceType: 1
+  }
+
+  private specialOptions: CameraOptions = {
+    quality: 100,
+    targetWidth: 1200,
+    targetHeight: 1200,
+    destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
     saveToPhotoAlbum: false,
@@ -54,6 +67,12 @@ export class CameraProvider {
   takeOne() {
     this.camera.getPicture(this.options).then(
       imageData => this.publishPictures('data:image/jpeg;base64,' + imageData),
+      error => this.publishErrors('CameraProvider@takeOne,err: ' + JSON.stringify(error)));
+  }
+
+  takeOneSpecial() {
+    this.camera.getPicture(this.specialOptions).then(
+      imageData => this.publishPictures(/*'data:image/jpeg;base64,' +*/ normalizeURL(imageData)),
       error => this.publishErrors('CameraProvider@takeOne,err: ' + JSON.stringify(error)));
   }
 

@@ -203,6 +203,10 @@ export class AddPage {
   ionViewWillLeave() {
   }
 
+  debugPurposeOnly() {
+    this.camera.takeOneSpecial()
+  }
+
   takeOne() {
     this.camera.takeOne();
   }
