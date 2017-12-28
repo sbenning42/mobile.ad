@@ -1,5 +1,9 @@
-export const baseApi = 'http://preprod.myauthenticdesign.fr/api';
-export const basePicturesApi = 'http://preprod.myauthenticdesign.fr/public/storage/';
+// export const baseApi = 'http://preprod.myauthenticdesign.fr/api';
+// export const basePicturesApi = 'http://preprod.myauthenticdesign.fr/public/storage/';
+
+export const baseApi = 'https://api.authenticdesign.fr/api';
+export const basePicturesApi = 'https://api.authenticdesign.fr/public/storage/';
+
 export const stockApi = `${baseApi}/private-products`;
 export const galleryApi = `${baseApi}/shared-gallery`;
 export const annexesApi = `${baseApi}/annexes`;

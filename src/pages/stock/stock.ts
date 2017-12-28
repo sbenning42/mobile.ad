@@ -15,6 +15,7 @@ import { GalleryModeProvider } from '../../providers/gallery-mode/gallery-mode';
 import { ApiProvider } from './../../providers/api/api';
 import { ContactPage } from '../contact/contact';
 import { StockDetailPage } from '../stock-detail/stock-detail';
+import { StoreMyArticlesProvider } from '../../providers/store-my-articles/store-my-articles';
 
 /**
  * Generated class for the StockPage page.
@@ -44,7 +45,8 @@ export class StockPage {
     public stockProvider: StockProvider,
     public stockMode: StockModeProvider,
     public stockCounts: StockCountsProvider,
-    private api: ApiProvider
+    private api: ApiProvider,
+    private articlesStore: StoreMyArticlesProvider
   ) {
     this.mode$ = this.stockMode.get();
   }
@@ -72,6 +74,20 @@ export class StockPage {
         },
         () => {
         });
+  }
+
+  read() {
+    const key = 'r';
+    const data = new PageOptions(0, 5, 1);
+    this.articlesStore.apply({key, data});
+  }
+
+  create() {
+
+  }
+
+  update() {
+
   }
 
   getPrincipalePicture(products: Article[]): Article[] {
