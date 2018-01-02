@@ -26,6 +26,38 @@ import { ChannelsProvider } from '../../providers/channels/channels';
  * Ionic pages and navigation.
  */
 
+class Movement {
+  
+  active: boolean;
+  point: Touch;
+  lastMove: any;
+
+  direction: number;
+
+  start($event: any) {
+    this.active = true;
+    this.point = $event.touches.item(0);
+  }
+
+  move($event: any) {
+    const newMove = $event.target;
+    if (newMove.clientX < this.lastMove.clientX) {
+      this.direction = -1;
+    } else if (newMove.clientX > this.lastMove.clientX) {
+      this.direction = 1;
+    } else {
+      this.direction = 0;
+    }
+  }
+
+  end($event: any) {
+    this.active = false;
+    this.lastMove = undefined;
+    console.log(JSON.stringify($event.target));
+  }
+
+}
+
 @IonicPage()
 @Component({
   selector: 'page-stock',
@@ -42,6 +74,8 @@ export class StockPage {
   detail: number;
 
   managed: Article;
+
+  movement: Movement = new Movement();
 
   constructor(
     public navCtrl: NavController,
@@ -191,6 +225,21 @@ export class StockPage {
 
   consolog(m) {
     console.log(m);
+  }
+
+  touchstart($event) {
+    this.consolog('start');
+    this.movement.start($event);
+  }
+
+  touchend($event) {
+    this.consolog('end');
+    this.movement.end($event);
+  }
+
+  touchmove($event) {
+    this.consolog('move');
+    this.movement.move($event);
   }
 
 }

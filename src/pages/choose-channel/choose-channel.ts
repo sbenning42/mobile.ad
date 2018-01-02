@@ -36,6 +36,7 @@ export class ChooseChannelPage {
   }
 
   solded(channel) {
+    if (!confirm('Are you sure you want to set your article as Solded by ' + channel.name + ' ?')) { return ; }
     this.navParams.get('delegate').soldChannel = channel.name;
     this.navCtrl.pop();
   }

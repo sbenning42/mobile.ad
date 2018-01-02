@@ -40,6 +40,11 @@
             <ion-icon class="managed primary" *ngIf="managed?.id === article.id" name="settings" item-end margin (click)="modifyHook(article)"></ion-icon>
             <ion-icon *ngIf="managed?.id !== article.id" name="arrow-forward" item-end margin (click)="details(article, index)"></ion-icon>
         </ion-item>
+        <!--ion-item (touchstart)="touchstart($event)" (touchend)="touchend($event)" (touchmove)="touchmove($event)">
+            <p>
+                This is a test {{ movement?.direction }}
+            </p>
+        </ion-item-->
     </ion-list>
 
     <!-- Thumbnail Mode -->
