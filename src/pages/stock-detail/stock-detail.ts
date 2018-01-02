@@ -8,6 +8,8 @@ import { Article } from '../../models/article';
 import { ChannelsProvider } from '../../providers/channels/channels';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { AddPage } from '../add/add';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { ChooseChannelPage } from '../choose-channel/choose-channel';
 
 /**
  * Generated class for the StockDetailPage page.
@@ -43,6 +45,7 @@ export class StockDetailPage {
   alreadySold: boolean;
 
   channels: any[];
+  soldChannel: any;
 
   mkChannels: any[];
   feChannels: any[];
@@ -58,7 +61,8 @@ export class StockDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public channelsProvider: ChannelsProvider,
-    public toaster: ToastController
+    public toaster: ToastController,
+    public modalCtrl: ModalController
   ) {
     this.article = this.navParams.get('article');
     this.channels = this.navParams.get('channels');
@@ -105,9 +109,8 @@ export class StockDetailPage {
   }
 
   register(channel) {
-    console.log('Got called');
-    if (this.busy || +this.article.state_id < 2) { return ; }
-    console.log('Actually do work');
+    if (this.busy || +this.article.state_id < 2 || this.alreadySold) { return ; }
+    if (this.sub) { this.sub.unsubscribe(); }    
     this.busy = true;
     this.sub = this.channelsProvider.publish(this.article, channel).subscribe(
       response => {
@@ -129,18 +132,14 @@ export class StockDetailPage {
       basePicturesApi + principale.url_thumb :
       (product['pictures'] && product['pictures'][0] ?
         basePicturesApi + product['pictures'][0].url_thumb :
-        'assets/imgs/addef.jpg');
+        '../assets/imgs/addef.jpg');
       product.principaleB = principale ?
         basePicturesApi + principale.url_img :
         (product['pictures'] && product['pictures'][0] ?
           basePicturesApi + product['pictures'][0].url_img :
-          'assets/imgs/addef.jpg');
+          '../assets/imgs/addef.jpg');
     return product;
   }
-
-
-
-
 
   ionWillLeave() {
     if (this.sub) {
@@ -155,16 +154,38 @@ export class StockDetailPage {
   }
 
   sold() {
-    this.commingSoon();
+    if (this.busy || this.alreadySold || +this.article.state_id < 2) { return ; }
+    this.soldChannel = undefined;
+    const modal = this.modalCtrl.create(ChooseChannelPage, { delegate: this });
+    modal.onDidDismiss(() => {
+      if (!this.soldChannel) { return ; }
+      this.busy = true;
+      if (this.sub) { this.sub.unsubscribe(); }
+      this.sub = this.channelsProvider.sold({ product: this.article, soldedBy: this.soldChannel })
+        .subscribe(response => {
+          this.article = this.getPrincipale(response);
+          this.computeStatus();
+          this.delegate.maj(this.article);
+        }, error => {this.busy = false}, () => {this.busy = false;});
+    });
+    modal.present();
   }
 
   modify() {
     this.navCtrl.push(AddPage, { article: this.article });
   }
 
-
-
-
+  delete() {
+    if (this.busy || this.alreadySold || +this.article.state_id > 2) { return ; }
+    if (!confirm('Are you surte you want to delete that article?')) { return ; }
+    this.busy = true;
+    if (this.sub) { this.sub.unsubscribe(); }
+    this.sub = this.channelsProvider.delete(this.article)
+      .subscribe(response => {
+        this.delegate.delete(this.article);
+        this.navCtrl.pop();
+      }, error => {this.busy = false}, () => {this.busy = false;});
+  }
 
 
   searchStatusName(channel): string {

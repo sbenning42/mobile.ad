@@ -57,6 +57,7 @@ import { ApiProvider } from '../providers/api/api';
 import { UploadProvider } from '../providers/upload/upload';
 import { CameraProvider } from '../providers/camera/camera';
 import { StoreMyArticlesProvider } from '../providers/store-my-articles/store-my-articles';
+import { ChooseChannelPage } from '../pages/choose-channel/choose-channel';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { StoreMyArticlesProvider } from '../providers/store-my-articles/store-my
     NewTitleArticlePage,
     NewDescriptionArticlePage,
     NewPricingArticlePage,
+    ChooseChannelPage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   imports: [
@@ -120,6 +122,7 @@ import { StoreMyArticlesProvider } from '../providers/store-my-articles/store-my
     NewTitleArticlePage,
     NewDescriptionArticlePage,
     NewPricingArticlePage,
+    ChooseChannelPage,
     SlidesNavigatorComponent, PicturesLoopComponent
   ],
   providers: [

@@ -16,6 +16,8 @@ import { ApiProvider } from './../../providers/api/api';
 import { ContactPage } from '../contact/contact';
 import { StockDetailPage } from '../stock-detail/stock-detail';
 import { StoreMyArticlesProvider } from '../../providers/store-my-articles/store-my-articles';
+import { AddPage } from '../add/add';
+import { ChannelsProvider } from '../../providers/channels/channels';
 
 /**
  * Generated class for the StockPage page.
@@ -39,6 +41,8 @@ export class StockPage {
 
   detail: number;
 
+  managed: Article;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,7 +50,8 @@ export class StockPage {
     public stockMode: StockModeProvider,
     public stockCounts: StockCountsProvider,
     private api: ApiProvider,
-    private articlesStore: StoreMyArticlesProvider
+    private articlesStore: StoreMyArticlesProvider,
+    public channelsProvider: ChannelsProvider
   ) {
     this.mode$ = this.stockMode.get();
   }
@@ -90,6 +95,26 @@ export class StockPage {
 
   }
 
+  alreadySold(article: Article): boolean {
+    let alreadySold = false;
+    article['marketplaces'].forEach(ch => {
+      if (!ch.status) { return ; }
+      const name = ch.status.name;
+      alreadySold = alreadySold || name === 'Sold';
+    });
+    return alreadySold;
+  }
+
+  deleteHook(article: Article) {
+    if (this.alreadySold(article) || +article.state_id > 2) { return ; }
+    if (!confirm('Are you surte you want to delete that article?')) { return ; }
+    this.channelsProvider.delete(article).subscribe(response => this.delete(article));
+  }
+
+  modifyHook(article: Article) {
+    this.navCtrl.push(AddPage, { article: article });
+  }
+
   getPrincipalePicture(products: Article[]): Article[] {
     products.forEach((product: Article) => {
       if (product.principale) { return ; }
@@ -100,12 +125,12 @@ export class StockPage {
         basePicturesApi + principale.url_thumb :
         (product['pictures'] && product['pictures'][0] ?
           basePicturesApi + product['pictures'][0].url_thumb :
-          'assets/imgs/addef.jpg');
+          '../assets/imgs/addef.jpg');
         product.principaleB = principale ?
           basePicturesApi + principale.url_img :
           (product['pictures'] && product['pictures'][0] ?
             basePicturesApi + product['pictures'][0].url_img :
-            'assets/imgs/addef.jpg');
+            '../assets/imgs/addef.jpg');
     });
     return products;
   }
@@ -142,9 +167,18 @@ export class StockPage {
     this.navCtrl.push(StockDetailPage, {article: article, channels: this.channels, delegate: this});
   }
 
+  manage(article: Article, index: number) {
+
+  }
+
   maj(article: Article) {
     console.log('Have to maj ' + article);
     this.articles[this.detail] = article;
+  }
+
+  delete(article: Article) {
+    this.articles = this.articles.filter(art => +art.id !== +article.id);
+    this.pageOptions.reNew(this.pageOptions.count - 1);
   }
 
   ionViewWillLoad() {

@@ -45,8 +45,9 @@
     </div>
 
     <div class="validate-box">
-        <button class="validate" ion-button raised (click)="sold()">Sold</button>
-        <button class="validate accent" ion-button raised (click)="modify()">Modify</button>
+        <button class="validate" ion-button raised (click)="sold()" [disabled]="alreadySold || article.state_id < 2">Sold</button>
+        <button class="validate accent" ion-button raised (click)="modify()" [disabled]="alreadySold">Modify</button>
+        <button class="validate warn" ion-button raised (click)="delete()" [disabled]="alreadySold || article.state_id > 2">Delete</button>
     </div>
 
 </ion-content>

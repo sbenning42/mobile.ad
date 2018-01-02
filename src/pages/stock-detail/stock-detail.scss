@@ -1,5 +1,4 @@
 page-stock-detail {
-    .dense {}
     .bigger {
         font-size: 1.6rem;
         margin-bottom: 8px !important;
@@ -70,6 +69,10 @@ page-stock-detail {
         width: 80%;
     }
     .accent {
+        width: 80%;
+        background-color: #f44336!important;
+    }
+    .warn {
         width: 80%;
         background-color: #f44336!important;
     }

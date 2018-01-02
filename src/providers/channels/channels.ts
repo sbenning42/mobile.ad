@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { channelsApi, channelsPublishApi } from '../../api/api';
+import { channelsApi, channelsPublishApi, channelsSoldApi, channelDeleteApi } from '../../api/api';
 import { HttpProvider } from '../../providers/http/http';
 
 /*
@@ -24,6 +24,14 @@ export class ChannelsProvider {
 
   publish(article, channel): Observable<any> {
     return this.http.put(channelsPublishApi(article.id, channel.id));
+  }
+
+  sold(data: {product: any, soldedBy: any}): Observable<any> {
+    return this.http.post(channelsSoldApi, data);
+  }
+
+  delete(article) {
+    return this.http.delete(channelDeleteApi(article.id));
   }
 
 }

@@ -13,4 +13,17 @@ page-stock {
     .grey {
         color: grey;
     }
+    .primary {
+        color: #00aed8;
+    }
+    .accent {
+        color: #f44336
+    }
+    .manager {
+        width: 100%;
+        display: flex;
+    }
+    .spacer {
+        flex: 1;
+    }
 }
