@@ -106,7 +106,7 @@ export class StockPage {
   }
 
   deleteHook(article: Article) {
-    if (this.alreadySold(article) || +article.state_id > 2) { return ; }
+    if (this.alreadySold(article)) { return ; }
     if (!confirm('Are you surte you want to delete that article?')) { return ; }
     this.channelsProvider.delete(article).subscribe(response => this.delete(article));
   }

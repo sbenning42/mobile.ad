@@ -176,7 +176,7 @@ export class StockDetailPage {
   }
 
   delete() {
-    if (this.busy || this.alreadySold || +this.article.state_id > 2) { return ; }
+    if (this.busy || this.alreadySold) { return ; }
     if (!confirm('Are you surte you want to delete that article?')) { return ; }
     this.busy = true;
     if (this.sub) { this.sub.unsubscribe(); }
