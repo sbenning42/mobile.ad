@@ -49,8 +49,10 @@ export class NewTitleArticlePage {
     stream$.subscribe(
       apiArticle => {
         const delegateArticle = this.navParams.get('delegate').article;
+        const id = delegateArticle.id;
         delegateArticle.id = apiArticle.id;
         delegateArticle.name = apiArticle.name;
+        if (!id) { this.navParams.get('delegate').takeOne(); }
         this.navCtrl.pop();
       },
       errors => {
