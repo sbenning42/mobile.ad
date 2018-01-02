@@ -30,7 +30,7 @@
 
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
-        <ion-item *ngFor="let article of articles; let index = index" (swipeleft)="managed = article">
+        <ion-item *ngFor="let article of articles; let index = index" (swipeleft)="managed = article" (swiperight)="managed = undefined">
             <ion-thumbnail item-start (click)="details(article, index)">
                 <img src="{{ article.principale }}">
             </ion-thumbnail>
@@ -38,7 +38,6 @@
             <p (click)="details(article, index)">Price: {{ article.price }} Euros</p>
             <ion-icon class="managed accent" *ngIf="managed?.id === article.id" name="trash" item-end margin (click)="deleteHook(article)"></ion-icon>
             <ion-icon class="managed primary" *ngIf="managed?.id === article.id" name="settings" item-end margin (click)="modifyHook(article)"></ion-icon>
-            <ion-icon class="managed" *ngIf="managed?.id === article.id" name="close" item-end margin (click)="managed = undefined"></ion-icon>
             <ion-icon *ngIf="managed?.id !== article.id" name="arrow-forward" item-end margin (click)="details(article, index)"></ion-icon>
         </ion-item>
     </ion-list>
