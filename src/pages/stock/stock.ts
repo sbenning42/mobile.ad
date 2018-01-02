@@ -189,4 +189,8 @@ export class StockPage {
     console.log('ionViewWillEnter StockPage');
   }
 
+  consolog(m) {
+    console.log(m);
+  }
+
 }

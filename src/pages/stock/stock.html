@@ -30,7 +30,7 @@
 
     <!-- List Mode -->
     <ion-list *ngIf="(mode$|async) === 'apps'">
-        <ion-item *ngFor="let article of articles; let index = index" (click)="details(article, index)" (swipeleft)="managed = article" (swiperight)="managed = undefined">
+        <ion-item *ngFor="let article of articles; let index = index" (click)="consolog('click'); details(article, index)" (swipeleft)="consolog('swipeleft'); managed = article" (swiperight)="consolog('swiperight'); managed = undefined">
             <ion-thumbnail item-start>
                 <img src="{{ article.principale }}">
             </ion-thumbnail>
