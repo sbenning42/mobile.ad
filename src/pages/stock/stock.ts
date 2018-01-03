@@ -136,7 +136,7 @@ export class StockPage {
         break ;
       case 'swipeleft':
         this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(-80px)'}, right: {width: '80px'}};
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(-80px)'}, right: {width: '160px'}};
         this.managed = article;
         break ;
       case 'swiperight':
@@ -156,11 +156,11 @@ export class StockPage {
     switch (this.movement.direction) {
       case -1:
         this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -80 ? left : -80) : 0) + 'px'}};
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -1600 ? left : -160) : 0) + 'px'}};
         break ;
       case 1:
         this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -80 ? left : -80) : 0) + 'px'}};
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -160 ? left : -160) : 0) + 'px'}};
         break ;
     }
   }

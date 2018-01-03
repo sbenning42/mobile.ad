@@ -41,7 +41,7 @@
             <ion-icon *ngIf="managed?.id === article.id" class="managed primary" name="settings" item-end margin (click)="modifyHook(article)"></ion-icon>
         </ion-item>
     </ion-list-->
-    <ion-list>
+    <ion-list *ngIf="(mode$|async) === 'apps'">
         <div class="test-row" *ngFor="let article of articles; let index = index" [ngStyle]="styles[index].contain">
             <div class="test-item" (touchstart)="touchstart($event, article, index)" (touchend)="touchend($event, article, index)" (touchmove)="touchmove($event, article, index)" [ngStyle]="styles[index].left">
                 <ion-item no-lines>
