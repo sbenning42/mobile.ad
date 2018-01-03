@@ -19,6 +19,7 @@ import { StoreMyArticlesProvider } from '../../providers/store-my-articles/store
 import { AddPage } from '../add/add';
 import { ChannelsProvider } from '../../providers/channels/channels';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 /**
  * Generated class for the StockPage page.
@@ -91,7 +92,8 @@ export class StockPage {
     public stockCounts: StockCountsProvider,
     private api: ApiProvider,
     private articlesStore: StoreMyArticlesProvider,
-    public channelsProvider: ChannelsProvider
+    public channelsProvider: ChannelsProvider,
+    public toastCtrl: ToastController
   ) {
     this.mode$ = this.stockMode.get();
   }
@@ -112,7 +114,7 @@ export class StockPage {
         response => {
           this.articles = this.getPrincipalePicture(response.products);
           // this.styles = this.articles.map(art => 'translateX(0)');
-          this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+          this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
           console.log('Got a next in index ' + this.pageOptions.index);
           this.pageOptions.nextPage();
           console.log('completed with index: ' + this.pageOptions.index);
@@ -128,6 +130,11 @@ export class StockPage {
     this.movement.start($event);
   }
 
+  touchcancel($event, article, index) {
+    this.movement.end($event);
+    this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
+  }
+
   touchend($event, article, index) {
     this.movement.end($event);
     switch (this.movement.eventKey) {
@@ -135,32 +142,41 @@ export class StockPage {
         this.details(article, index);
         break ;
       case 'swipeleft':
-        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(-80px)'}, right: {width: '160px'}};
+        this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
+        this.styles[index] = {one: {width: '100%', left: '-40%'}, two: {width: '20%', right: '20%', left: 'auto'}, three: {width: '20%', right: '0', left: 'auto'}};
         this.managed = article;
         break ;
       case 'swiperight':
-        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
         this.managed = undefined;
         break ;
       default:
-        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
         break ;
     }
   }
 
   touchmove($event, article, index) {
     this.movement.move($event);
+    const offsetY = this.movement.originalPoint.clientY - this.movement.point.clientY;
+    if (offsetY > 40 || offsetY < -40) {
+      return ;
+    }
     const el = <HTMLElement>$event.target;
-    const left = (-(this.movement.originalPoint.clientX - this.movement.point.clientX));
+    let left = this.movement.originalPoint.clientX - this.movement.point.clientX;
+    left < 0 ? 0 : (left > 40 ? 40 : left);
+    const oneLeft = -(left * 2) + 'px';
+    const twoWidth = left + 'px';
+    const twoRight = left + 'px';
     switch (this.movement.direction) {
       case -1:
-        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -1600 ? left : -160) : 0) + 'px'}};
+        this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
+        this.styles[index] = {one: {width: '100%', left: oneLeft}, two: {width: twoWidth, right: twoRight, left: 'auto'}, three: {width: twoWidth, right: 0, left: 'auto'}};
+        // this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -1600 ? left : -160) : 0) + 'px'}};
         break ;
       case 1:
-        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
-        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -160 ? left : -160) : 0) + 'px'}};
+        this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
+        // this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -160 ? left : -160) : 0) + 'px'}};
         break ;
     }
   }
@@ -179,6 +195,12 @@ export class StockPage {
 
   }
 
+  toaster(message, duration, cssClass, callback?) {
+    const toast = this.toastCtrl.create({message, duration, cssClass});
+    callback ? toast.onDidDismiss(callback) : undefined;
+    toast.present();
+  }
+
   alreadySold(article: Article): boolean {
     let alreadySold = false;
     article['marketplaces'].forEach(ch => {
@@ -192,6 +214,8 @@ export class StockPage {
   deleteHook(article: Article) {
     if (this.alreadySold(article)) { return ; }
     if (!confirm('Are you surte you want to delete that article?')) { return ; }
+    this.managed = undefined;
+    this.styles = this.articles.map(art => ({one: {width: '100%'}, two: {width: '0%'}, three: {width: '0%'}}));
     this.channelsProvider.delete(article).subscribe(response => this.delete(article));
   }
 
@@ -263,6 +287,7 @@ export class StockPage {
   delete(article: Article) {
     this.articles = this.articles.filter(art => +art.id !== +article.id);
     this.pageOptions.reNew(this.pageOptions.count - 1);
+    this.toaster('Product Deleted !', 1500, 'failure-toast');
   }
 
   ionViewWillLoad() {

@@ -31,27 +31,23 @@ page-stock {
     .test-row {
         width: 100%;
         display: flex;
+        position: relative;
+        min-height: 72px;
     }
     .test-item {
-        overflow: hidden;
-        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .second-test-item {
-        overflow: hidden;
-        min-height: 100%;
-        width: 0px;
-        display: flex;
-        align-items: center;
-    }
-    .second-test-item>* {
-        width: 100%;
-        min-height: 100%;
-        font-size: 3rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+}
+
+.failure-toast {
+    >div {
+        background-color: #f44336!important;
     }
 }
