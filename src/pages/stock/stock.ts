@@ -18,6 +18,7 @@ import { StockDetailPage } from '../stock-detail/stock-detail';
 import { StoreMyArticlesProvider } from '../../providers/store-my-articles/store-my-articles';
 import { AddPage } from '../add/add';
 import { ChannelsProvider } from '../../providers/channels/channels';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 /**
  * Generated class for the StockPage page.
@@ -29,31 +30,35 @@ import { ChannelsProvider } from '../../providers/channels/channels';
 class Movement {
   
   active: boolean;
+  originalPoint: Touch;
   point: Touch;
-  lastMove: any;
 
   direction: number;
+
+  eventKey: string
 
   start($event: any) {
     this.active = true;
     this.point = $event.touches.item(0);
+    this.originalPoint = this.point;
   }
 
   move($event: any) {
-    const newMove = $event.target;
-    if (newMove.clientX < this.lastMove.clientX) {
-      this.direction = -1;
-    } else if (newMove.clientX > this.lastMove.clientX) {
-      this.direction = 1;
-    } else {
-      this.direction = 0;
-    }
+    const newPoint = $event.touches.item(0);
+    this.direction = (newPoint.clientX === this.originalPoint.clientX
+      ? 0
+      : (newPoint.clientX > this.originalPoint.clientX ? 1 : -1));
+    this.point = newPoint;
   }
 
   end($event: any) {
+    this.eventKey = (this.direction === undefined
+      ? 'click'
+      : (this.direction === 1 ? 'swiperight' : 'swipeleft'));
     this.active = false;
-    this.lastMove = undefined;
-    console.log(JSON.stringify($event.target));
+    this.originalPoint = undefined;
+    this.point = undefined;
+    this.direction = undefined;
   }
 
 }
@@ -67,6 +72,7 @@ export class StockPage {
 
   pageOptions: PageOptions;
   articles: Article[];
+  styles: any[];
   mode$: Observable<string>;
 
   channels: any[];
@@ -93,7 +99,8 @@ export class StockPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad StockPage');
     this.pageOptions = new PageOptions(0);
-    this.api.getContractedChannels()
+    // this.api.getContractedChannels()
+    this.channelsProvider.get()
       .do(response => {
         this.channels = response;
       })
@@ -104,6 +111,8 @@ export class StockPage {
       .subscribe(
         response => {
           this.articles = this.getPrincipalePicture(response.products);
+          // this.styles = this.articles.map(art => 'translateX(0)');
+          this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
           console.log('Got a next in index ' + this.pageOptions.index);
           this.pageOptions.nextPage();
           console.log('completed with index: ' + this.pageOptions.index);
@@ -113,6 +122,47 @@ export class StockPage {
         },
         () => {
         });
+  }
+
+  touchstart($event, article, index) {
+    this.movement.start($event);
+  }
+
+  touchend($event, article, index) {
+    this.movement.end($event);
+    switch (this.movement.eventKey) {
+      case 'click':
+        this.details(article, index);
+        break ;
+      case 'swipeleft':
+        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(-80px)'}, right: {width: '80px'}};
+        this.managed = article;
+        break ;
+      case 'swiperight':
+        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.managed = undefined;
+        break ;
+      default:
+        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        break ;
+    }
+  }
+
+  touchmove($event, article, index) {
+    this.movement.move($event);
+    const el = <HTMLElement>$event.target;
+    const left = (-(this.movement.originalPoint.clientX - this.movement.point.clientX));
+    switch (this.movement.direction) {
+      case -1:
+        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -80 ? left : -80) : 0) + 'px'}};
+        break ;
+      case 1:
+        this.styles = this.articles.map(art => ({contain: {}, left: {}, right: {}}));
+        this.styles[index] = {contain: {}, left: {transform: 'translateX(' + (left < 0 ? (left > -80 ? left : -80) : 0) + 'px)'}, right: {width: -(left < 0 ? (left > -80 ? left : -80) : 0) + 'px'}};
+        break ;
+    }
   }
 
   read() {
@@ -225,21 +275,6 @@ export class StockPage {
 
   consolog(m) {
     console.log(m);
-  }
-
-  touchstart($event) {
-    this.consolog('start');
-    this.movement.start($event);
-  }
-
-  touchend($event) {
-    this.consolog('end');
-    this.movement.end($event);
-  }
-
-  touchmove($event) {
-    this.consolog('move');
-    this.movement.move($event);
   }
 
 }

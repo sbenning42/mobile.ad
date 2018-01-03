@@ -29,22 +29,35 @@
     </ion-refresher>
 
     <!-- List Mode -->
-    <ion-list *ngIf="(mode$|async) === 'apps'">
-        <ion-item *ngFor="let article of articles; let index = index" (click)="consolog('click'); details(article, index)" (swipeleft)="consolog('swipeleft'); managed = article" (swiperight)="consolog('swiperight'); managed = undefined">
+    <!--ion-list *ngIf="(mode$|async) === 'apps'">
+        <ion-item *ngFor="let article of articles; let index = index" (touchstart)="touchstart($event, article, index)" (touchend)="touchend($event, article, index)" (touchmove)="touchmove($event, article, index)" [ngStyle]="{'left': styles[index]}">
             <ion-thumbnail item-start>
                 <img src="{{ article.principale }}">
             </ion-thumbnail>
             <h2 style="white-space: pre-line;">{{ article.name }}<span class="grey"> - Ref: {{ article.id }}</span></h2>
             <p>Price: {{ article.price }} Euros</p>
-            <ion-icon class="managed accent" *ngIf="managed?.id === article.id" name="trash" item-end margin (click)="deleteHook(article)"></ion-icon>
-            <ion-icon class="managed primary" *ngIf="managed?.id === article.id" name="settings" item-end margin (click)="modifyHook(article)"></ion-icon>
             <ion-icon *ngIf="managed?.id !== article.id" name="arrow-forward" item-end margin (click)="details(article, index)"></ion-icon>
+            <ion-icon *ngIf="managed?.id === article.id" class="managed accent" name="trash" item-end margin (click)="deleteHook(article)"></ion-icon>
+            <ion-icon *ngIf="managed?.id === article.id" class="managed primary" name="settings" item-end margin (click)="modifyHook(article)"></ion-icon>
         </ion-item>
-        <!--ion-item (touchstart)="touchstart($event)" (touchend)="touchend($event)" (touchmove)="touchmove($event)">
-            <p>
-                This is a test {{ movement?.direction }}
-            </p>
-        </ion-item-->
+    </ion-list-->
+    <ion-list>
+        <div class="test-row" *ngFor="let article of articles; let index = index" [ngStyle]="styles[index].contain">
+            <div class="test-item" (touchstart)="touchstart($event, article, index)" (touchend)="touchend($event, article, index)" (touchmove)="touchmove($event, article, index)" [ngStyle]="styles[index].left">
+                <ion-item no-lines>
+                    <ion-thumbnail item-start>
+                        <img src="{{ article.principale }}">
+                    </ion-thumbnail>
+                    <h2 style="white-space: pre-line;">{{ article.name }}<span class="grey"> - Ref: {{ article.id }}</span></h2>
+                    <p>Price: {{ article.price }} Euros</p>
+                    <ion-icon item-end name="arrow-forward" (click)="details(article, index)"></ion-icon>
+                </ion-item>
+            </div>
+            <div class="second-test-item" [ngStyle]="styles[index].right">
+                <ion-icon class="managed accent" name="trash" (click)="deleteHook(article)"></ion-icon>
+                <ion-icon class="managed primary" name="settings" (click)="modifyHook(article)"></ion-icon>
+            </div>
+        </div>
     </ion-list>
 
     <!-- Thumbnail Mode -->
