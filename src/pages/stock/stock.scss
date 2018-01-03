@@ -41,6 +41,7 @@ page-stock {
     }
     .second-test-item {
         overflow: hidden;
+        min-height: 100%;
         width: 0px;
         display: flex;
         justify-content: space-between;
