@@ -23,6 +23,9 @@ import { AnnexesProvider } from '../../providers/annexes/annexes'
 export class GalleryDetailPage {
 
   basePicturesApi = basePicturesApi;
+  picturesForLoop: string[];
+  morePicture: boolean;
+
   article: Article;
 
   category: string;
@@ -34,10 +37,6 @@ export class GalleryDetailPage {
   material: string;
   color: string;
 
-  picturesForLoop: string[];
-  morePicture: boolean;
-
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -45,13 +44,18 @@ export class GalleryDetailPage {
     public annexes: AnnexesProvider
   ) {
     this.article = this.navParams.get('article');
-
     this.picturesForLoop = [];
-    // this.picturesForLoop.push(this.article.principale);
     if (this.article['pictures']) {
-      this.article['pictures'].filter(pic => !pic.principal).forEach((pic, index) => index < 7 ? this.picturesForLoop.push(basePicturesApi + pic.url_thumb) : this.morePicture = true);
+      /**
+       * Forge the pictures gallery list (max 8 items)
+       */
+      this.article['pictures'].filter(pic => !pic.principal)
+        .forEach((pic, index) => index < 7 ? this.picturesForLoop.push(basePicturesApi + pic.url_thumb) : this.morePicture = true);
     }
 
+    /**
+     * Overkill way to get article additionnal infos
+     */
     const category = this.annexes.categories.find(cat => +cat.id === +this.article.category_id);
     const period = this.annexes.periods.find(cat => +cat.id === +this.article.periods_id);
     const style = this.annexes.styles.find(cat => +cat.id === +this.article.style_id);
@@ -70,18 +74,19 @@ export class GalleryDetailPage {
     this.color = color ? color.name : '';
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GalleryDetailPage');
-  }
-
+  /**
+   * Push the contact page giving it the article owner
+   */
   contact() {
     this.navCtrl.push(ContactPage, {user: this.article['user'], articles: this.navParams.data.articles});
   }
 
+  /**
+   * Present a modal for pictures fullscreen
+   */
   detail(index: number) {
     const modal = this.modalCtrl.create(SliderPage, { pictures: this.article['pictures'], index });
     modal.present();
-    // this.navCtrl.push(SliderPage, { pictures: this.article['pictures'], index });
   }
 
 }

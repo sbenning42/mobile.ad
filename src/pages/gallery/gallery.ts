@@ -43,38 +43,46 @@ export class GalleryPage {
     private api: ApiProvider
   ) {
     this.mode$ = this.galleryMode.get();
-    // this.fetchData();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GalleryPage');
     this.articles = [];
     this.fetchData();
   }
 
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter GalleryPage');
-  }
-
   fetchData() {
-    console.log('Fetching data for GalleryPage');
+    /**
+     * Get a default pageOptions, present loading, and get gallery (1st page)
+     */
     this.pageOptions = new PageOptions(0);
     const loader = this.presentLoading();
     this.gallery.get(this.pageOptions)
-      .do(
-        response => this.pageOptions.reNew(response.count)
-      ).subscribe(
+      /**
+       * Now that we have the gallery total size, we can maj the pageOptions
+       */
+      .do(response => this.pageOptions.reNew(response.count))
+      .subscribe(
+        /**
+         * GetPrincipale prepare pictures infos for all fetched articles
+         */
         response => this.getPrincipale(this.articles = response.products),
         error => {
+          this.dismissLoading(loader);
           this.navCtrl.setRoot(LoginPage);
         },
+        /**
+         * Prepare pageOptions for fetching next page, and dismiss loading
+         */
         () => {
           this.pageOptions.nextPage();
           this.dismissLoading(loader);
-        }
-      );
+        });
   }
 
+  /**
+   * Get the gallery next page, dismiss scroll on completion.
+   * Prepare pageOptions for fetching next page
+   */
   nextPage(infiniteScroll) {
     this.gallery.get(this.pageOptions)
       .do(response => infiniteScroll.complete())
@@ -85,6 +93,10 @@ export class GalleryPage {
       );
   }
 
+  /**
+   * Prepare articles pictures and select principal picture.
+   * If there is no pictures, use the default ad picture.
+   */
   getPrincipale(articles: Article[]): Article[] {
     articles.forEach(article => {
       if (article.principale) { return ; }
@@ -105,10 +117,16 @@ export class GalleryPage {
     return articles;
   }
 
+  /**
+   * Push the contact page, giving it article owner user
+   */
   contact(article: Article) {
     this.navCtrl.push(ContactPage, {user: article['user']});
   }
 
+  /**
+   * Push the article detail page, giving it the article and all owned by the same user
+   */
   details(article: Article) {
     this.navCtrl.push(GalleryDetailPage, {article: article, articles: this.articles.filter(art => +art.user_id === +article.user_id)});
   }
@@ -129,13 +147,15 @@ export class GalleryPage {
     this.galleryMode.change();
   }
 
+  /**
+   * Reinit the pageOptions and articles list
+   */
   reload(infiniteScroll) {
     this.pageOptions = new PageOptions(0);
     this.gallery.get(this.pageOptions)
-      .do(
-        response => this.pageOptions.reNew(response.count)
-      ).do(response => infiniteScroll.complete())
-        .subscribe(
+      .do(response => this.pageOptions.reNew(response.count))
+      .do(response => infiniteScroll.complete())
+      .subscribe(
         response => this.getPrincipale(this.articles = response.products),
         error => {},
         () => this.pageOptions.nextPage()

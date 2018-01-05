@@ -22,7 +22,9 @@ import { NavParams } from 'ionic-angular/navigation/nav-params';
 })
 export class TabsPage {
 
-  selectedIndex = 1;
+  /**
+   * Possible page from tabs
+   */
   homeRoot = HomePage;
   galleryRoot = GalleryPage;
   addRoot = AddPage;
@@ -30,15 +32,25 @@ export class TabsPage {
   accountRoot = ACcountPage;
   loginRoot = LoginPage;
 
+  /**
+   * Selected page, default 1, can be change via navParams
+   */
+  selectedIndex = 1;
+
+  /**
+   * Observable of the login state.
+   */
   logged$: Observable<boolean>;
 
   constructor(
     private auth: AuthProvider, public navParams: NavParams
   ) {
+    /**
+     * If a custom index was given, load it.
+     * Else load the gallery tab.
+     */
+    const index = this.navParams.get('index');
+    this.selectedIndex = index ? index : 1;
     this.logged$ = this.auth.isLoggedStream();
-    this.selectedIndex = this.navParams.get('index');
-    if (!this.selectedIndex) {
-      this.selectedIndex = 1;
-    }
   }
 }

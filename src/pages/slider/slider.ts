@@ -26,17 +26,16 @@ export class SliderPage {
     spaceBetween:0
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController
+  ) {
     this.pictures = this.navParams.get('pictures').map(pic => basePicturesApi + pic.url_img);
     this.index = this.navParams.get('index');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SliderPage');
-  }
-
   dismiss() {
-    console.log('hello there');
     this.viewCtrl.dismiss();
   }
 

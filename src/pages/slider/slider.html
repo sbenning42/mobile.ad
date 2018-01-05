@@ -5,17 +5,12 @@
   Ionic pages and navigation.
 -->
 
-<ion-header>
-
-    <ion-navbar>
-        <ion-title>Back</ion-title>
-    </ion-navbar>
-
-</ion-header>
-
+<!--    Display article picture fullscreen  -->
 <ion-slides initialSlide="{{ index }}" zoom="true" pager paginationType="progress">
     <ion-slide *ngFor="let picture of pictures">
         <img src="{{ picture }}">
     </ion-slide>
 </ion-slides>
+
+<!--    Dismiss modal   -->
 <button (click)="dismiss()" class="back" ion-fab mini color="light"><ion-icon name="close"></ion-icon></button>

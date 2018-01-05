@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content padding>
+    <!--    Contact infos   -->
     <div ion-fixed #fixed class="head">
         <ion-item no-lines class="row-no-padding">
             <ion-avatar item-start>
@@ -19,10 +20,12 @@
         </ion-item>
     </div>
     <div class="fixed" [ngStyle]="{ 'margin-top.px': height }">
+        <!--    Contact additionnal infos   -->
         <ion-item no-lines class="row-no-padding">
             <p class="dense" style="white-space: pre-line;"><strong>{{ contact.name }}</strong></p>
             <p class="dense" style="white-space: pre-line;">{{ infos }}</p>
         </ion-item>
+        <!--    Contact articles gallery header   -->
         <div class="flex-header">
             <div class="flex-header-item">
                 <strong>{{ count }}</strong>
@@ -37,7 +40,7 @@
         </div>
     </div>
 
-
+    <!--    Contact articles gallery   -->
     <div class="flex-column fixed-float">
         <div class="flex-box" *ngIf="mode">
             <div class="flex-item" *ngFor="let article of articles">
