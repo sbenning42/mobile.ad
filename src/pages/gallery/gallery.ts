@@ -33,7 +33,7 @@ export class GalleryPage {
 
   articles: Article[];
   pageOptions: PageOptions;
-  filters: any;
+  filters: any[] = [];
 
   mode$: Observable<string>;
 

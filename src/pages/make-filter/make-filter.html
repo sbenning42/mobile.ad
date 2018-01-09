@@ -15,38 +15,6 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngIf="filters.user?.length > 0">
-            <ion-badge color="primary" *ngFor="let user of filters.user" (click)="removeFilter(user, filters.user)">
-                {{ user.name }}
-            </ion-badge>
-        </ion-item>
-        <ion-item *ngIf="filters.category?.length > 0">
-            <ion-badge color="primary" *ngFor="let category of filters.category" (click)="removeFilter(category, filters.category)">
-                {{ category.name }}
-            </ion-badge>
-        </ion-item>
-        <ion-item *ngIf="filters.style?.length > 0">
-            <ion-badge color="secondary" *ngFor="let style of filters.style" (click)="removeFilter(style, filters.style)">
-                {{ style.name }}
-            </ion-badge>
-        </ion-item>
-        <ion-item *ngIf="filters.period?.length > 0">
-            <ion-badge color="primary" *ngFor="let period of filters.period" (click)="removeFilter(period, filters.period)">
-                {{ period.name }}
-            </ion-badge>
-        </ion-item>
-        <ion-item *ngIf="filters.designer?.length > 0">
-            <ion-badge color="primary" *ngFor="let designer of filters.designer" (click)="removeFilter(designer, filters.designer)">
-                {{ designer.name }}
-            </ion-badge>
-        </ion-item>
-        <ion-item *ngIf="filters.brand?.length > 0">
-            <ion-badge color="secondary" *ngFor="let brand of filters.brand" (click)="removeFilter(brand, filters.brand)">
-                {{ brand.name }}
-            </ion-badge>
-        </ion-item>
-    </ion-list>
-    <ion-list>
         <ion-item>
             <ion-label>Categories</ion-label>
             <ion-input #categoryInput (ionFocus)="setFocus('categories')" (ionChange)="getMatchCategories()" [(ngModel)]="categoryName"></ion-input>
@@ -120,8 +88,41 @@
             </div>
         </ng-container>
     </ion-list>
+    <ion-list>
+        <ion-item *ngIf="filters.user?.length > 0">
+            <ion-badge color="primary" *ngFor="let user of filters.user" (click)="removeFilter(user, filters.user)">
+                {{ user.name }}
+            </ion-badge>
+        </ion-item>
+        <ion-item *ngIf="filters.category?.length > 0">
+            <ion-badge color="primary" *ngFor="let category of filters.category" (click)="removeFilter(category, filters.category)">
+                {{ category.name }}
+            </ion-badge>
+        </ion-item>
+        <ion-item *ngIf="filters.style?.length > 0">
+            <ion-badge color="secondary" *ngFor="let style of filters.style" (click)="removeFilter(style, filters.style)">
+                {{ style.name }}
+            </ion-badge>
+        </ion-item>
+        <ion-item *ngIf="filters.period?.length > 0">
+            <ion-badge color="primary" *ngFor="let period of filters.period" (click)="removeFilter(period, filters.period)">
+                {{ period.name }}
+            </ion-badge>
+        </ion-item>
+        <ion-item *ngIf="filters.designer?.length > 0">
+            <ion-badge color="primary" *ngFor="let designer of filters.designer" (click)="removeFilter(designer, filters.designer)">
+                {{ designer.name }}
+            </ion-badge>
+        </ion-item>
+        <ion-item *ngIf="filters.brand?.length > 0">
+            <ion-badge color="secondary" *ngFor="let brand of filters.brand" (click)="removeFilter(brand, filters.brand)">
+                {{ brand.name }}
+            </ion-badge>
+        </ion-item>
+    </ion-list>
     <ion-buttons class="flex-buttons">
         <span class="spacer"></span>
+        <button ion-button color="danger" (click)="removeAll()">RESET</button>
         <button ion-button (click)="cancel()">CANCEL</button>
         <button ion-button (click)="save()">SAVE</button>
         <span class="spacer"></span>
