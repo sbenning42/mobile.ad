@@ -91,6 +91,13 @@ export class MakeFilterPage {
     this.colors = this.annexes.colors;
     this.designers = this.annexes.designers;
     this.brands = this.annexes.brands;
+    const filters = this.navParams.get('filters');
+    this.filters.category = filters.map(f => f.type === 'category');
+    this.filters.style = filters.map(f => f.type === 'style');
+    this.filters.period = filters.map(f => f.type === 'period');
+    this.filters.designer = filters.map(f => f.type === 'designer');
+    this.filters.brand = filters.map(f => f.type === 'brand');
+    this.filters.user = filters.map(f => f.type === 'user');
   }
 
   setFocus(key: string) {

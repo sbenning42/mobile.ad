@@ -129,7 +129,7 @@ export class GalleryPage {
   }
 
   makeFilter() {
-    const modal = this.modalCtrl.create(MakeFilterPage);
+    const modal = this.modalCtrl.create(MakeFilterPage, {filters: this.filters});
     modal.onDidDismiss((filters: any) => {
       if (filters) {
         this.filters = filters;
