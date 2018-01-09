@@ -88,7 +88,7 @@ export class GalleryPage {
    * Prepare pageOptions for fetching next page
    */
   nextPage(infiniteScroll) {
-    this.gallery.get(this.pageOptions)
+    this.gallery.get(this.pageOptions, this.filters)
       .do(response => infiniteScroll.complete())
       .subscribe(
         response => this.articles = this.articles.concat(this.getPrincipale(response.products)),

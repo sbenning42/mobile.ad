@@ -50,7 +50,7 @@
         <ion-item>
             <ion-label>Categories</ion-label>
             <ion-input #categoryInput (ionFocus)="setFocus('categories')" (ionChange)="getMatchCategories()" [(ngModel)]="categoryName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'categories'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'categories'">
             <div class="not-to-much">
@@ -62,7 +62,7 @@
         <ion-item>
             <ion-label>Styles</ion-label>
             <ion-input #styleInput (ionFocus)="setFocus('styles')" (ionChange)="getMatchStyles()" [(ngModel)]="styleName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'styles'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'styles'">
             <div class="not-to-much">
@@ -74,7 +74,7 @@
         <ion-item>
             <ion-label>Periods</ion-label>
             <ion-input #periodsInput (ionFocus)="setFocus('periods')" (ionChange)="getMatchPeriods()" [(ngModel)]="periodName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'periods'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'periods'">
             <div class="not-to-much">
@@ -86,7 +86,7 @@
         <ion-item>
             <ion-label>Designers</ion-label>
             <ion-input #designerInput (ionFocus)="setFocus('designers')" (ionChange)="getMatchDesigners()" [(ngModel)]="designerName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'designers'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'designers'">
             <div class="not-to-much">
@@ -98,7 +98,7 @@
         <ion-item>
             <ion-label>Brands</ion-label>
             <ion-input #brandInput (ionFocus)="setFocus('brands')" (ionChange)="getMatchBrands()" [(ngModel)]="brandName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'brands'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'brands'">
             <div class="not-to-much">
@@ -110,7 +110,7 @@
         <ion-item>
             <ion-label>Users</ion-label>
             <ion-input #userInput (ionFocus)="setFocus('users')" (ionChange)="getMatchUsers()" [(ngModel)]="userName"></ion-input>
-            <button item-end ion-button (click)="setFocus('')">Close</button>
+            <button *ngIf="focus === 'users'" item-end ion-button (click)="setFocus('')">Close</button>
         </ion-item>
         <ng-container *ngIf="focus === 'users'">
             <div class="not-to-much">
